@@ -40,17 +40,21 @@ function draw() {
     for (let bullet of bullets) {
       bullet.draw();
     }
+    if (keyCode == 27)
+      window.history.back();
     coin.draw();
     player.draw();
     fill(240);
     textSize(34);
     text("You Fucked Up Bruh xD", player.x, player.y);
+    text("Press ESC to get back to main menu", innerWidth / 2 - 250, 40);
+    text("Press any other key or mouse botton to play again", innerWidth / 2 - 350, 80);
     if (keyIsPressed || mouseIsPressed) {
       running = true;
       coin.coinCount = 0;
       player.reset();
       bullets.forEach(function(entry) {
-        entry.reset();
+      entry.reset();
       });
     }
   }

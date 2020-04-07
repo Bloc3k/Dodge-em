@@ -15,10 +15,10 @@ function setup() {
 }
 
 function draw() {
+  background('#260B02');
+  
   if (running) {
     //game is running
-
-    background('#260B02');
     player.update();
 
     for (let bullet of bullets) {
@@ -37,7 +37,11 @@ function draw() {
 
   } else {
     //game is not running
-
+    for (let bullet of bullets) {
+      bullet.draw();
+    }
+    coin.draw();
+    player.draw();
     fill(240);
     textSize(34);
     text("You Fucked Up Bruh xD", player.x, player.y);

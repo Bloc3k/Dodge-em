@@ -64,7 +64,7 @@ class Bullet {
       case 1:
         //Going right
         this.y = random(100, innerHeight - 100);
-         this.x = random(-450, -100);
+        this.x = random(-600, -70);
         this.dx = random(4, 7);
         this.width = 90;
         this.height = 50;

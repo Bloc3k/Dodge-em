@@ -15,7 +15,7 @@ function setup() {
 }
 
 function draw() {
-  background('#260B02');
+  background(0);
   
   if (running) {
     //game is running

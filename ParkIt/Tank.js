@@ -69,11 +69,12 @@ class Bullet {
        // this.direction.div(direction.mag()).mult(this.speed);
         this.speed = 10;
         this.angle = atan( this.direction.y / this.direction.x) + 90;
+        if (direction.x < 0)
+            this.angle = this.angle - 180;
     }
 
     draw(){
         push();
-
         translate(this.pos.x,this.pos.y);
         rotate(this.angle);
         image(bullet_sprite,-5,-10);

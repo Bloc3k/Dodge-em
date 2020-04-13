@@ -3,11 +3,11 @@ class Tank {
         this.pos = createVector(x,y);
         this.heading = createVector(1,0);
         this.angle = 0;
-        this.angSpeed = 2;
+        this.angSpeed = 3;
         this.speed = speed;
         this.tank_sprite = tank_sprite;
         this.bullet_sprite = bullet_sprite;
-        this.reloadTime = 200;
+        this.reloadTime = 100;
         this.reloadCounter = 0;
         this.loaded = true;
     }
@@ -65,9 +65,8 @@ class Tank {
 class Bullet {
     constructor(pos, direction){
         this.pos = createVector(pos.x, pos.y);
-        this.direction = createVector(direction.x / direction.mag(), direction.y / direction.mag());
-       // this.direction.div(direction.mag()).mult(this.speed);
-        this.speed = 10;
+        this.speed = 20;
+        this.direction = createVector(direction.x / direction.mag() * this.speed, direction.y / direction.mag() * this.speed);
         this.angle = atan( this.direction.y / this.direction.x) + 90;
         if (direction.x < 0)
             this.angle = this.angle - 180;

@@ -36,6 +36,7 @@ function draw() {
         }
       }
     }
+    
     for (let i = 0; i < tanks.length; i++) {
       tanks[i].draw();
       tanks[i].update();

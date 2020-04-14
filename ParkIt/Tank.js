@@ -11,6 +11,7 @@ class Tank {
         this.reloadCounter = 0;
         this.loaded = true;
         this.destroyed = false;
+        this.BORDER_PADDING = 30;
     }
 
     draw() {
@@ -28,11 +29,32 @@ class Tank {
     update() {
         if (keyIsDown(UP_ARROW)){
             //go forward
-            this.pos.add(this.heading);
+            if (this.pos.x >= this.BORDER_PADDING && this.pos.y >= this.BORDER_PADDING &&
+                this.pos.x <= innerWidth - this.BORDER_PADDING && this.pos.y <= innerHeight - this.BORDER_PADDING )
+                this.pos.add(this.heading);
+            else if (this.pos.x < this.BORDER_PADDING)
+                this.pos.x = this.BORDER_PADDING;
+            else if (this.pos.y < this.BORDER_PADDING)
+                this.pos.y = this.BORDER_PADDING;
+            else if (this.pos.x > innerWidth - this.BORDER_PADDING)
+                this.pos.x = innerWidth - this.BORDER_PADDING;
+            else if (this.pos.y > innerHeight - this.BORDER_PADDING)
+                this.pos.y = innerHeight - this.BORDER_PADDING;
+                
         }
         if (keyIsDown(DOWN_ARROW)){
             //go backwards
-            this.pos.sub(this.heading);
+            if (this.pos.x >= this.BORDER_PADDING && this.pos.y >= this.BORDER_PADDING &&
+                this.pos.x <= innerWidth - this.BORDER_PADDING && this.pos.y <= innerHeight - this.BORDER_PADDING )
+                this.pos.sub(this.heading);
+            else if (this.pos.x < this.BORDER_PADDING)
+                this.pos.x = this.BORDER_PADDING;
+            else if (this.pos.y < this.BORDER_PADDING)
+                this.pos.y = this.BORDER_PADDING;
+            else if (this.pos.x > innerWidth - this.BORDER_PADDING)
+                this.pos.x = innerWidth - this.BORDER_PADDING;
+            else if (this.pos.y > innerHeight - this.BORDER_PADDING)
+                this.pos.y = innerHeight - this.BORDER_PADDING;
         }
         if (keyIsDown(LEFT_ARROW)){
             //turn left
@@ -80,6 +102,8 @@ class Bullet {
         this.speed = 20;
         this.direction = createVector(direction.x / direction.mag() * this.speed, direction.y / direction.mag() * this.speed);
         this.angle = atan( this.direction.y / this.direction.x) + 90;
+        this.exist = true;
+
         if (direction.x < 0)
             this.angle = this.angle - 180;
         for (let i = 0; i < 4; i++)

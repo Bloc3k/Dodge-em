@@ -28,10 +28,16 @@ class Tank {
 
     update() {
         if (keyIsDown(UP_ARROW)){
+            //TODO: Make hitting the borders more smooth
+
             //go forward
-            if (this.pos.x >= this.BORDER_PADDING && this.pos.y >= this.BORDER_PADDING &&
-                this.pos.x <= innerWidth - this.BORDER_PADDING && this.pos.y <= innerHeight - this.BORDER_PADDING )
-                this.pos.add(this.heading);
+            if (this.pos.x >= this.BORDER_PADDING && 
+                this.pos.y >= this.BORDER_PADDING &&
+                this.pos.x <= innerWidth - this.BORDER_PADDING && 
+                this.pos.y <= innerHeight - this.BORDER_PADDING ) {
+                    //TODO: Make collision check between tanks
+                        this.pos.add(this.heading);
+                }
             else if (this.pos.x < this.BORDER_PADDING)
                 this.pos.x = this.BORDER_PADDING;
             else if (this.pos.y < this.BORDER_PADDING)
@@ -44,8 +50,10 @@ class Tank {
         }
         if (keyIsDown(DOWN_ARROW)){
             //go backwards
-            if (this.pos.x >= this.BORDER_PADDING && this.pos.y >= this.BORDER_PADDING &&
-                this.pos.x <= innerWidth - this.BORDER_PADDING && this.pos.y <= innerHeight - this.BORDER_PADDING )
+            if (this.pos.x >= this.BORDER_PADDING &&
+                this.pos.y >= this.BORDER_PADDING &&
+                this.pos.x <= innerWidth - this.BORDER_PADDING && 
+                this.pos.y <= innerHeight - this.BORDER_PADDING )
                 this.pos.sub(this.heading);
             else if (this.pos.x < this.BORDER_PADDING)
                 this.pos.x = this.BORDER_PADDING;
@@ -84,7 +92,7 @@ class Tank {
     }   
 
     hit(bullet) {
-        //ToDo: more precise hit boxes, now they are made randomly sized
+        //TODO: More precise hit boxes, now they are made randomly sized
         if (bullet.pos.x - 3 <= this.pos.x + 30 &&
             bullet.pos.x + 3 >= this.pos.x - 30 &&
             bullet.pos.y - 10 <= this.pos.y + 23 &&
@@ -102,7 +110,7 @@ class Bullet {
         this.speed = 20;
         this.direction = createVector(direction.x / direction.mag() * this.speed, direction.y / direction.mag() * this.speed);
         this.angle = atan( this.direction.y / this.direction.x) + 90;
-        this.exist = true;
+        this.toDestroy = false;
 
         if (direction.x < 0)
             this.angle = this.angle - 180;
@@ -110,7 +118,7 @@ class Bullet {
             this.pos.add(this.direction);
     }
 
-    draw(){
+    draw() {
         push();
         translate(this.pos.x,this.pos.y);
         rotate(this.angle);
@@ -119,7 +127,14 @@ class Bullet {
         pop();
     }
 
-    update(){
+    update() {
+        if (this.pos.x < -20 ||
+            this.pos.x > innerWidth + 20 ||
+            this.pos.y < -20 ||
+            this.pos.y > innerHeight + 20){
+                this.toDestroy = true;
+            }
+
         this.pos.add(this.direction);
     }
 

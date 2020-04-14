@@ -32,14 +32,16 @@ function draw() {
         tanks[j].hit(bullets[i]);
         if (tanks[j].destroyed){
           tanks.splice(j,1);
-          bullets.splice(i,1);
+          bullets[i].toDestroy = true;
         }
       }
+      if (bullets[i].toDestroy)
+        bullets.splice(i,1);
     }
-    
+
     for (let i = 0; i < tanks.length; i++) {
       tanks[i].draw();
       tanks[i].update();
     }
-
+    
 }

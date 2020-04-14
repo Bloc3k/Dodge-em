@@ -10,6 +10,7 @@ class Tank {
         this.reloadTime = 100;
         this.reloadCounter = 0;
         this.loaded = true;
+        this.destroyed = false;
     }
 
     draw() {
@@ -60,6 +61,17 @@ class Tank {
         this.heading.set(cos(this.angle - 90) * this.speed, sin(this.angle- 90) * this.speed);
     }   
 
+    hit(bullet) {
+        //ToDo: more precise hit boxes, now they are made randomly sized
+        if (bullet.pos.x - 3 <= this.pos.x + 30 &&
+            bullet.pos.x + 3 >= this.pos.x - 30 &&
+            bullet.pos.y - 10 <= this.pos.y + 23 &&
+            bullet.pos.y + 10 >= this.pos.y - 30) {
+                    this.destroyed = true;
+            }
+            
+    }
+
 }
 
 class Bullet {
@@ -70,6 +82,8 @@ class Bullet {
         this.angle = atan( this.direction.y / this.direction.x) + 90;
         if (direction.x < 0)
             this.angle = this.angle - 180;
+        for (let i = 0; i < 4; i++)
+            this.pos.add(this.direction);
     }
 
     draw(){

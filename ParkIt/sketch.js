@@ -1,6 +1,5 @@
 let bullets = [];
-let tank;
-let enemies = [];
+let tanks = [];
 
 function preload() {
   tank_sprite = loadImage('/ParkIt/Assets/tank_sprite.png');
@@ -10,10 +9,12 @@ function preload() {
 
 function setup() {
     createCanvas(innerWidth, innerHeight);
-    tank = new Tank(tank_sprite, bullet_sprite);
+
     for (let i = 0; i < 2; i++) {
-      enemies.push(new Tank(tankEnemy, null, i * 300 + 100, 500));
+      tanks.push(new Tank(tankEnemy, bullet_sprite, i * 300 + 100, 500));
     }
+    tanks.push(new Tank(tank_sprite,bullet_sprite, 250,300));
+    tanks.push(new Tank(tank_sprite,bullet_sprite, 800,600));
   }
   
 function draw() {
@@ -23,19 +24,21 @@ function draw() {
     textSize(60);
     text("Still in progress",innerWidth/2 - 150,innerHeight/2);
   
-  
     //draw bullets
-    for (let bullet of bullets) {
-        bullet.draw();
-        bullet.update();
+    for (let i = bullets.length - 1; i >= 0; i--) {
+      bullets[i].draw();
+      bullets[i].update();
+      for (let j = tanks.length - 1; j >= 0; j--) {
+        tanks[j].hit(bullets[i]);
+        if (tanks[j].destroyed){
+          tanks.splice(j,1);
+          bullets.splice(i,1);
+        }
+      }
     }
-
-    for (let enemy of enemies) {
-        enemy.draw();
-        enemy.update();
+    for (let i = 0; i < tanks.length; i++) {
+      tanks[i].draw();
+      tanks[i].update();
     }
-  
-    tank.update();
-    tank.draw();
 
 }

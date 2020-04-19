@@ -1,10 +1,12 @@
 let bullets = [];
 let tanks = [];
+let sandbags = [];
 
 function preload() {
   tank_sprite = loadImage('/ParkIt/Assets/tank_sprite.png');
   tankEnemy = loadImage('/ParkIt/Assets/enemyTank_sprite.png');
   bullet_sprite = loadImage('/ParkIt/Assets/bulletPlayer_sprite.png');
+  sandbag_sprite = loadImage('/ParkIt/Assets/sandbagBrown.png');
 }
 
 function setup() {
@@ -15,6 +17,9 @@ function setup() {
     }
     tanks.push(new Tank(tank_sprite,bullet_sprite, 250,300));
     tanks.push(new Tank(tank_sprite,bullet_sprite, 800,600));
+
+    sandbags.push(new Sandbag(300,300, 90));
+
   }
   
 function draw() {
@@ -32,8 +37,11 @@ function draw() {
         tanks[j].hit(bullets[i]);
         if (tanks[j].destroyed){
           tanks.splice(j,1);
-          bullets[i].toDestroy = true;
         }
+      }
+      for (let k = sandbags.length - 1; k >= 0; k--) {
+        if (sandbags[k].hit(bullets[i]))
+          bullets[i].toDestroy = true;
       }
       if (bullets[i].toDestroy)
         bullets.splice(i,1);
@@ -44,7 +52,11 @@ function draw() {
       tanks[i].update();
     }
 
+    for (let sandbag of sandbags) {
+      sandbag.draw();
+    }
+
     if (keyCode == 27)
-      window.history.back();
+      window.history.back();                //TODO: Make it go to Main menu and to just back in history
     
 }

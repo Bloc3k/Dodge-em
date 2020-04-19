@@ -139,3 +139,33 @@ class Bullet {
     }
 
 }
+
+class Sandbag {
+    constructor(x = 300,y = 300, angle = 0 ) {
+        this.pos = createVector(x,y);
+        this.angle = angle;
+        this.width = 33;
+        this.height = 22;
+    }
+
+    draw(){
+        push();
+
+        translate(this.pos.x,this.pos.y);
+        rotate(this.angle);
+        image(sandbag_sprite, -20, -5);
+
+        pop();
+    }
+
+    //TODO: Make precise collision detection with everything
+
+    hit(bullet) {
+        //TODO: More precise hit boxes, now they are made randomly sized
+        return (bullet.pos.x - 3 <= this.pos.x + 10 &&
+           bullet.pos.x + 3 >= this.pos.x  &&
+           bullet.pos.y - 3 <= this.pos.y + 10 &&
+           bullet.pos.y + 3 >= this.pos.y );       
+    }
+
+}

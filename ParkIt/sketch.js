@@ -43,5 +43,8 @@ function draw() {
       tanks[i].draw();
       tanks[i].update();
     }
+
+    if (keyCode == 27)
+      window.history.back();
     
 }

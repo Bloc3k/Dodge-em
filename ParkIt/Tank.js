@@ -35,7 +35,7 @@ class Tank {
                 this.pos.y >= this.BORDER_PADDING &&
                 this.pos.x <= innerWidth - this.BORDER_PADDING && 
                 this.pos.y <= innerHeight - this.BORDER_PADDING ) {
-                    //TODO: Make collision check between tanks
+                    //TODO: Make collision check between tanks and sandbags in future
                         this.pos.add(this.heading);
                 }
             else if (this.pos.x < this.BORDER_PADDING)

@@ -23,32 +23,7 @@ function draw() {
     circle1.draw();
     circle2.draw();
     circle3.draw();
-
-    //blue balls
-    fill('#24d');
-    circle(innerWidth/2 - 250, innerHeight/2, 65);
-    fill('#24d');
-    circle(innerWidth/2 + 250, innerHeight/2, 65);
-    fill('#24d');
-    circle(innerWidth/2, innerHeight/2 - 250, 65);
-    fill('#24d');
-    circle(innerWidth/2, innerHeight/2 + 250, 65);
-
-   
-    //white ballse
-    fill('#ddd');
-    circle(innerWidth/2 - 150, innerHeight/2, 65);
-    fill('#ddd');
-    circle(innerWidth/2 + 150, innerHeight/2, 65);
-    fill('#ddd');
-    circle(innerWidth/2, innerHeight/2 - 150, 65);
-    fill('#ddd');
-    circle(innerWidth/2, innerHeight/2 + 150, 65);
-
-   
-
-    //for (let circle of circles) {
-   
+  
 
     if (keyCode == 27)
         window.history.back();                //TODO: Make it go to Main menu and to just back in history

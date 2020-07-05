@@ -22,10 +22,6 @@ class Circle1 {
         circle(innerWidth/2, innerHeight/2 + 350, 65);
     }
 
-    update() {
-
-    }
-
     click() {
         //click on 0 position
         if (mouseX < innerWidth/2 - 315 &&
@@ -47,13 +43,12 @@ class Circle1 {
                         this.sockets[0] = 0;
                         circle2.colBalls[0] = this.colBalls[0];
                         this.colBalls[0] = [0, 0];
-                        //TODO: Do rest of position as well
                     }
                 } 
             }
 
         //click on 1 position
-        if (mouseX < innerWidth/2 + 40 &&
+        else if (mouseX < innerWidth/2 + 40 &&
             mouseX > innerWidth/2 - 40 && 
             mouseY < innerHeight/2 - 315 &&
             mouseY > innerHeight/2 - 385)
@@ -67,11 +62,17 @@ class Circle1 {
                             this.colBalls[1] = [0, 0];
                         }
                     }
+                    if (circle2.sockets[1] == 0){
+                        circle2.sockets[1] = 1;
+                        this.sockets[1] = 0;
+                        circle2.colBalls[1] = this.colBalls[1];
+                        this.colBalls[1] = [0, 0];
+                    }
                 }   
             }
 
         //click on 2 position
-        if (mouseX < innerWidth/2 + 385 &&
+        else if (mouseX < innerWidth/2 + 385 &&
             mouseX > innerWidth/2 + 315 && 
             mouseY < innerHeight/2 + 40 &&
             mouseY > innerHeight/2 - 40)
@@ -85,11 +86,17 @@ class Circle1 {
                             this.colBalls[2] = [0, 0];
                         }
                     }
+                    if (circle2.sockets[2] == 0){
+                        circle2.sockets[2] = 1;
+                        this.sockets[2] = 0;
+                        circle2.colBalls[2] = this.colBalls[2];
+                        this.colBalls[2] = [0, 0];
+                    }
                 }   
             }
 
         //click on 2 position
-        if (mouseX < innerWidth/2 + 40 &&
+        else if (mouseX < innerWidth/2 + 40 &&
             mouseX > innerWidth/2 - 40 && 
             mouseY < innerHeight/2 + 385 &&
             mouseY > innerHeight/2 + 315)
@@ -103,7 +110,30 @@ class Circle1 {
                             this.colBalls[3] = [0, 0];
                         }
                     }
+                    if (circle2.sockets[3] == 0){
+                        circle2.sockets[3] = 1;
+                        this.sockets[3] = 0;
+                        circle2.colBalls[3] = this.colBalls[3];
+                        this.colBalls[3] = [0, 0];
+                    }
                 }   
+            }
+
+        //rotate circle1
+         else if (dist(mouseX, mouseY, innerWidth/2, innerHeight/2) < 400 &&
+                 dist(mouseX, mouseY, innerWidth/2, innerHeight/2) > 300){
+                let tempSocket = this.sockets[3];
+                let tempColor = this.colBalls[3];
+
+                for (let i = 3; i > 0; i--){
+                    this.sockets[i] = this.sockets[i - 1];
+                }
+                this.sockets[0] = tempSocket;
+
+                for (let i = 3; i > 0; i--){
+                    this.colBalls[i] = this.colBalls[i - 1];
+                }
+                this.colBalls[0] = tempColor;
             }
     }
 }

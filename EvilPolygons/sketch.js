@@ -6,6 +6,7 @@ function setup() {
   createCanvas(innerWidth, innerHeight);
   player = new Player();
   enemies.push( new Shooter());
+  enemies.push( new Eater());
 }
 
 function draw() {

@@ -1,5 +1,5 @@
 class Enemy {
-    constructor(pos = createVector(innerWidth / 2, innerHeight / 2), speed , col = '#f30', angSpeed = 0.01, angle = 0) {
+    constructor(pos = createVector(innerWidth / 2, innerHeight / 2), speed = 0.1 , col = '#f30', angSpeed = 0.01, angle = 0) {
         this.pos = pos;
         this.dir = createVector(1, 0);
         this.speed = speed;
@@ -35,11 +35,11 @@ class Enemy {
     }
 
     goForward() {
-        this.pos.add(this.heading);
+        this.pos.add(this.dir.mult(this.speed * deltaTime));
     }
 
     goBackward() {
-        this.pos.sub(this.heading);
+        this.pos.sub(this.dir.mult(this.speed * deltaTime));
     }
 
     turnLeft() {

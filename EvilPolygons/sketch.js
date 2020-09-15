@@ -5,7 +5,7 @@ let enemies = [];
 function setup() {
   createCanvas(innerWidth, innerHeight);
   player = new Player();
-  enemies.push( new Polygon());
+  enemies.push( new Shooter());
 }
 
 function draw() {
@@ -28,4 +28,7 @@ function draw() {
 
   player.draw();
   player.update();
+
+  if (keyCode == 27)
+    window.history.back();  
 }

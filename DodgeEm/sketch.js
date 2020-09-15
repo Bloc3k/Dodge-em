@@ -60,3 +60,4 @@ function draw() {
   }
   coin.drawScore();
 }
+//TODO: Make leaderboard

@@ -30,9 +30,9 @@ function draw() {
   
 }
 
-function mousePressed() {
+function mousePressed() { //TODO: Make images
     paddle.click();
     circle1.click();
     circle2.click();
     circle3.click();
-}
+} //TODO: Make winnig screen & winner board

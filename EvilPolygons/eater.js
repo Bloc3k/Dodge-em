@@ -1,4 +1,8 @@
 class Eater extends Enemy {
+    constructor(size = 60, pos = createVector(60, 60)){
+        super(pos);
+        this.size = size;
+    }
 
     draw() {
         push();
@@ -7,7 +11,7 @@ class Eater extends Enemy {
         fill(this.col);
         rectMode(CENTER);
         //-------- player sprite  --------
-        rect(0, 0, 60, 60);
+        rect(0, 0, this.size, this.size);
         //--------------------------------
         pop();
     }
@@ -18,5 +22,22 @@ class Eater extends Enemy {
         this.goForward();
 
         super.update();
+    }
+
+    isHit(target) {
+        return dist(this.pos.x, this.pos.y , target.x, target.y) < this.size / 2;            
+    }
+
+    hit() {
+        if (this.size > 33)
+            this.split();
+        else
+            this.toDestroy = true;
+    }
+
+    split() {
+        this.toDestroy = true;
+        enemies.push(new Eater(33, createVector(this.pos.x - 20, this.pos.y - 20)));
+        enemies.push(new Eater(33, createVector(this.pos.x + 10, this.pos.y + 10)));
     }
 }

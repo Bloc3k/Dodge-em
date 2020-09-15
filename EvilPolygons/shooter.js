@@ -1,7 +1,7 @@
 class Shooter extends Enemy {
-    constructor(reloadTime = 100, pos, speed) {
-        super(pos, speed);
-        this.loaded = true;
+    constructor(reloadTime = 100) {
+        super();
+        this.loaded = false;
         this.reloadTime = reloadTime;
         this.reloadCounter = 0;
     }
@@ -9,7 +9,7 @@ class Shooter extends Enemy {
     draw() {
         push();
         translate(this.pos.x, this.pos.y);
-        rotate(this.angle  + 3/4 * Math.PI);
+        rotate(this.angle + 3 / 4 * Math.PI);
         fill(this.col);
         rectMode(CENTER);
         //-------- player sprite  --------
@@ -21,8 +21,8 @@ class Shooter extends Enemy {
 
     update() {
         this.turnLeft();
-        
-        if( this.loaded ){
+
+        if (this.loaded) {
             this.shoot();
             this.loaded = false;
         }
@@ -37,5 +37,17 @@ class Shooter extends Enemy {
         }
 
         super.update();
+    }
+
+    shoot() {
+        bullets.push(new Bullet(this.pos, this.dir, this.col));
+    }
+
+    isHit(target) {
+        return dist(this.pos.x, this.pos.y , target.x, target.y) < 13;            
+    }
+
+    hit() {
+        this.toDestroy = true;
     }
 }

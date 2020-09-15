@@ -3,7 +3,6 @@ class Bullet {
         this.pos = createVector(pos.x, pos.y);
         this.speed = 1;
         this.direction = createVector(direction.x / direction.mag() * this.speed * deltaTime, direction.y / direction.mag() * this.speed * deltaTime);
-        this.angle = atan(this.direction.y / this.direction.x) + 90;
         this.col = col
         this.toDestroy = false;
 
@@ -14,7 +13,6 @@ class Bullet {
     draw() {
         push();
         translate(this.pos.x, this.pos.y);
-        rotate(this.angle);
         //----------Bullet sprite-----------
         fill(this.col);
         circle(0, 0, 8);
@@ -30,6 +28,14 @@ class Bullet {
             this.toDestroy = true;
         }
         this.pos.add(this.direction);
+    }
+
+    getPos() {
+        return this.pos;
+    }
+
+    hit() {
+        this.toDestroy = true;
     }
 
 }

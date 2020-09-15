@@ -15,7 +15,7 @@ class Player {
     draw() {
         push();
         translate(this.pos.x, this.pos.y);
-        rotate(this.angle + 3/4 * Math.PI);
+        rotate(this.angle + 3 / 4 * Math.PI);
         fill(this.col);
         rectMode(CENTER);
         //-------- player sprite  --------
@@ -41,7 +41,7 @@ class Player {
         if (keyIsDown(32) || mouseIsPressed) {
             if (this.loaded) {
                 //shoot bullet
-                bullets.push(new Bullet(this.pos, createVector(1,0).rotate(this.angle), '#06f'));
+                bullets.push(new Bullet(this.pos, createVector(1, 0).rotate(this.angle), '#06f'));
                 this.loaded = false;
             }
         }
@@ -56,7 +56,7 @@ class Player {
         }
 
         //calculate new heading
-        this.angle = createVector(mouseX - this.pos.x, mouseY - this.pos.y).heading();     
+        this.angle = createVector(mouseX - this.pos.x, mouseY - this.pos.y).heading();
 
         this.climpToBoarder();
     }

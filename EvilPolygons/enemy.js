@@ -1,21 +1,17 @@
 class Enemy {
-    constructor(pos = createVector(innerWidth / 2, innerHeight / 2), speed = 0.1 , col = '#f30', angSpeed = 0.01, angle = 0) {
+    constructor(pos = createVector(innerWidth / 2, innerHeight / 2), speed = 0.1, col = '#f30', angSpeed = 0.01, angle = 0) {
         this.pos = pos;
         this.dir = createVector(1, 0);
         this.speed = speed;
         this.angle = angle;
         this.angSpeed = angSpeed;
         this.col = col;
-        this.destroyed = false;
+        this.toDestroy = false;
     }
-    
+
     update() {
         //calculate new heading
         this.dir.set(cos(this.angle), sin(this.angle));
-    }
-
-    shoot() {
-        bullets.push(new Bullet(this.pos, this.dir, this.col));
     }
 
     goUp() {
@@ -49,4 +45,13 @@ class Enemy {
     turnRight() {
         this.angle += this.angSpeed;
     }
+
+    isHit() {
+        console.error('isHit() function is not override...        enemy.js:50');
+    }
+
+    hit() {
+        console.error('hit() function is not override...        enemy.js:54');
+    }
+
 }

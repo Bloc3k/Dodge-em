@@ -6,8 +6,7 @@ class Bullet {
         this.col = col
         this.toDestroy = false;
 
-        for (let i = 0; i < 2; i++)
-            this.pos.add(this.direction);
+        this.pos.add(this.direction);
     }
 
     draw() {

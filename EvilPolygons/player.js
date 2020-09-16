@@ -4,7 +4,6 @@ class Player {
         this.angle = 0;
         this.angSpeed = 3;
         this.speed = .35;
-        this.destroyed = false;
         this.col = '#06f';
         this.BORDER_PADDING = 10;
         this.loaded = true;
@@ -95,5 +94,13 @@ class Player {
             this.pos.x = innerWidth - this.BORDER_PADDING;
         else if (this.pos.y > innerHeight - this.BORDER_PADDING)
             this.pos.y = innerHeight - this.BORDER_PADDING;
+    }
+
+    isHit(target) {
+        return dist(this.pos.x, this.pos.y , target.x, target.y) < 13;            
+    }
+
+    reset() {
+        this.pos = createVector(innerWidth / 2, innerHeight / 2);
     }
 }

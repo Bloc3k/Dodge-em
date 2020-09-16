@@ -1,5 +1,5 @@
 class Enemy {
-    constructor(pos = createVector(innerWidth / 2, innerHeight / 2 - 150), speed = 0.1, col = '#f30', angSpeed = 0.01, angle = 0) {
+    constructor(pos = createVector(innerWidth / 2, innerHeight / 2), speed = 0.1, col = '#f30', angSpeed = 0.01, angle = 0) {
         this.pos = pos;
         this.dir = createVector(1, 0);
         this.speed = speed;

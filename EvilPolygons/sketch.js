@@ -7,8 +7,10 @@ let lobbyTime = 0;
 function setup() {
   createCanvas(innerWidth, innerHeight);
   player = new Player();
-  enemies.push(new Shooter());
-  enemies.push(new Eater());
+  enemies.push(new Shooter(createVector(innerWidth * 7 / 8, innerHeight * 7 / 8)));
+  enemies.push(new Shooter(createVector(innerWidth * 7 / 8, innerHeight * 6 / 8)));
+  enemies.push(new Shooter(createVector(innerWidth * 6 / 8, innerHeight * 7 / 8)));
+  enemies.push(new Eater(createVector(innerWidth * 1 / 8, innerHeight * 1 / 8)));
 }
 
 function draw() {
@@ -67,8 +69,10 @@ function draw() {
         player.reset();
         bullets = [];
         enemies = [];
-        enemies.push(new Shooter());
-        enemies.push(new Eater());
+        enemies.push(new Shooter(createVector(innerWidth * 7 / 8, innerHeight * 7 / 8)));
+        enemies.push(new Shooter(createVector(innerWidth * 7 / 8, innerHeight * 6 / 8)));
+        enemies.push(new Shooter(createVector(innerWidth * 6 / 8, innerHeight * 7 / 8)));
+        enemies.push(new Eater(createVector(innerWidth * 1 / 8, innerHeight * 1 / 8)));
         lobbyTime = 0;
       }
 

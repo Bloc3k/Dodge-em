@@ -1,6 +1,6 @@
 class Shooter extends Enemy {
-    constructor(reloadTime = 100) {
-        super();
+    constructor(pos = createVector(innerWidth / 2, innerHeight / 2), reloadTime = 100) {
+        super(pos);
         this.loaded = false;
         this.reloadTime = reloadTime;
         this.reloadCounter = 0;
@@ -20,7 +20,7 @@ class Shooter extends Enemy {
     }
 
     update() {
-        this.turnLeft();
+        this.angle = createVector(player.pos.x - this.pos.x, player.pos.y - this.pos.y).heading();
 
         if (this.loaded) {
             this.shoot();
@@ -40,7 +40,7 @@ class Shooter extends Enemy {
     }
 
     shoot() {
-        bullets.push(new Bullet(this.pos, this.dir, this.col));
+        bullets.push(new Bullet(this.pos, this.dir.add((Math.random() - 0.5) / 2), this.col));
     }
 
     isHit(target) {

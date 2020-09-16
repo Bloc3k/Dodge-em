@@ -1,8 +1,7 @@
 class Eater extends Enemy {
-    constructor(size = 60, pos = createVector(60, 60)) {
-        super(pos);
+    constructor(pos = createVector(innerWidth / 2, innerHeight / 2), size = 60) {
+        super(pos, 0.12);
         this.size = size;
-        this.boostSpeed = this.speed * 2.5;
     }
 
     draw() {
@@ -19,9 +18,9 @@ class Eater extends Enemy {
 
     update() {
         this.angle = createVector(player.pos.x - this.pos.x, player.pos.y - this.pos.y).heading();
-
+        
         this.goForward();
-
+        
         if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < 150) {
             this.speed = player.speed * 2;
         } else {
@@ -29,8 +28,8 @@ class Eater extends Enemy {
         }
         
         if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < 20)
-            running = false;  //---------------- Player Eaten ------- Game Over ------------------
-
+        running = false;  //---------------- Player Eaten ------- Game Over ------------------
+        
         super.update();
     }
 
@@ -47,7 +46,7 @@ class Eater extends Enemy {
 
     split() {
         this.toDestroy = true;
-        enemies.push(new Eater(33, createVector(this.pos.x - 20, this.pos.y - 20)));
-        enemies.push(new Eater(33, createVector(this.pos.x + 10, this.pos.y + 10)));
+        enemies.push(new Eater(createVector(this.pos.x - 20, this.pos.y - 20), 33));
+        enemies.push(new Eater(createVector(this.pos.x + 10, this.pos.y + 10), 33));
     }
 }

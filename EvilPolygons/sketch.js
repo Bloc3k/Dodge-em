@@ -1,7 +1,7 @@
 let player;
 let bullets = [];
 let enemies = [];
-let running = true;
+let running = false;
 let lobbyTime = 0;
 
 function setup() {
@@ -49,11 +49,7 @@ function draw() {
 
   } else {
     //---------------------- Lobby  -----------------------
-    fill(240);
-    textSize(34);
-    text("You Fucked Up Bruh xD", player.x, player.y);
-    text("Press ESC to get back to main menu", innerWidth / 2 - 250, 40);
-    text("Press any other key or mouse button to play again", innerWidth / 2 - 350, 80);
+    keyCode = null;
 
     player.draw();
     for (let bullet of bullets) {
@@ -80,6 +76,12 @@ function draw() {
       lobbyTime++;
     }
 
+    fill(240);
+    textSize(34);
+    text("Keep peace in your heart xD", player.pos.x, player.pos.y);
+    text("Press ESC to get back to main menu.", innerWidth / 2 - 250, 40);
+    text("Press any other key or mouse button to play.", innerWidth / 2 - 300, 80);
+    text("Use 'w' 'a' 's' 'd' to move and 'space' or 'left mouse button' to shoot.", innerWidth / 2 - 430 , innerHeight - 40);
   }
   if (keyCode == 27)
     window.history.back();

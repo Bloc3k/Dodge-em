@@ -7,7 +7,7 @@ class Player {
         this.col = '#06f';
         this.BORDER_PADDING = 10;
         this.loaded = true;
-        this.reloadTime = 50;
+        this.reloadTime = 20;
         this.reloadCounter = 0;
     }
 

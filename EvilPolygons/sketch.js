@@ -1,4 +1,5 @@
 let spawner;
+let anim;
 let player;
 let bullets = [];
 let enemies = [];
@@ -8,6 +9,7 @@ let lobbyTime = 0;
 function setup() {
   createCanvas(innerWidth, innerHeight);
   spawner = new Spawner();
+  anim = new Animator();
   player = new Player();
 
   spawner.beginning();
@@ -19,6 +21,7 @@ function draw() {
   if (running) {
     //-------------------- Game State  --------------------
     spawner.tick();
+    anim.tick();
     
     for (let i = bullets.length - 1; i >= 0; i--) {
       bullets[i].draw();
@@ -64,6 +67,8 @@ function draw() {
     if (lobbyTime >= 50) {
       if (keyIsPressed || mouseIsPressed) {
         running = true;
+        spawner.reset();
+        anim.reset();
         player.reset();
         bullets = [];
         enemies = [];

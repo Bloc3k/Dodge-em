@@ -7,9 +7,10 @@ class Spawner {
     tick() {
         
         if (this.tick_count == 0)
-            this.spawnEater(createVector(innerWidth * 1 / 8, innerHeight * 1 / 8))
+            anim.spawnEater(createVector(innerWidth * 1 / 8, innerHeight * 1 / 8))
         
-        
+        if (this.tick_count == 128)
+            anim.spawnEater(createVector(Math.random() * innerWidth, Math.random() * innerHeight));
         this.tick_count++;
         this.tick_count = this.tick_count % 256;
     }
@@ -25,6 +26,10 @@ class Spawner {
     }
 
     spawnEater(pos) {
-        enemies.push(new Eater(pos));
+        anim.spawnEater(pos);
+    }
+
+    reset() {
+        this.tick_count = 0;
     }
 }

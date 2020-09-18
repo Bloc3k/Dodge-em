@@ -54,4 +54,8 @@ class Enemy {
         console.error('hit() function is not override...        enemy.js:54');
     }
 
+    getPos() {
+        return this.pos;
+    }
+
 }

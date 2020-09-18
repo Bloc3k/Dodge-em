@@ -15,9 +15,11 @@ function setup() {
 
 function draw() {
   background(220);
-
+  
   if (running) {
     //-------------------- Game State  --------------------
+    spawner.tick();
+    
     for (let i = bullets.length - 1; i >= 0; i--) {
       bullets[i].draw();
       bullets[i].update();

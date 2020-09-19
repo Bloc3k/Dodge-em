@@ -2,6 +2,7 @@ class Eater extends Enemy {
     constructor(pos = createVector(innerWidth / 2, innerHeight / 2), size = 60) {
         super(pos, 0.12);
         this.size = size;
+        this.dashSpeed = this.speed * 4;
     }
 
     draw() {
@@ -22,9 +23,9 @@ class Eater extends Enemy {
         this.goForward();
         
         if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < 150) {
-            this.speed = player.speed * 2;
+            this.speed = this.dashSpeed;
         } else {
-            this.speed = this.speed;
+            this.speed = this.dashSpeed / 3;
         }
         
         if (dist(this.pos.x, this.pos.y, player.pos.x, player.pos.y) < 20)

@@ -25,4 +25,4 @@ Application consists of 3 relatively completed games and 1 which in progress.
 - Move by *'w' 'a' 's' 'd'* aim with mouse and shoot with left mouse button.
 
 ---
-## Hope it will give you some good moments ❤
+## Hope it will give you some good times ❤

@@ -1,151 +1,126 @@
 class Paddle {
     constructor() {
         this.pos = 0;
-        this.socket = 0;
-        this.colBody = '#a6a';
-        this.colBall = [0,0];
+        this.socket = null;
     
     }
 
     draw() { 
-        //body
-        rectMode(CENTER);
         if (this.pos == 0) {
-            fill(this.colBody);
-            rect(innerWidth/2 - 435, innerHeight/2, 120, 100, 25);
-        } else if ( this.pos == 1) {
-            fill(this.colBody);     
-            rect(innerWidth/2, innerHeight/2 - 435, 100, 120, 25);
+            push();
+            translate(innerWidth/2 ,innerHeight/2);
+            rotate(0);
+            image(circle_Purple, 0 ,0);
+            if (this.socket)
+                image(this.socket, -(scale/2.575), 0);
+            pop();
+        } else if (this.pos == 1) {
+            push();
+            translate(innerWidth/2, innerHeight/2 );
+            rotate(PI/2);
+            image(circle_Purple, 0 ,0);
+            if (this.socket)
+                image(this.socket, -(scale/2.575), 0);
+            pop();
         } else if (this.pos == 2) {
-            fill(this.colBody);     
-            rect(innerWidth/2 + 435, innerHeight/2, 120, 100, 25);    
-        } else if ( this.pos == 3) {
-            fill(this.colBody);
-            rect(innerWidth/2, innerHeight/2 + 425, 120, 100, 25);
+            push();
+            translate(innerWidth/2 , innerHeight/2 );
+            rotate(PI);
+            image(circle_Purple, 0 ,0);
+            if (this.socket)
+                image(this.socket, - (scale/2.575), 0);
+            pop();
+        } else if (this.pos == 3) {
+            push();
+            translate(innerWidth/2, innerHeight/2);
+            rotate(3*PI/2);
+            image(circle_Purple, 0 ,0);
+            if (this.socket)
+                image(this.socket, - (scale/2.575), 0);
+            pop();
         }
-
-        //ball
-        if (this.pos == 0) {
-            fill(this.colBall);
-            circle(innerWidth/2 - 440, innerHeight/2, 65);
-        } else if ( this.pos == 1) {
-            fill(this.colBall);        
-            circle(innerWidth/2, innerHeight/2 - 440, 65);
-        } else if (this.pos == 2) {
-            fill(this.colBall);        
-            circle(innerWidth/2 + 440, innerHeight/2, 65);    
-        } else if ( this.pos == 3) {
-            fill(this.colBall);
-            circle(innerWidth/2, innerHeight/2 + 440, 65);
-        }
-    }
-
-    update() {
 
     }
 
     click() {
-     
-       
         if (this.pos == 0) {
             //pass the ball
-            if (mouseX < innerWidth/2 - 410 &&
-                mouseX > innerWidth/2 - 478 && 
-                mouseY < innerHeight/2 + 40 &&
-                mouseY > innerHeight/2 - 40){
-                    if (this.socket == 1){
-                        if (circle1.sockets[0] == 0) {
-
-                                this.socket = 0;
-                                circle1.sockets[0] = 1;
-                                circle1.colBalls[0] = this.colBall;
-                                this.colBall = [0, 0];
-
+            if (mouseX < innerWidth/2 - (scale/2.575) + (scale/20) &&
+                mouseX > innerWidth/2 - (scale/2.575) - (scale/20) && 
+                mouseY < innerHeight/2 + (scale/20) &&
+                mouseY > innerHeight/2 - (scale/20)){
+                    if (this.socket){
+                        if (circle1.sockets[0] == null) {
+                            circle1.sockets[0] = this.socket;
+                            this.socket = null;
                         }
                     }
                 }
-
-            //movement
-            else if (mouseX < innerWidth/2 - 400 &&
-                mouseX > innerWidth/2 - 495 &&
-                mouseY < innerHeight/2 + 60 &&
-                mouseY > innerHeight/2 - 60
-                ) {
+            //rotate
+            else if (dist(mouseX, mouseY, innerWidth/2, innerHeight/2) < (scale/1.13)/2 &&
+                     dist(mouseX, mouseY, innerWidth/2, innerHeight/2) > (scale/1.5)/2) {
+                console.log("rotate Purple cylinder...");
                 this.pos++;
                 this.pos = this.pos % 4;
             }
         } else if ( this.pos == 1) {
             //pass the ball
-            if (mouseX < innerWidth/2 + 40 &&
-                mouseX > innerWidth/2 - 40 && 
-                mouseY < innerHeight/2 - 410 &&
-                mouseY > innerHeight/2 - 478){
-                    if (this.socket == 1){
-                        if (circle1.sockets[1] == 0) {
-                            this.socket = 0;
-                            circle1.sockets[1] = 1;
-                            circle1.colBalls[1] = this.colBall;
-                            this.colBall = [0, 0];
+            if (mouseX < innerWidth/2 + (scale/20) &&
+                mouseX > innerWidth/2 - (scale/20) && 
+                mouseY < innerHeight/2 - (scale/2.575) + (scale/20) &&
+                mouseY > innerHeight/2 - (scale/2.575) - (scale/20)){
+                    if (this.socket){
+                        if (circle1.sockets[1] == null) {
+                            circle1.sockets[1] = this.socket;
+                            this.socket = null;
                         }
                     }
                 }
 
-            //movement
-            else if (mouseX < innerWidth/2 + 60 &&
-                     mouseX > innerWidth/2 - 60 &&
-                     mouseY < innerHeight/2 - 400 &&
-                     mouseY > innerHeight/2 - 495
-                ) {
+          //rotate
+          else if (dist(mouseX, mouseY, innerWidth/2, innerHeight/2) < (scale/1.13)/2 &&
+                   dist(mouseX, mouseY, innerWidth/2, innerHeight/2) > (scale/1.5)/2) {
+                console.log("rotate Purple cylinder...");
                 this.pos++;
                 this.pos = this.pos % 4;
             }
         } else if (this.pos == 2) {
             //pass the ball
-            if (mouseX < innerWidth/2 + 478 &&
-                mouseX > innerWidth/2 + 410 && 
-                mouseY < innerHeight/2 + 40 &&
-                mouseY > innerHeight/2 - 40){
-                    if (this.socket == 1){
-                        if (circle1.sockets[2] == 0) {
-                            this.socket = 0;
-                            circle1.sockets[2] = 1;
-                            circle1.colBalls[2] = this.colBall;
-                            this.colBall = [0, 0];
+            if (mouseX < innerWidth/2 + (scale/2.575) + (scale/20) &&
+                mouseX > innerWidth/2 + (scale/2.575) - (scale/20) && 
+                mouseY < innerHeight/2 + (scale/20) &&
+                mouseY > innerHeight/2 - (scale/20)){
+                    if (this.socket){
+                        if (circle1.sockets[2] == null) {
+                            circle1.sockets[2] = this.socket;
+                            this.socket = null;
                         }
                     }
                 }
-            //movement
-            else if (mouseX < innerWidth/2 + 495 &&
-                mouseX > innerWidth/2 + 400 &&
-                mouseY < innerHeight/2 + 60 &&
-                mouseY > innerHeight/2 - 60
-                ) {
+           //rotate
+           else if (dist(mouseX, mouseY, innerWidth/2, innerHeight/2) < (scale/1.13)/2 &&
+                    dist(mouseX, mouseY, innerWidth/2, innerHeight/2) > (scale/1.5)/2) {
+                console.log("rotate Purple cylinder...");
                 this.pos++;
                 this.pos = this.pos % 4;
             }
         } else if ( this.pos == 3) {
               //pass the ball
-              if (mouseX < innerWidth/2 + 40 &&
-                    mouseX > innerWidth/2 - 40 && 
-                    mouseY < innerHeight/2 + 478 &&
-                    mouseY > innerHeight/2 + 410)
-                    {
-
-                    if (this.socket == 1){
-                        if (circle1.sockets[3] == 0) {
-                            this.socket = 0;
-                            circle1.sockets[3] = 1;
-                            circle1.colBalls[3] = this.colBall;
-                            this.colBall = [0, 0];
+              if (mouseX < innerWidth/2 + (scale/20) &&
+                    mouseX > innerWidth/2 - (scale/20) && 
+                    mouseY < innerHeight/2 + (scale/2.575) + (scale/20) &&
+                    mouseY > innerHeight/2 + (scale/2.575) - (scale/20)) {
+                    if (this.socket){
+                        if (circle1.sockets[3] == null) {
+                            circle1.sockets[3] = this.socket;
+                            this.socket = null;
                         }
                     }
                 }
-            //movement
-            else if (mouseX < innerWidth/2 + 60 &&
-                mouseX > innerWidth/2 - 60 &&
-                mouseY < innerHeight/2 + 495 &&
-                mouseY > innerHeight/2 + 400
-                ) {
+            //rotate
+            else if (dist(mouseX, mouseY, innerWidth/2, innerHeight/2) < (scale/1.13)/2 &&
+                     dist(mouseX, mouseY, innerWidth/2, innerHeight/2) > (scale/1.5)/2) {
+                console.log("rotate Purple cylinder...");
                 this.pos++;
                 this.pos = this.pos % 4;
             }

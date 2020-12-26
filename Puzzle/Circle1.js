@@ -1,139 +1,115 @@
 class Circle1 {
     constructor() {
-        this.pos = createVector(innerWidth/2,innerHeight/2);
-        this.sockets = [1, 1, 1, 1];
-        this.colBody = '#ddd';
-        this.colBalls = ['#d24','#d24','#d24','#d24'];
+        this.sockets = [stone_Red, stone_Yellow, stone_Yellow, stone_Yellow];
     }
 
     draw() {
         //body
-        fill(this.colBody);
-        circle(innerWidth/2, innerHeight/2, 800);
+        image(circle_Green, innerWidth/2, innerHeight/2); //- (scale/1.5)/2
 
-        //balls
-        fill(this.colBalls[0]);
-        circle(innerWidth/2 - 350, innerHeight/2, 65);
-        fill(this.colBalls[1]);
-        circle(innerWidth/2, innerHeight/2 - 350, 65);
-        fill(this.colBalls[2]);
-        circle(innerWidth/2 + 350, innerHeight/2, 65);
-        fill(this.colBalls[3]);
-        circle(innerWidth/2, innerHeight/2 + 350, 65);
+        //stones
+        if (this.sockets[0]) 
+            image(this.sockets[0], innerWidth/2 - (scale/3.55) , innerHeight/2);
+        if (this.sockets[1]) 
+            image(this.sockets[1], innerWidth/2, innerHeight/2 - (scale/3.55));
+        if (this.sockets[2]) 
+            image(this.sockets[2], innerWidth/2 + (scale/3.55), innerHeight/2); 
+        if (this.sockets[3]) 
+            image(this.sockets[3], innerWidth/2, innerHeight/2 + (scale/3.55)); 
     }
 
     click() {
         //click on 0 position
-        if (mouseX < innerWidth/2 - 315 &&
-            mouseX > innerWidth/2 - 385 && 
-            mouseY < innerHeight/2 + 40 &&
-            mouseY > innerHeight/2 - 40)
+        console.log()
+        if (mouseX < innerWidth/2 - (scale/3.55) + (scale/20) &&
+            mouseX > innerWidth/2 - (scale/3.55) - (scale/20) && 
+            mouseY < innerHeight/2 + (scale/20) &&
+            mouseY > innerHeight/2 - (scale/20))
             {
-                if (this.sockets[0] == 1){
+                if (this.sockets[0]){
                     if (paddle.pos == 0) {
-                        if (paddle.socket == 0){
-                            paddle.socket = 1;
-                            this.sockets[0] = 0;
-                            paddle.colBall = this.colBalls[0];
-                            this.colBalls[0] = [0, 0];
+                        if (paddle.socket == null){
+                            paddle.socket = this.sockets[0];
+                            this.sockets[0] = null;
                         }
                     } 
-                    if (circle2.sockets[0] == 0){
-                        circle2.sockets[0] = 1;
-                        this.sockets[0] = 0;
-                        circle2.colBalls[0] = this.colBalls[0];
-                        this.colBalls[0] = [0, 0];
+                    if (circle2.sockets[0] == null){
+                        circle2.sockets[0] = this.sockets[0];
+                        this.sockets[0] = null;
                     }
                 } 
             }
 
         //click on 1 position
-        else if (mouseX < innerWidth/2 + 40 &&
-            mouseX > innerWidth/2 - 40 && 
-            mouseY < innerHeight/2 - 315 &&
-            mouseY > innerHeight/2 - 385)
+        else if (mouseX < innerWidth/2 + (scale/20) &&
+            mouseX > innerWidth/2 - (scale/20) && 
+            mouseY < innerHeight/2 - (scale/3.55) + (scale/20) &&
+            mouseY > innerHeight/2 - (scale/3.55) - (scale/20))
             {
-                if (this.sockets[1] == 1){
+                if (this.sockets[1]){
                     if (paddle.pos == 1) {
-                        if (paddle.socket == 0){
-                            paddle.socket = 1;
-                            this.sockets[1] = 0;
-                            paddle.colBall = this.colBalls[1];
-                            this.colBalls[1] = [0, 0];
+                        if (paddle.socket == null){
+                            paddle.socket = this.sockets[1];
+                            this.sockets[1] = null;
                         }
                     }
-                    if (circle2.sockets[1] == 0){
-                        circle2.sockets[1] = 1;
-                        this.sockets[1] = 0;
-                        circle2.colBalls[1] = this.colBalls[1];
-                        this.colBalls[1] = [0, 0];
+                    if (circle2.sockets[1] == null){
+                        circle2.sockets[1] = this.sockets[1];
+                        this.sockets[1] = null;
                     }
                 }   
             }
 
         //click on 2 position
-        else if (mouseX < innerWidth/2 + 385 &&
-            mouseX > innerWidth/2 + 315 && 
-            mouseY < innerHeight/2 + 40 &&
-            mouseY > innerHeight/2 - 40)
+        else if (mouseX < innerWidth/2 + (scale/3.55) + (scale/20) &&
+            mouseX > innerWidth/2 + (scale/3.55) - (scale/20) && 
+            mouseY < innerHeight/2 + (scale/20) &&
+            mouseY > innerHeight/2 - (scale/20))
             {
-                if (this.sockets[2] == 1){
+                if (this.sockets[2]){
                     if (paddle.pos == 2) {
-                        if (paddle.socket == 0){
-                            paddle.socket = 1;
-                            this.sockets[2] = 0;
-                            paddle.colBall = this.colBalls[2];
-                            this.colBalls[2] = [0, 0];
+                        if (paddle.socket == null){
+                            paddle.socket = this.sockets[2];
+                            this.sockets[2] = null;
                         }
                     }
-                    if (circle2.sockets[2] == 0){
-                        circle2.sockets[2] = 1;
-                        this.sockets[2] = 0;
-                        circle2.colBalls[2] = this.colBalls[2];
-                        this.colBalls[2] = [0, 0];
+                    if (circle2.sockets[2] == null){
+                        circle2.sockets[2] = this.sockets[2];
+                        this.sockets[2] = null;
                     }
                 }   
             }
 
-        //click on 2 position
-        else if (mouseX < innerWidth/2 + 40 &&
-            mouseX > innerWidth/2 - 40 && 
-            mouseY < innerHeight/2 + 385 &&
-            mouseY > innerHeight/2 + 315)
+        //click on 3 position
+        else if (mouseX < innerWidth/2 + (scale/20) &&
+            mouseX > innerWidth/2 - (scale/20) && 
+            mouseY < innerHeight/2 + (scale/3.55) + (scale/20) &&
+            mouseY > innerHeight/2 + (scale/3.55) - (scale/20))
             {
-                if (this.sockets[3] == 1){
+                if (this.sockets[3]){
                     if (paddle.pos == 3) {
-                        if (paddle.socket == 0){
-                            paddle.socket = 1;
-                            this.sockets[3] = 0;
-                            paddle.colBall = this.colBalls[3];
-                            this.colBalls[3] = [0, 0];
+                        if (paddle.socket == null){
+                            paddle.socket = this.sockets[3];
+                            this.sockets[3] = null;
                         }
                     }
-                    if (circle2.sockets[3] == 0){
-                        circle2.sockets[3] = 1;
-                        this.sockets[3] = 0;
-                        circle2.colBalls[3] = this.colBalls[3];
-                        this.colBalls[3] = [0, 0];
+                    if (circle2.sockets[3] == null){
+                        circle2.sockets[3] = this.sockets[3];
+                        this.sockets[3] = null;
                     }
                 }   
             }
 
         //rotate circle1
-         else if (dist(mouseX, mouseY, innerWidth/2, innerHeight/2) < 400 &&
-                 dist(mouseX, mouseY, innerWidth/2, innerHeight/2) > 300){
+         else if (dist(mouseX, mouseY, innerWidth/2, innerHeight/2) < (scale/1.5)/2 &&
+                 dist(mouseX, mouseY, innerWidth/2, innerHeight/2) > (scale/2.2)/2){
                 let tempSocket = this.sockets[3];
-                let tempColor = this.colBalls[3];
+                console.log("rotate Green cylinder...");
 
                 for (let i = 3; i > 0; i--){
                     this.sockets[i] = this.sockets[i - 1];
                 }
                 this.sockets[0] = tempSocket;
-
-                for (let i = 3; i > 0; i--){
-                    this.colBalls[i] = this.colBalls[i - 1];
-                }
-                this.colBalls[0] = tempColor;
             }
     }
 }

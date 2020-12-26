@@ -1,12 +1,37 @@
 class Circle2 {
     constructor() {
+        this.pos = 0;
         this.sockets = [stone_Yellow, stone_Green, stone_Green, stone_Green];
     }
 
     draw() {
         //body
-        image(circle_Red, innerWidth/2  ,innerHeight/2);
-    
+        if (this.pos == 0) {
+            push();
+            translate(innerWidth/2 ,innerHeight/2);
+            rotate(0);
+            image(circle_Red, 0, 0);
+            pop();
+        } else if (this.pos == 1) {
+            push();
+            translate(innerWidth/2, innerHeight/2 );
+            rotate(PI/2);
+            image(circle_Red, 0, 0);
+            pop();
+        } else if (this.pos == 2) {
+            push();
+            translate(innerWidth/2 , innerHeight/2 );
+            rotate(PI);
+            image(circle_Red, 0, 0);
+            pop();
+        } else if (this.pos == 3) {
+            push();
+            translate(innerWidth/2, innerHeight/2);
+            rotate(3*PI/2);
+            image(circle_Red, 0, 0);
+            pop();
+        }
+        
         //balls
         if (this.sockets[0])
             image(this.sockets[0], innerWidth/2 - (scale/5.8) , innerHeight/2);
@@ -97,6 +122,8 @@ class Circle2 {
                     this.sockets[i] = this.sockets[i - 1];
                 }
                 this.sockets[0] = tempSocket;
+
+                this.pos =(this.pos + 1) % 4;
             }
     }
 }

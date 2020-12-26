@@ -1,12 +1,36 @@
 class Circle1 {
     constructor() {
+        this.pos = 0;
         this.sockets = [stone_Red, stone_Yellow, stone_Yellow, stone_Yellow];
     }
 
     draw() {
         //body
-        image(circle_Green, innerWidth/2, innerHeight/2); //- (scale/1.5)/2
-
+        if (this.pos == 0) {
+            push();
+            translate(innerWidth/2 ,innerHeight/2);
+            rotate(0);
+            image(circle_Green, 0, 0);
+            pop();
+        } else if (this.pos == 1) {
+            push();
+            translate(innerWidth/2, innerHeight/2 );
+            rotate(PI/2);
+            image(circle_Green, 0, 0);
+            pop();
+        } else if (this.pos == 2) {
+            push();
+            translate(innerWidth/2 , innerHeight/2 );
+            rotate(PI);
+            image(circle_Green, 0, 0);
+            pop();
+        } else if (this.pos == 3) {
+            push();
+            translate(innerWidth/2, innerHeight/2);
+            rotate(3*PI/2);
+            image(circle_Green, 0, 0);
+            pop();
+        }
         //stones
         if (this.sockets[0]) 
             image(this.sockets[0], innerWidth/2 - (scale/3.55) , innerHeight/2);
@@ -110,6 +134,8 @@ class Circle1 {
                     this.sockets[i] = this.sockets[i - 1];
                 }
                 this.sockets[0] = tempSocket;
+
+                this.pos =(this.pos + 1) % 4;
             }
     }
 }

@@ -2,7 +2,7 @@
 
 
 This is repository of one man trying to make his own *web games*.
-Whole purpose of it is to learn and experiment with web environment. Project uses p5.js framework, specialy canvas workflow. Real world application is hosted on server: [www.nohavovi.cz](https://games.nohavovi.cz/).
+Whole purpose of it is to learn and experiment with web environment. Project uses [p5.js](https://p5js.org/) framework, specialy canvas workflow. Real world application is hosted on server: [www.nohavovi.cz](https://games.nohavovi.cz/).
 
 
 ## Games

@@ -23,6 +23,7 @@ function draw() {
     spawner.tick();
     anim.tick();
     
+    /*Check hits by bullets*/
     for (let i = bullets.length - 1; i >= 0; i--) {
       bullets[i].draw();
       bullets[i].update();
@@ -40,15 +41,18 @@ function draw() {
         bullets.splice(i, 1);
     }
 
+    /*Draw and Update enemies*/
     for (let i = enemies.length - 1; i >= 0; i--) {
       enemies[i].draw();
       enemies[i].update();
       if (enemies[i].toDestroy)
         enemies.splice(i, 1);
-
     }
+
+    /*Check if game ends*/
     if (enemies.length == 0)
       running = false;
+
     player.draw();
     player.update();
 
@@ -82,7 +86,7 @@ function draw() {
       lobbyTime++;
     }
 
-    fill(240);
+    fill(40);
     textSize(34);
     text("Keep peace in your heart xD", player.pos.x, player.pos.y);
     text("Press ESC to get back to main menu.", innerWidth / 2 - 250, 40);

@@ -11,7 +11,7 @@ class Circle1 {
             translate(innerWidth/2 ,innerHeight/2);
             rotate(0);
             image(circle_Green, 0, 0);
-            pop();
+           pop();
         } else if (this.pos == 1) {
             push();
             translate(innerWidth/2, innerHeight/2 );

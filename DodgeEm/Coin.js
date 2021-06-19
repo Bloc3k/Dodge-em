@@ -25,7 +25,7 @@ class Coin {
 
   drawScore() {
     fill(240);
-    textSize(40);
-    text(this.coinCount, 13, 40);
+    textSize(60);
+    text(this.coinCount, 15, 60);
   }
 }

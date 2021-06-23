@@ -13,7 +13,7 @@ function setup() {
   coin = new Coin();
   leaderboard = new Leaderboard();
 
-  for (let i = 0; i < innerWidth / 110; i++) {
+  for (let i = 0; i < innerWidth*innerHeight / 121000; i++) { //11
     bullets[i] = new Bullet(i % 2);
   }
 }
@@ -58,7 +58,7 @@ function draw() {
       text("Keep up <3", player.x, player.y);
     text("Press ESC to get back to main menu", innerWidth / 2 - 250, 40);
     text("Press Left Mouse button to play again", innerWidth / 2 - 250, 80);
-    text("Try to collect as many coins as possible without dying", innerWidth/2 - 300, innerHeight - 40);
+    text("Try to collect as many coins as possible without dying", innerWidth/2 - 400, innerHeight - 40);
 
     /*add new record*/
     if (coin.coinCount > leaderboard.topten[leaderboard.topten.length - 1][1]) {

@@ -43,11 +43,11 @@ class Bullet {
 
     if (this.x > innerWidth) {
       this.x = -250;
-      this.y = random(mouseY - 150, mouseY + 150);
+      this.y = random(mouseY - innerHeight/6, mouseY + innerHeight/6);
     }
     if (this.y > innerHeight) {
       this.y = -250;
-      this.x = random(mouseX - 150, mouseX + 150);
+      this.x = random(mouseX - innerWidth/9, mouseX + innerWidth/9);
     }
 
   }

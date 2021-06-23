@@ -57,22 +57,22 @@ function draw() {
     else
       text("Keep up <3", player.x, player.y);
     text("Press ESC to get back to main menu", innerWidth / 2 - 250, 40);
-    text("Press any other key or mouse button to play again", innerWidth / 2 - 350, 80);
+    text("Press Left Mouse button to play again", innerWidth / 2 - 250, 80);
     text("Try to collect as many coins as possible without dying", innerWidth/2 - 300, innerHeight - 40);
 
     /*add new record*/
     if (coin.coinCount > leaderboard.topten[leaderboard.topten.length - 1][1]) {
       if (scoring) { 
         nickname = null;
-        while (nickname == null)
-        nickname = prompt("You're one of the best. You've earned a place in the Hell of Flame <3", "What's your nickname, sir?").substring(0, 9);
-        leaderboard.update(nickname, coin.coinCount);
+        nickname = prompt("You're one of the best. You've earned a place in the Hell of Flame <3 \nMax length: 10 ", "What's your nickname, sir?");
+        if (nickname != null) 
+          leaderboard.update(nickname.substring(0, 10), coin.coinCount);
         scoring = false;
       }
     }
 
     /*Restart game*/
-    if (keyIsPressed || mouseIsPressed) {
+    if (mouseIsPressed) {
       running = true;
       coin.coinCount = 0;
       player.reset();

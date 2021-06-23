@@ -26,8 +26,8 @@ class Player {
       let vDx = vNx * this.speed;
       let vDy = vNy * this.speed;
 
-      this.x += vDx;
-      this.y += vDy;
+      this.x += vDx * deltaTime/11;
+      this.y += vDy * deltaTime/11;
 
     }
     

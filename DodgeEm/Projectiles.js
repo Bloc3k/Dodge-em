@@ -38,8 +38,8 @@ class Bullet {
   }
 
   update() {
-    this.x += this.dx;
-    this.y += this.dy;
+    this.x += this.dx * deltaTime/11;
+    this.y += this.dy * deltaTime/11;
 
     if (this.x > innerWidth) {
       this.x = -250;

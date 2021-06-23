@@ -7,6 +7,7 @@ var leaderboard;
 let scoring = false;
 
 function setup() {
+  document.cookie = "leaderboard=Yakub-69_LuckyBoy-31_PEPEE-21_OMEGALUL-19_KEKW-16_toddler-15_newbie-11_noob-7_rookie-6_pleb-3";
   createCanvas(innerWidth, innerHeight);
   player = new Player();
   coin = new Coin();
@@ -15,7 +16,6 @@ function setup() {
   for (let i = 0; i < innerWidth / 110; i++) {
     bullets[i] = new Bullet(i % 2);
   }
-  document.cookie = "leaderboard=Yakub-69_LuckyBoy-31_PEPEE-21_OMEGALUL-19_KEKW-16_toddler-15_newbie-11_noob-7_rookie-6_pleb-3";
 }
 
 function draw() {
@@ -65,7 +65,7 @@ function draw() {
       if (scoring) { 
         nickname = null;
         while (nickname == null)
-        nickname = prompt("You're one of the best. You've earned a place in the Hell of Flame <3", "What's your nickname, sir?");
+        nickname = prompt("You're one of the best. You've earned a place in the Hell of Flame <3", "What's your nickname, sir?").substring(0, 9);
         leaderboard.update(nickname, coin.coinCount);
         scoring = false;
       }

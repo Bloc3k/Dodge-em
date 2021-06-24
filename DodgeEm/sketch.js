@@ -5,6 +5,7 @@ var coin;
 var running = false;
 var leaderboard;
 let scoring = false;
+let reseter;
 
 function setup() {
   document.cookie = "leaderboard=Yakub-69_LuckyBoy-31_PEPEE-21_OMEGALUL-19_KEKW-16_toddler-15_newbie-11_noob-7_rookie-6_pleb-3";
@@ -12,6 +13,7 @@ function setup() {
   player = new Player();
   coin = new Coin();
   leaderboard = new Leaderboard();
+  reseter = new Reseter();
 
   for (let i = 0; i < innerWidth*innerHeight / 121000; i++) { //11
     bullets[i] = new Bullet(i % 2);
@@ -23,25 +25,34 @@ function draw() {
   
   if (running) {
     //------------------ Game is Running ------------------
-    player.update();
-
+    reseter.draw();
+    reseter.update();
+    
     for (let bullet of bullets) {
       bullet.draw();
       bullet.update();
       if (bullet.colision(player))
-        running = false;
+      running = false;
     }
     if (coin.colected(player)) {
       coin.coinCount++;
       coin.respawn();
     }
-
+    
     coin.draw();
     player.draw();
+    player.update();
+
+    if (reseter.colected(player)) {
+      coin.respawn();
+      reseter.timer = 0;
+      reseter.done = false;
+    }
 
     scoring = true;
   } else {
     //----------------------- LOBBY -----------------------
+    reseter.draw();
     for (let bullet of bullets) {
       bullet.draw();
     }

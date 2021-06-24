@@ -6,7 +6,6 @@ class Leaderboard {
         this.y = innerHeight - this.height - 20;
         this.topten = this.load();
         this.step = this.height/10 - 1;
-        console.log(this.topten)
     }
 
     show() {

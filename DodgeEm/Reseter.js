@@ -9,7 +9,7 @@ class Reseter {
 
     update() {
         if (this.timer < 6.26) {
-            this.timer += 1 * deltaTime / 500;
+            this.timer += deltaTime / 500;
         } else {
             this.done = true;
         }
@@ -34,5 +34,10 @@ class Reseter {
             player.x + player.width > this.x - this.size / 2 &&
             player.y < this.y + this.size / 2 &&
             player.y + player.height > this.y - this.size/ 2) && this.done == true);
+     }
+
+     reset() {
+         this.timer = 0;
+         this.done = false;
      }
 }

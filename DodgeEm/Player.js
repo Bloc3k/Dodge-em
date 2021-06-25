@@ -14,6 +14,15 @@ class Player {
     rect(this.x, this.y, this.width, this.height , 4);
   }
 
+  drawEffect(_duration, _effectTime) {
+    fill(242,	203,	5, 60);
+    stroke(242,	203,	5, 60);
+    rect(this.x, this.y, this.width, this.height , 4);
+    fill(242,	203,	5, 90);
+    stroke(242,	203,	5, 100);
+    rect(this.x, this.y + this.height, this.width, -(this.height/_duration)*_effectTime, 4);
+  }
+
   update() {
     //ToDo: Handle shaking, so far it handle this if below, but than player position is not precise
     if (dist(mouseX - this.width/2 , mouseY- this.height/2, this.x, this.y) >= this.speed){

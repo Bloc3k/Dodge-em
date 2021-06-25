@@ -6,6 +6,15 @@ var running = false;
 var leaderboard;
 let scoring = false;
 let reseter;
+let skills;
+let stealth_s, coin_s, reset_s, gameover_s;
+
+function preload() {
+  stealth_s = loadSound("/DodgeEm/Assests/stelth.wav");
+  coin_s = loadSound("/DodgeEm/Assests/pop.wav");
+  reset_s = loadSound("/DodgeEm/Assests/pop1.wav");
+  gameover_s = loadSound("/DodgeEm/Assests/gameover.wav");
+}
 
 function setup() {
   document.cookie = "leaderboard=Yakub-69_LuckyBoy-31_PEPEE-21_OMEGALUL-19_KEKW-16_toddler-15_newbie-11_noob-7_rookie-6_pleb-3";
@@ -14,6 +23,7 @@ function setup() {
   coin = new Coin();
   leaderboard = new Leaderboard();
   reseter = new Reseter();
+  skills = new Skills();
 
   for (let i = 0; i < innerWidth*innerHeight / 121000; i++) { //11
     bullets[i] = new Bullet(i % 2);
@@ -27,32 +37,48 @@ function draw() {
     //------------------ Game is Running ------------------
     reseter.draw();
     reseter.update();
+    skills.update(stealth_s);
     
     for (let bullet of bullets) {
       bullet.draw();
       bullet.update();
-      if (bullet.colision(player))
-      running = false;
+      if (skills.effect == false) { /*Not detecting if skill is on*/
+        if (bullet.colision(player)){
+          running = false;
+          gameover_s.play();
+          gameover_s.setVolume(0.4);
+        }
+      }
     }
     if (coin.colected(player)) {
+      coin_s.play();
       coin.coinCount++;
       coin.respawn();
+      reseter.reset();
     }
-    
     coin.draw();
-    player.draw();
+
+    if (skills.effect == true)
+      player.drawEffect(skills.duration, skills.effectTime);
+    else
+      player.draw();
     player.update();
 
     if (reseter.colected(player)) {
+      reset_s.play();
       coin.respawn();
       reseter.timer = 0;
       reseter.done = false;
     }
 
+    skills.draw();
+
     scoring = true;
   } else {
     //----------------------- LOBBY -----------------------
     reseter.draw();
+    reseter.timer = 0;
+    reseter.done = false;
     for (let bullet of bullets) {
       bullet.draw();
     }
@@ -64,24 +90,22 @@ function draw() {
     if (floor(player.y % 3) == 0)
       text("You Died LOL xD", player.x, player.y);
     else if (floor(player.y % 3) == 1)
-      text("I said withou dying OMG!!!", player.x, player.y);
-    else
       text("Keep up <3", player.x, player.y);
     text("Press ESC to get back to main menu", innerWidth / 2 - 250, 40);
     text("Press Left Mouse button to play again", innerWidth / 2 - 250, 80);
-    text("Try to collect as many coins as possible without dying", innerWidth/2 - 400, innerHeight - 40);
-
+    //text("Try to collect as many coins as possible without dying", innerWidth/2 - 375, 120);
+    
     /*add new record*/
     if (coin.coinCount > leaderboard.topten[leaderboard.topten.length - 1][1]) {
       if (scoring) { 
         nickname = null;
         nickname = prompt("You're one of the best. You've earned a place in the Hell of Flame <3 \nMax length: 10 ", "What's your nickname, sir?");
         if (nickname != null) 
-          leaderboard.update(nickname.substring(0, 10), coin.coinCount);
+        leaderboard.update(nickname.substring(0, 10), coin.coinCount);
         scoring = false;
       }
     }
-
+    
     /*Restart game*/
     if (mouseIsPressed) {
       running = true;
@@ -90,12 +114,14 @@ function draw() {
       bullets.forEach(function(entry) {
         entry.reset();
       });
+      skills.reset();
     }
   }
   if (keyCode == 27)
     window.history.back();
-  coin.drawScore();
 
+  coin.drawScore();
+  skills.draw();
 }
 
 function newRecord() {

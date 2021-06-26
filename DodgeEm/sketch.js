@@ -7,13 +7,14 @@ var leaderboard;
 let scoring = false;
 let reseter;
 let skills;
-let stealth_s, coin_s, reset_s, gameover_s;
+let stealth_s, coin_s, reset_s, gameover_s, click_s;
 
 function preload() {
   stealth_s = loadSound("/DodgeEm/Assests/stelth.wav");
   coin_s = loadSound("/DodgeEm/Assests/pop.wav");
   reset_s = loadSound("/DodgeEm/Assests/pop1.wav");
   gameover_s = loadSound("/DodgeEm/Assests/gameover.wav");
+  click_s = loadSound("/DodgeEm/Assests/click.wav");
 }
 
 function setup() {
@@ -37,7 +38,7 @@ function draw() {
     //------------------ Game is Running ------------------
     reseter.draw();
     reseter.update();
-    skills.update(stealth_s);
+    skills.update(stealth_s, click_s);
     
     for (let bullet of bullets) {
       bullet.draw();

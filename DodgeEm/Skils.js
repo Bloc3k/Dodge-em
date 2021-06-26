@@ -7,16 +7,18 @@ class Skills {
         this.duration = 3;
     }
 
-    update(_sound) {
+    update(_use, _ready) {
         if (this.ready == false) {
             this.cooldown += deltaTime/500;
             if (this.cooldown >= 13) {
                 this.ready = true;
+                _ready.play();
+                _ready.setVolume(1.2);
             }
         }
         if (keyIsPressed) {
             if (key == 'f' && this.ready == true) {
-                _sound.play();
+                _use.play();
                 this.effect = true;
                 this.ready = false;
                 this.cooldown = 0;

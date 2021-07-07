@@ -6,8 +6,9 @@ var running = false;
 var leaderboard;
 let scoring = false;
 let reseter;
-let skills;
-let stealth_s, coin_s, reset_s, gameover_s, click_s;
+let skill_f;
+let skill_d;
+let stealth_s, coin_s, reset_s, gameover_s, click_s, placed_s, port_s;
 
 function preload() {
   stealth_s = loadSound("/DodgeEm/Assests/stelth.wav");
@@ -15,6 +16,8 @@ function preload() {
   reset_s = loadSound("/DodgeEm/Assests/pop1.wav");
   gameover_s = loadSound("/DodgeEm/Assests/gameover.wav");
   click_s = loadSound("/DodgeEm/Assests/click.wav");
+  placed_s = loadSound("/DodgeEm/Assests/placed.wav");
+  port_s = loadSound("/DodgeEm/Assests/port.wav");
 }
 
 function setup() {
@@ -24,7 +27,7 @@ function setup() {
   coin = new Coin();
   leaderboard = new Leaderboard();
   reseter = new Reseter();
-  skills = new Skills();
+  skill_f = new Skills();
 
   for (let i = 0; i < innerWidth*innerHeight / 121000; i++) { //11
     bullets[i] = new Bullet(i % 2);
@@ -36,14 +39,15 @@ function draw() {
   
   if (running) {
     //------------------ Game is Running ------------------
+    skill_f.drawPortal();
     reseter.draw();
     reseter.update();
-    skills.update(stealth_s, click_s);
+    skill_f.update(stealth_s, click_s, player, placed_s, port_s);
     
     for (let bullet of bullets) {
       bullet.draw();
       bullet.update();
-      if (skills.effect == false) { /*Not detecting if skill is on*/
+      if (skill_f.effect == false) { /*Not detecting if skill is on*/
         if (bullet.colision(player)){
           running = false;
           gameover_s.play();
@@ -58,9 +62,8 @@ function draw() {
       reseter.reset();
     }
     coin.draw();
-
-    if (skills.effect == true)
-      player.drawEffect(skills.duration, skills.effectTime);
+    if (skill_f.effect == true)
+      player.drawEffect(skill_f.duration, skill_f.effectTime);
     else
       player.draw();
     player.update();
@@ -72,11 +75,12 @@ function draw() {
       reseter.done = false;
     }
 
-    skills.draw();
+    skill_f.draw();
 
     scoring = true;
   } else {
     //----------------------- LOBBY -----------------------
+    skill_f.drawPortal();
     reseter.draw();
     reseter.timer = 0;
     reseter.done = false;
@@ -115,14 +119,14 @@ function draw() {
       bullets.forEach(function(entry) {
         entry.reset();
       });
-      skills.reset();
+      skill_f.reset();
     }
   }
   if (keyCode == 27)
     window.history.back();
 
   coin.drawScore();
-  skills.draw();
+  skill_f.draw();
 }
 
 function newRecord() {

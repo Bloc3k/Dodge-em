@@ -46,7 +46,7 @@ function  setup() {
 }
 
 function draw() {
-    background(0);
+    background(30);
     imageMode(CENTER);
 
     //Paddle

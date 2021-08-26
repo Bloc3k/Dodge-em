@@ -35,7 +35,7 @@ function setup() {
 }
 
 function draw() {
-  background(0);
+  background(30);
   
   if (running) {
     //------------------ Game is Running ------------------

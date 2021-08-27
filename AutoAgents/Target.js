@@ -16,9 +16,9 @@ class Target {
                 else if (this.move === true) {
                     this.position = createVector(mouseX, mouseY);
                 }
-            } else {
-                this.move = false;
-            }
+            } 
+        } else {
+            this.move = false;
         }
     }
 

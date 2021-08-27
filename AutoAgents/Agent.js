@@ -1,5 +1,5 @@
 class Agent {
-    constructor(mass = 10, max_force = 30, max_speed = 20) {
+    constructor(mass = 10, max_force = 30, max_speed = 12) {
         this.position = createVector(300, 200);
         this.velocity = createVector(0, 0);
 
@@ -44,5 +44,9 @@ class Agent {
 
     truncate(vector, amount) {
         return vector.limit(amount);
+    }
+
+    setPosition(newPosition) {
+        this.position = createVector(newPosition.x, newPosition.y);
     }
 }

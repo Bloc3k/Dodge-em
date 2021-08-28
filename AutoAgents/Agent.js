@@ -1,5 +1,5 @@
 class Agent {
-    constructor(mass = 10, max_force = 30, max_speed = 12) {
+    constructor(mass = 10, max_force = 10, max_speed = 20) {
         this.position = createVector(300, 200);
         this.velocity = createVector(0, 0);
 
@@ -8,7 +8,7 @@ class Agent {
         this.MAX_FORCE = max_speed;
 
         /******* SPRITE *******/
-        this.size = this.mass * 1,5;
+        this.size = map(this.mass, 0, 50, 12, 16);
         this.color = '#a0a';
     }
 
@@ -28,8 +28,6 @@ class Agent {
         this.position = p5.Vector.add(this.position, this.velocity);
     }
 
-    update() { }
-
     draw() {
         push();
 
@@ -48,5 +46,18 @@ class Agent {
 
     setPosition(newPosition) {
         this.position = createVector(newPosition.x, newPosition.y);
+    }
+
+    setMaxSpeed(speed) {
+        this.MAX_SPEED = speed;
+    }
+
+    setMaxForce(force) {
+        this.MAX_FORCE = force;
+    }
+
+    setMass(mass) {
+        this.mass = mass;
+        this.size = map(this.mass, 0, 50, 12, 16);
     }
 }

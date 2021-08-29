@@ -53,17 +53,18 @@ class Paddle {
                         if (circle1.sockets[0] == null) {
                             circle1.sockets[0] = this.socket;
                             this.socket = null;
+                            move_s.play();
                         }
                     }
                 }
             //rotate
             else if (dist(mouseX, mouseY, innerWidth/2, innerHeight/2) < (scale/1.13)/2 &&
                      dist(mouseX, mouseY, innerWidth/2, innerHeight/2) > (scale/1.5)/2) {
-                console.log("rotate Purple cylinder...");
                 this.pos++;
                 this.pos = this.pos % 4;
+                stone_slide_s.play();
             }
-        } else if ( this.pos == 1) {
+        } else if (this.pos == 1) {
             //pass the ball
             if (mouseX < innerWidth/2 + (scale/20) &&
                 mouseX > innerWidth/2 - (scale/20) && 
@@ -73,6 +74,7 @@ class Paddle {
                         if (circle1.sockets[1] == null) {
                             circle1.sockets[1] = this.socket;
                             this.socket = null;
+                            move_s.play();
                         }
                     }
                 }
@@ -80,9 +82,9 @@ class Paddle {
           //rotate
           else if (dist(mouseX, mouseY, innerWidth/2, innerHeight/2) < (scale/1.13)/2 &&
                    dist(mouseX, mouseY, innerWidth/2, innerHeight/2) > (scale/1.5)/2) {
-                console.log("rotate Purple cylinder...");
                 this.pos++;
                 this.pos = this.pos % 4;
+                stone_slide_s.play();
             }
         } else if (this.pos == 2) {
             //pass the ball
@@ -94,15 +96,16 @@ class Paddle {
                         if (circle1.sockets[2] == null) {
                             circle1.sockets[2] = this.socket;
                             this.socket = null;
+                            move_s.play();
                         }
                     }
                 }
            //rotate
            else if (dist(mouseX, mouseY, innerWidth/2, innerHeight/2) < (scale/1.13)/2 &&
                     dist(mouseX, mouseY, innerWidth/2, innerHeight/2) > (scale/1.5)/2) {
-                console.log("rotate Purple cylinder...");
                 this.pos++;
                 this.pos = this.pos % 4;
+                stone_slide_s.play();
             }
         } else if ( this.pos == 3) {
               //pass the ball
@@ -114,15 +117,16 @@ class Paddle {
                         if (circle1.sockets[3] == null) {
                             circle1.sockets[3] = this.socket;
                             this.socket = null;
+                            move_s.play();
                         }
                     }
                 }
             //rotate
             else if (dist(mouseX, mouseY, innerWidth/2, innerHeight/2) < (scale/1.13)/2 &&
                      dist(mouseX, mouseY, innerWidth/2, innerHeight/2) > (scale/1.5)/2) {
-                console.log("rotate Purple cylinder...");
                 this.pos++;
                 this.pos = this.pos % 4;
+                stone_slide_s.play();
             }
         }
     }

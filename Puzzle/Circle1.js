@@ -42,9 +42,8 @@ class Circle1 {
             image(this.sockets[3], innerWidth/2, innerHeight/2 + (scale/3.55)); 
     }
 
-    click() {
+    click(stone_slide_s) {
         //click on 0 position
-        console.log()
         if (mouseX < innerWidth/2 - (scale/3.55) + (scale/20) &&
             mouseX > innerWidth/2 - (scale/3.55) - (scale/20) && 
             mouseY < innerHeight/2 + (scale/20) &&
@@ -55,11 +54,13 @@ class Circle1 {
                         if (paddle.socket == null){
                             paddle.socket = this.sockets[0];
                             this.sockets[0] = null;
+                            move_s.play();
                         }
                     } 
                     if (circle2.sockets[0] == null){
                         circle2.sockets[0] = this.sockets[0];
                         this.sockets[0] = null;
+                        move_s.play();
                     }
                 } 
             }
@@ -75,11 +76,13 @@ class Circle1 {
                         if (paddle.socket == null){
                             paddle.socket = this.sockets[1];
                             this.sockets[1] = null;
+                            move_s.play();
                         }
                     }
                     if (circle2.sockets[1] == null){
                         circle2.sockets[1] = this.sockets[1];
                         this.sockets[1] = null;
+                        move_s.play();
                     }
                 }   
             }
@@ -95,11 +98,13 @@ class Circle1 {
                         if (paddle.socket == null){
                             paddle.socket = this.sockets[2];
                             this.sockets[2] = null;
+                            move_s.play();
                         }
                     }
                     if (circle2.sockets[2] == null){
                         circle2.sockets[2] = this.sockets[2];
                         this.sockets[2] = null;
+                        move_s.play();
                     }
                 }   
             }
@@ -115,11 +120,13 @@ class Circle1 {
                         if (paddle.socket == null){
                             paddle.socket = this.sockets[3];
                             this.sockets[3] = null;
+                            move_s.play();
                         }
                     }
                     if (circle2.sockets[3] == null){
                         circle2.sockets[3] = this.sockets[3];
                         this.sockets[3] = null;
+                        move_s.play();
                     }
                 }   
             }
@@ -128,7 +135,6 @@ class Circle1 {
          else if (dist(mouseX, mouseY, innerWidth/2, innerHeight/2) < (scale/1.5)/2 &&
                  dist(mouseX, mouseY, innerWidth/2, innerHeight/2) > (scale/2.2)/2){
                 let tempSocket = this.sockets[3];
-                console.log("rotate Green cylinder...");
 
                 for (let i = 3; i > 0; i--){
                     this.sockets[i] = this.sockets[i - 1];
@@ -136,6 +142,7 @@ class Circle1 {
                 this.sockets[0] = tempSocket;
 
                 this.pos =(this.pos + 1) % 4;
+                stone_slide_s.play();
             }
     }
 }

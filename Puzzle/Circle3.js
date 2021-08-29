@@ -54,6 +54,7 @@ class Circle3 {
                     if (circle2.sockets[0] == null){
                         circle2.sockets[0] = this.sockets[0];
                         this.sockets[0] = null;
+                        move_s.play();
                     }
                 } 
             }
@@ -68,6 +69,7 @@ class Circle3 {
                     if (circle2.sockets[1] == null){
                         circle2.sockets[1] = this.sockets[1];
                         this.sockets[1] = null;
+                        move_s.play();
                     }
                 }   
             }
@@ -82,6 +84,7 @@ class Circle3 {
                     if (circle2.sockets[2] == null){
                         circle2.sockets[2] = this.sockets[2];
                         this.sockets[2] = null;
+                        move_s.play();
                     }
                 }   
             }
@@ -96,13 +99,13 @@ class Circle3 {
                     if (circle2.sockets[3] == null){
                         circle2.sockets[3] = this.sockets[3];
                         this.sockets[3] = null;
+                        move_s.play();
                     }
                 }   
             }
         //rotate circle1
         else if (dist(mouseX, mouseY, innerWidth/2, innerHeight/2) < (scale/4.2)/2){
                 let tempSocket = this.sockets[3];
-                console.log("rotate Yellow cylinder...");
 
                 for (let i = 3; i > 0; i--){
                     this.sockets[i] = this.sockets[i - 1];
@@ -110,6 +113,7 @@ class Circle3 {
                 this.sockets[0] = tempSocket;
 
                 this.pos =(this.pos + 1) % 4;
+                stone_slide_s.play();
             }
     }
 }

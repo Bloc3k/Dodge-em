@@ -5,6 +5,8 @@ let paddle;
 let circle_Green;
 
 function preload() {
+    stone_slide_s = loadSound("/Puzzle/Assets/Stone.wav");
+    move_s = loadSound("/Puzzle/Assets/move.mp3");
     scale = 0;
     if (innerWidth <= innerHeight)
         scale = innerWidth;
@@ -57,14 +59,19 @@ function draw() {
     circle2.draw();
     circle3.draw();
 
+    noStroke();
+    fill(180);
+    textSize(20);
+    text("Try to match same color of stones and sockets", 10, 20);
+
     if (keyCode == 27)
         window.history.back();                //TODO: Make it go to Main menu and to just back in history
   
 }
 
 function mousePressed() { //TODO: Make images
-    paddle.click();
-    circle1.click();
-    circle2.click();
-    circle3.click();
+    paddle.click(stone_slide_s, move_s);
+    circle1.click(stone_slide_s, move_s);
+    circle2.click(stone_slide_s, move_s);
+    circle3.click(stone_slide_s, move_s);
 } //TODO: Make winnig screen & winner board

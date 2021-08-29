@@ -32,14 +32,14 @@ class Skills {
             }
         }
         if (this.ready_to_place == false) {
-            this.effect = true;
-            this.duration = 1;                      // Changes this.duration
             this.cooldown_to_place += deltaTime/500;
             if (this.cooldown_to_place >= 1) {
                 this.ready_to_place = true;
+                //----------- End of invincibility after teleporting ----------------
                 this.effect = false;
                 this.effectTime = 0;
-                this.duration = 3;                  //Set this.duration back to original value
+                this.duration = 3;         //Set this.duration back to original value
+                //-------------------------------------------------------------------
             }
         }
         if (keyIsPressed) {
@@ -54,8 +54,12 @@ class Skills {
             if (this.portalPlaced == true && this.ready_d == true && key == 'd') {
                 _port.play();
                 _port.setVolume(0.1);
-                player.x = skill_f.portalPos.x;
-                player.y = skill_f.portalPos.y;
+                player.x = this.portalPos.x;
+                player.y = this.portalPos.y;
+                //--------- Invincibility after teleporting ------------
+                this.effect = true;
+                this.duration = 1;              // Changes this.duration
+                //------------------------------------------------------
                 this.portalPlaced = false;
                 this.ready_to_place = false;
                 this.cooldown_to_place = 0;

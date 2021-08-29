@@ -1,3 +1,12 @@
+/**
+ * Implementation of Slider used on canvas in p5.js framework
+ * 
+ * Usage:
+ *  1) Copy this file to your working directory and include it in html file
+ *  2) Make instance of Slider by calling constructor with x and y coorinates to place slider, optionaly with another paramiter to set inner properties of a slider
+ *  3) Make p5.js function mousePressed() in sketche in whitch call the mousePressed() function for each instance of slider
+ *  4) Call show() fucntion in p5.js draw() for every instance
+ */
 class Slider {
     constructor(x, y, from = 0, to = 100, cur = round((from+to)/2), width = 150, height = 12) {
         this.position = createVector(x,y);
@@ -8,6 +17,7 @@ class Slider {
         this.width = width;
         this.height = height;
         this.color = "#444";
+        this.lastClick = null;
     }
 
     show() {
@@ -22,7 +32,9 @@ class Slider {
                     mouseX > this.position.x && 
                     mouseY < this.position.y + this.height/1.2 &&
                     mouseY > this.position.y - this.height/1.2) {
+                    if (this.clickedIn(this.lastClick)) {
                         this.cur = round(map(mouseX, this.position.x, this.position.x + this.width, this.FROM, this.TO));
+                    }
                 }
             }
         }
@@ -41,6 +53,22 @@ class Slider {
         circle(map(this.cur, this.FROM, this.TO, this.position.x, this.position.x + this.width), this.position.y, this.height*1.5)
         text(this.text, this.position.x, this.position.y - this.height*1.5);
         pop();
+    }
+
+    clickedIn(click_pos) {
+        if (click_pos.x < this.position.x + this.width &&
+            click_pos.x > this.position.x && 
+            click_pos.y < this.position.y + this.height/1.2 &&
+            click_pos.y > this.position.y - this.height/1.2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    mousePressed(mouseX_in, mouseY_in) {
+        this.lastClick = createVector(mouseX_in, mouseY_in);
+        console.log(this.lastClick)
     }
 
     getCur() {

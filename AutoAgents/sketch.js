@@ -41,3 +41,10 @@ function draw() {
     if (keyCode == 27)
         window.history.back();
 }
+
+function mousePressed() {
+    slider_agents.mousePressed(mouseX, mouseY);
+    slider_speed.mousePressed(mouseX, mouseY);
+    slider_force.mousePressed(mouseX, mouseY);
+    slider_mass.mousePressed(mouseX, mouseY);
+}

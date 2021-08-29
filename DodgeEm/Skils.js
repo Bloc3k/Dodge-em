@@ -32,9 +32,14 @@ class Skills {
             }
         }
         if (this.ready_to_place == false) {
+            this.effect = true;
+            this.duration = 1;                      // Changes this.duration
             this.cooldown_to_place += deltaTime/500;
             if (this.cooldown_to_place >= 1) {
                 this.ready_to_place = true;
+                this.effect = false;
+                this.effectTime = 0;
+                this.duration = 3;                  //Set this.duration back to original value
             }
         }
         if (keyIsPressed) {

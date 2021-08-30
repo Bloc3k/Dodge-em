@@ -13,6 +13,7 @@ class Slider {
         this.FROM = from;
         this.TO = to;
         this.cur = cur;
+        this.lastCur = this.cur; //cur from last frame to recognize change and play sound
         this.text = '';
         this.width = width;
         this.height = height;
@@ -20,9 +21,10 @@ class Slider {
         this.lastClick = null;
     }
 
-    show() {
+    show(click_s) {
         this.update();
         this.draw();
+        this.sound(click_s);
     }
 
     update() {
@@ -66,9 +68,15 @@ class Slider {
         }
     }
 
+    sound(click_s) {
+        if (this.cur != this.lastCur) {
+            click_s.play();
+            this.lastCur = this.cur;
+        }
+    }
+
     mousePressed(mouseX_in, mouseY_in) {
         this.lastClick = createVector(mouseX_in, mouseY_in);
-        console.log(this.lastClick)
     }
 
     getCur() {
@@ -77,6 +85,7 @@ class Slider {
 
     setCur(position) {
         this.cur = position;
+        this.lastCur = this.cur;
     }
 
     setText(text) {

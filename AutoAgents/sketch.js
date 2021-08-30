@@ -5,6 +5,10 @@ let slider_speed;
 let slider_force;
 let slider_mass;
 
+function preload() {
+    click_s = loadSound("/AutoAgents/Assets/click.wav");
+}
+
 function setup() {
     createCanvas(innerWidth,innerHeight);
     agentsHandler = new AgentsHandler();
@@ -30,10 +34,10 @@ function draw() {
 
     agentsHandler.run();
 
-    slider_agents.show();
-    slider_speed.show();
-    slider_force.show();
-    slider_mass.show();
+    slider_agents.show(click_s);
+    slider_speed.show(click_s);
+    slider_force.show(click_s);
+    slider_mass.show(click_s);
   
     target.draw();
     target.update();

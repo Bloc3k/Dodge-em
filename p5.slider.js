@@ -8,7 +8,7 @@
  *  4) Call show() fucntion in p5.js draw() for every instance
  */
 class Slider {
-    constructor(x, y, from = 0, to = 100, cur = round((from+to)/2), width = 150, height = 12) {
+    constructor(x, y, from = 0, to = 100, roundDigits = 0, cur = round((from+to)/2, roundDigits), width = 150, height = 12) {
         this.position = createVector(x,y);
         this.FROM = from;
         this.TO = to;
@@ -16,8 +16,9 @@ class Slider {
         this.lastCur = this.cur; //cur from last frame to recognize change and play sound
         this.text = '';
         this.width = width;
-        this.height = height;
+        this.height = height; 
         this.color = "#444";
+        this.roundDigits = roundDigits;
         this.lastClick = null;
     }
 
@@ -35,7 +36,7 @@ class Slider {
                     mouseY < this.position.y + this.height/1.2 &&
                     mouseY > this.position.y - this.height/1.2) {
                     if (this.clickedIn(this.lastClick)) {
-                        this.cur = round(map(mouseX, this.position.x, this.position.x + this.width, this.FROM, this.TO));
+                        this.cur = +(map(mouseX, this.position.x, this.position.x + this.width, this.FROM, this.TO).toFixed(this.roundDigits));
                     }
                 }
             }

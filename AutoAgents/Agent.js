@@ -1,5 +1,5 @@
 class Agent {
-    constructor(max_force = 10, max_speed = 20) {
+    constructor(max_force = 1, max_speed = 20) {
         this.position = createVector(300, 200);
         this.velocity = createVector(0, 0);
 
@@ -7,7 +7,7 @@ class Agent {
         this.MAX_FORCE = max_speed;
 
         /******* SPRITE *******/
-        this.size = 13;
+        this.size = 14;
         this.color = '#a0a';
     }
 
@@ -36,15 +36,15 @@ class Agent {
 
     seek(target) {
         const steering_direction = p5.Vector.sub(target, this.position);
-        const steering_force = this.truncate(steering_direction, this.MAX_FORCE);
-        this.velocity = this.truncate(p5.Vector.add(this.velocity, steering_force), this.MAX_SPEED);
+        const steering_force = steering_direction.limit(this.MAX_FORCE);
+        this.velocity = p5.Vector.add(this.velocity, steering_force).limit(this.MAX_SPEED);
         this.position = p5.Vector.add(this.position, this.velocity);
     }
 
     flee(target) {
         const steering_direction = p5.Vector.sub(this.position, target);
-        const steering_force = this.truncate(steering_direction, this.MAX_FORCE);
-        this.velocity = this.truncate(p5.Vector.add(this.velocity, steering_force), this.MAX_SPEED);
+        const steering_force = steering_direction.limit(this.MAX_FORCE);
+        this.velocity = p5.Vector.add(this.velocity, steering_force).limit(this.MAX_SPEED);
         this.position = p5.Vector.add(this.position, this.velocity);
     }
 
@@ -57,10 +57,6 @@ class Agent {
         triangle(-this.size, -this.size, this.size*2.5 , 0, -this.size, this.size); 
         
         pop(); 
-    }
-
-    truncate(vector, amount) {
-        return vector.limit(amount);
     }
 
     setPosition(newPosition) {

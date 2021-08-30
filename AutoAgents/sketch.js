@@ -20,8 +20,8 @@ function setup() {
     slider_agents.setText("Amount of Agents");
     slider_speed = new Slider(30, 100, 1, 50);
     slider_speed.setText("Max Speed");
-    slider_force = new Slider(30, 150, 0.1, 15);
-    slider_force.setCur(12);
+    slider_force = new Slider(30, 150, 0.01, 5, 2);
+    slider_force.setCur(1);
     slider_force.setText("Max Force");
     //----------------------------------------
     //Disables right click's default context menu

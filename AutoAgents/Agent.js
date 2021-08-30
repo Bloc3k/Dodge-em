@@ -12,6 +12,18 @@ class Agent {
         this.color = '#a0a';
     }
 
+    /**
+     * Agent will pursuite target by taking its velocity vector and multiplying it by T = D*c; 
+     * where D is distance from target and c is turning constant
+     * It is less sophisticated calculation of T because it dosn't taking into account orientation between target and pursuer.
+     * @param {} target_in - object to pursuit, has to have getVelocity() and getPosition() function
+     */
+    pursuitWithConst(target_in) {
+        const T = dist(this.position.x, this.position.y, target_in.getPosition().x, target_in.getPosition().y) * 0.12;
+        this.seekTargetInFuture = p5.Vector.add(p5.Vector.mult(target_in.getVelocity(), T), target_in.getPosition()) //remove/edit
+        this.seek(this.seekTargetInFuture);
+    }
+
     seek(target) {
         const steering_direction = p5.Vector.sub(target, this.position);
         const steering_force = this.truncate(steering_direction, this.MAX_FORCE);
@@ -32,10 +44,9 @@ class Agent {
         push();
 
         fill(this.color);
-        //angleMode(DEGREES);
         translate(this.position.x, this.position.y)
         rotate(this.velocity.heading());
-        triangle(-this.size, -this.size, this.size*2.5 , 0, -this.size, this.size);
+        triangle(-this.size, -this.size, this.size*2.5 , 0, -this.size, this.size); 
         
         pop(); 
     }

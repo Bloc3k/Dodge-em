@@ -16,12 +16,17 @@ class AgentsHandler {
         this.draw();
         this.seek();
     }
-    
+
+    pursuit(target_in) {
+        for (let i = 0; i < this.agents.length; i++) {
+            this.agents[i].pursuitWithConst(target_in);
+        }
+    }
     
     seek() {
         for (let i = 0; i < this.agents.length; i++) {
             this.agents[i].seek(target.getPosition());
-         }
+        }
     }
 
     populate() {
@@ -79,5 +84,9 @@ class AgentsHandler {
         for (let i = 0; i < this.agents.length; i++) {
             this.agents[i].draw();
         }
+    }
+
+    getAgents() {
+        return this.agents;
     }
 }

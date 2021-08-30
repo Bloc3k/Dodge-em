@@ -4,14 +4,12 @@ class AgentsHandler {
         this.agents.push(new Agent());
         this.MAX_SPEED = this.agents[0].MAX_SPEED;
         this.MAX_FORCE = this.agents[0].MAX_FORCE;
-        this.mass = this.agents[0].mass;
     }
 
     seek() {
         this.populate();
         this.adjustSpeed();
         this.adjustForce();
-        this.adjustMass();
 
         this.draw();
         this.seek_in();
@@ -21,7 +19,6 @@ class AgentsHandler {
         this.populate();
         this.adjustSpeed();
         this.adjustForce();
-        this.adjustMass();
 
         this.draw();
         this.arrive_in(300);
@@ -77,18 +74,8 @@ class AgentsHandler {
         }
     }
 
-    adjustMass() {
-        const newMass = slider_mass.getCur();
-        if (this.mass != newMass) {
-            for (const agent of this.agents) {
-                agent.setMass(newMass);
-                this.mass = newMass;
-            }
-        }
-    }
-
     spawn() {
-        this.agents.push(new Agent(this.mass, this.MAX_SPEED, this.MAX_FORCE));
+        this.agents.push(new Agent(this.MAX_SPEED, this.MAX_FORCE));
         this.agents[this.agents.length-1].setPosition(createVector(random(10, innerWidth - 10), random(10, innerHeight - 10)));
     }
 

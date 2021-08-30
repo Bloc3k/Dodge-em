@@ -3,7 +3,6 @@ let target;
 let slider_agents;
 let slider_speed;
 let slider_force;
-let slider_mass;
 let rightButton = {clicked:false, x:null, y:null};
 
 function preload() {
@@ -21,12 +20,9 @@ function setup() {
     slider_agents.setText("Amount of Agents");
     slider_speed = new Slider(30, 100, 1, 50);
     slider_speed.setText("Max Speed");
-    slider_force = new Slider(30, 150, 1, 30);
+    slider_force = new Slider(30, 150, 0.1, 15);
     slider_force.setCur(12);
     slider_force.setText("Max Force");
-    slider_mass = new Slider(30, 200, 1, 50);
-    slider_mass.setCur(10);
-    slider_mass.setText("Mass");
     //----------------------------------------
     //Disables right click's default context menu
     document.addEventListener('contextmenu', event => event.preventDefault()); 
@@ -35,13 +31,12 @@ function setup() {
 function draw() {
     background(33);
 
-    //agentsHandler.seek();
-    agentsHandler.arrive();
+    agentsHandler.seek();
+    //agentsHandler.arrive();
 
     slider_agents.show(click_s);
     slider_speed.show(click_s);
     slider_force.show(click_s);
-    slider_mass.show(click_s);
   
     target.draw();
     target.update();
@@ -58,7 +53,6 @@ function mousePressed() {
     slider_agents.mousePressed(mouseX, mouseY);
     slider_speed.mousePressed(mouseX, mouseY);
     slider_force.mousePressed(mouseX, mouseY);
-    slider_mass.mousePressed(mouseX, mouseY);
     
     if(mouseButton === RIGHT) {
         rightButton.clicked = true;

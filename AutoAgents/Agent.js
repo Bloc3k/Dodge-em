@@ -16,12 +16,24 @@ class Agent {
      * Agent will pursuite target by taking its velocity vector and multiplying it by T = D*c; 
      * where D is distance from target and c is turning constant
      * It is less sophisticated calculation of T because it dosn't taking into account orientation between target and pursuer.
-     * @param {} target_in - object to pursuit, has to have getVelocity() and getPosition() function
+     * @param {} target - object to pursuit, has to have getVelocity() and getPosition() function
      */
-    pursuitWithConst(target_in) {
-        const T = dist(this.position.x, this.position.y, target_in.getPosition().x, target_in.getPosition().y) * 0.12;
-        this.seekTargetInFuture = p5.Vector.add(p5.Vector.mult(target_in.getVelocity(), T), target_in.getPosition()) //remove/edit
+    pursuitWithConst(target) {
+        const T = dist(this.position.x, this.position.y, target.getPosition().x, target.getPosition().y) * 0.12;
+        this.seekTargetInFuture = p5.Vector.add(p5.Vector.mult(target.getVelocity(), T), target.getPosition()) //remove/edit
         this.seek(this.seekTargetInFuture);
+    }
+
+    arrive(target, radius) {
+        const steering_direction = p5.Vector.sub(target, this.position);
+        const distance_to_target = steering_direction.mag();
+        const ramped_speed = this.MAX_SPEED * (distance_to_target / radius);
+        const limited_speed = Math.min(ramped_speed, this.MAX_SPEED);
+        const desired_velocity = p5.Vector.mult(steering_direction, (limited_speed / distance_to_target));
+        const steering_force = this.truncate(p5.Vector.sub(desired_velocity, this.velocity), this.MAX_FORCE);
+        const accleration = p5.Vector.div(steering_force, this.mass);
+        this.velocity = p5.Vector.add(accleration, this.velocity);
+        this.position = p5.Vector.add(this.position, this.velocity);
     }
 
     seek(target) {

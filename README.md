@@ -1,25 +1,34 @@
 # Yakubco Games
 
-
-This is repository of one man trying to make his own *web games*.
-Whole purpose of it is to learn and experiment with web environment. Project uses p5.js framework, specialy canvas workflow. Real world application is hosted on server: [www.nohavovi.cz](https://games.nohavovi.cz/).
+This is a repository of a one man trying to learn something and entertain him and hopefully other people as well. The web environment was chosen for ease of distribution so people can see it. Real world application is running [games.nohavovi.cz](https://games.nohavovi.cz/).
 
 
-## Games
+## Content
 
-Application consists of 3 relatively completed games and 1 which in progress.
-1. ### Dodge 'em
-- Truely skill-based game.
-- Goal is to collect as many as posible coins while avoiding moving projectiles.
-- Movement controlled by mouse only, restarting is possible by any key or mouse button.
-2. ### Easy Little Puzzle
+**1. Dodge 'em**
+
+- Truly skill-based game.
+- Goal is to collect as many as possible coins while avoiding moving projectiles.
+- You have _"teleport"_ and short _"protection by higher forces"_ to your advantage but you will die anyway. 
+
+**2. Easy Little Puzzle**
+
 - Logic puzzle game.
-- 3 roatatable cylinders each with different color and 4 places for stones. Goal si to get all stones to their corresponding cylinder by their color using ratation of cylinders and one extra paddle at the side.
-- For rotation just click on cylinder or extra paddle or click on the stones to move them instead.
-3. ### Evil Polygons
+- 3 rotatable cylinders each with different color and 4 places for stones. Goal is to get all stones to their corresponding cylinder using rotation of the cylinders.
+- Click on cylinders to rotate them or click on the stones to move them instead.
+
+**3. Evil Polygons**
+
 - Skill-based arcade.
-- You can win by shooting all of the enemies. There are 2 types of enemy: **Shooter**, **Eater**. Shooter just sits but shoots and Eater is trying to eat you, so he will chase you and chase you till death.
-- Move by *'w' 'a' 's' 'd'* aim with mouse and shoot with left mouse button.
+- Shoot all of the enemies and win. There are 2 types of enemy for now: **Shooter**, **Eater**. Shooter just sits and shoots and Eater is trying to eat you, so he will chase you and chase you till you die.
+- Move by *'w' 'a' 's' 'd'*, aim with your mouse and shoot them all.
 
 ---
+
+## Bugs
+
+If you find bug, which you will, there is an option to open an issue for this repository so I can take a look at it. But most likely I won't notice :} I am doing it in free time.
+
+---
+
 ### Hope it will give you some good times ❤

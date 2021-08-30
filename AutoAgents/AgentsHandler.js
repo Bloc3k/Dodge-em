@@ -7,14 +7,24 @@ class AgentsHandler {
         this.mass = this.agents[0].mass;
     }
 
-    run() {
+    seek() {
         this.populate();
         this.adjustSpeed();
         this.adjustForce();
         this.adjustMass();
 
         this.draw();
-        this.seek();
+        this.seek_in();
+    }
+    
+    arrive() {
+        this.populate();
+        this.adjustSpeed();
+        this.adjustForce();
+        this.adjustMass();
+
+        this.draw();
+        this.arrive_in(300);
     }
 
     pursuit(target_in) {
@@ -22,8 +32,14 @@ class AgentsHandler {
             this.agents[i].pursuitWithConst(target_in);
         }
     }
+
+    arrive_in(radius) {
+        for (let i = 0; i < this.agents.length; i++) {
+            this.agents[i].arrive(target.getPosition(), radius);
+        }
+    }
     
-    seek() {
+    seek_in() {
         for (let i = 0; i < this.agents.length; i++) {
             this.agents[i].seek(target.getPosition());
         }

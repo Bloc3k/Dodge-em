@@ -35,7 +35,8 @@ function setup() {
 function draw() {
     background(33);
 
-    agentsHandler.run();
+    //agentsHandler.seek();
+    agentsHandler.arrive();
 
     slider_agents.show(click_s);
     slider_speed.show(click_s);

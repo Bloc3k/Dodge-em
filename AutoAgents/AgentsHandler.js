@@ -6,11 +6,12 @@ class AgentsHandler {
         this.MAX_FORCE = this.agents[0].MAX_FORCE;
     }
 
+    
     seek() {
         this.populate();
         this.adjustSpeed();
         this.adjustForce();
-
+        
         this.draw();
         this.seek_in();
     }
@@ -19,9 +20,20 @@ class AgentsHandler {
         this.populate();
         this.adjustSpeed();
         this.adjustForce();
-
+        
         this.draw();
         this.arrive_in(300);
+    }
+    
+    followPath() {
+        this.populate();
+        this.adjustSpeed();
+        this.adjustForce();
+
+        this.draw();
+        for (let i = 0; i < this.agents.length; i++) {
+            this.agents[i].followPath(path);
+        }
     }
 
     pursuit(target_in) {

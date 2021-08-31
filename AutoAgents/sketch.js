@@ -1,5 +1,7 @@
+let menu = {procedure:"followPath", debug: true};      //Opetions: 'seek', 'arrive', 'followPath'
 let agentsHandler;
 let target;
+let path;
 let slider_agents;
 let slider_speed;
 let slider_force;
@@ -13,6 +15,7 @@ function setup() {
     createCanvas(innerWidth,innerHeight);
     agentsHandler = new AgentsHandler();
     target = new Target(createVector(300,500));
+    path = new PathSegment(100,800,500,700);
 
     //--------------- Sliders ----------------
     slider_agents = new Slider(30,50, 1, 200);
@@ -30,9 +33,24 @@ function setup() {
 
 function draw() {
     background(33);
+    
+    path.draw();
+    //path.setA(target.getPosition());
 
-    agentsHandler.seek();
-    //agentsHandler.arrive();
+    //--- What procedure does Agant follow ---
+    switch (menu.procedure) {
+        case "seek":
+            agentsHandler.seek();
+            break;
+        case "arrive":
+            agentsHandler.arrive();
+            break;
+        case "followPath":
+            agentsHandler.followPath();
+            agentsHandler.seek();
+            break;
+    }
+    //----------------------------------------
 
     slider_agents.show(click_s);
     slider_speed.show(click_s);

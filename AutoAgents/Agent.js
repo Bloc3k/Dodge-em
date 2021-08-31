@@ -1,6 +1,6 @@
 class Agent {
     constructor(max_force = 1, max_speed = 20) {
-        this.position = createVector(300, 200);
+        this.position = createVector(300, 400);
         this.velocity = createVector(this.max_force, 0);
 
         this.MAX_SPEED = max_force;
@@ -19,8 +19,8 @@ class Agent {
         if (p5.Vector.dist(futurePos, path.getScalarProjection(futurePos)) > path.getR()) {
             const target = p5.Vector.add(path.getScalarProjection(futurePos), path.getDir().setMag(1));
             this.seek(target);
-        }
-
+        } 
+        
     }
 
     /**
@@ -60,6 +60,15 @@ class Agent {
         const steering_force = steering_direction.limit(this.MAX_FORCE);
         this.velocity = p5.Vector.add(this.velocity, steering_force).limit(this.MAX_SPEED);
         this.position = p5.Vector.add(this.position, this.velocity);
+    }
+
+    wander() {
+        this.velocity = createVector(this.MAX_SPEED, cos(0.01*this.position.x)*10).limit(this.MAX_SPEED);
+        this.position = p5.Vector.add(this.position, this.velocity);
+        if (this.position.x > innerWidth) {
+            this.position.x = -20;
+            this.position.y = random(150,innerHeight-150);
+        }
     }
 
     draw() {

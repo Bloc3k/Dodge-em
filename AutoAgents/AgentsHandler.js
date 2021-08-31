@@ -35,6 +35,17 @@ class AgentsHandler {
             this.agents[i].followPath(path);
         }
     }
+    
+    wander(noise) {
+        this.populate();
+        this.adjustSpeed();
+        this.adjustForce();
+
+        this.draw();
+        for (let i = 0; i < this.agents.length; i++) {
+            this.agents[i].wander();
+        }
+    }
 
     pursuit(target_in) {
         for (let i = 0; i < this.agents.length; i++) {

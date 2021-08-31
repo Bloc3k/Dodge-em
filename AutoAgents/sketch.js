@@ -1,4 +1,4 @@
-let menu = {procedure:"followPath", debug: true};      //Opetions: 'seek', 'arrive', 'followPath'
+let menu = {procedure:"wander", debug: true};//Opetions: 'seek','arrive','followPath','wander'
 let agentsHandler;
 let target;
 let path;
@@ -13,6 +13,7 @@ function preload() {
 
 function setup() {
     createCanvas(innerWidth,innerHeight);
+    noFill()
     agentsHandler = new AgentsHandler();
     target = new Target(createVector(300,500));
     path = new PathSegment(100,800,500,700);
@@ -47,7 +48,10 @@ function draw() {
             break;
         case "followPath":
             agentsHandler.followPath();
-            agentsHandler.seek();
+            agentsHandler.wander();
+            break;
+        case "wander":
+            agentsHandler.wander();
             break;
     }
     //----------------------------------------

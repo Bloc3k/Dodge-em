@@ -1,5 +1,5 @@
 class Agent {
-    constructor(max_force = 1, max_speed = 20) {
+    constructor(max_force = 1, max_speed = 4) {
         this.position = createVector(300, 400);
         this.velocity = createVector(this.max_force, 0);
 
@@ -9,6 +9,8 @@ class Agent {
         /******* SPRITE *******/
         this.size = 14;
         this.color = '#a0a';
+
+        this.wandertheta = 0;
     }
 
     followPath(path) {
@@ -17,7 +19,7 @@ class Agent {
             circle(futurePos.x, futurePos.y, 10);
         }
         if (p5.Vector.dist(futurePos, path.getScalarProjection(futurePos)) > path.getR()) {
-            const target = p5.Vector.add(path.getScalarProjection(futurePos), path.getDir().setMag(1));
+            const target = p5.Vector.add(path.getScalarProjection(futurePos), path.getDir().setMag(10));
             this.seek(target);
         } 
         
@@ -47,8 +49,7 @@ class Agent {
     }
 
     seek(target) {
-        if (menu.debug)
-            circle(target.x, target.y, 4);
+        if (menu.debug) circle(target.x, target.y, 4);
         const steering_direction = p5.Vector.sub(target, this.position);
         const steering_force = steering_direction.limit(this.MAX_FORCE);
         this.velocity = p5.Vector.add(this.velocity, steering_force).limit(this.MAX_SPEED);
@@ -63,11 +64,26 @@ class Agent {
     }
 
     wander() {
-        this.velocity = createVector(this.MAX_SPEED, cos(0.01*this.position.x)*10).limit(this.MAX_SPEED);
-        this.position = p5.Vector.add(this.position, this.velocity);
-        if (this.position.x > innerWidth) {
-            this.position.x = -20;
-            this.position.y = random(150,innerHeight-150);
+        this.MAX_SPEED = 4;
+        const wanderR = 30;         // Radius for our "wander circle"
+        const wanderD = 30;         // Distance for our "wander circle"
+        const change = 0.3;
+        this.wandertheta += random(-change,change);     // Randomly change wander theta
+
+        // Now we have to calculate the new position to steer towards on the wander circle
+        let circlepos = this.velocity.setMag(wanderD);    // Start with velocity
+        circlepos = p5.Vector.add(circlepos, this.position);               // Make it relative to boid's position
+
+        const h = this.velocity.heading();        // We need to know the heading to offset wandertheta
+
+        const circleOffSet = createVector(wanderR*cos(this.wandertheta),wanderR*sin(this.wandertheta));
+        this.seek(p5.Vector.add(circlepos,circleOffSet));
+
+        this.climpToBorders();
+
+        if (menu.debug) {
+            stroke(222)
+            circle(circlepos.x, circlepos.y , wanderR);
         }
     }
 
@@ -80,6 +96,13 @@ class Agent {
         triangle(-this.size, -this.size, this.size*2.5 , 0, -this.size, this.size); 
 
         pop(); 
+    }
+
+    climpToBorders() {
+        if (this.position.x < -100) this.position.x = innerWidth + 100;
+        if (this.position.x > innerWidth+100) this.position.x = -100;
+        if (this.position.y < -100) this.position.y = innerHeight + 100;
+        if (this.position.y > innerHeight+100) this.position.y = -100;
     }
 
     setPosition(newPosition) {

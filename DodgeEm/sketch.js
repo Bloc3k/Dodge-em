@@ -1,4 +1,7 @@
+const API_URL_GET = "https://games.nohavovi.cz/api/leaderboard";   //GET api url
+const API_URL_POST = "https://games.nohavovi.cz/api/update";   //POST api url
 var player;
+var leaderboard_json;
 var bullets = [];
 var lassers = [];
 var coin;
@@ -11,6 +14,7 @@ let skill_d;
 let stealth_s, coin_s, reset_s, gameover_s, click_s, placed_s, port_s;
 
 function preload() {
+  leaderboard_json = loadJSON(API_URL_GET);   //preload leaderboard
   stealth_s = loadSound("/DodgeEm/Assests/stelth.wav");
   coin_s = loadSound("/DodgeEm/Assests/pop.wav");
   reset_s = loadSound("/DodgeEm/Assests/pop1.wav");
@@ -21,17 +25,17 @@ function preload() {
 }
 
 function setup() {
-  document.cookie = "leaderboard=Yakub-69_LuckyBoy-31_PEPEE-21_OMEGALUL-19_KEKW-16_toddler-15_newbie-11_noob-7_rookie-6_pleb-3";
   createCanvas(innerWidth, innerHeight);
+  leaderboard = new Leaderboard(leaderboard_json);
   player = new Player();
   coin = new Coin();
-  leaderboard = new Leaderboard();
   reseter = new Reseter();
   skill_f = new Skills();
-
+  
   for (let i = 0; i < innerWidth*innerHeight / 121000; i++) { //11
     bullets[i] = new Bullet(i % 2);
   }
+
 }
 
 function draw() {
@@ -98,15 +102,14 @@ function draw() {
       text("Keep up <3", player.x, player.y);
     text("Press ESC to get back to main menu", innerWidth / 2 - 250, 40);
     text("Press Left Mouse button to play again", innerWidth / 2 - 250, 80);
-    //text("Try to collect as many coins as possible without dying", innerWidth/2 - 375, 120);
-    
+
     /*add new record*/
-    if (coin.coinCount > leaderboard.topten[leaderboard.topten.length - 1][1]) {
+    if (coin.coinCount > leaderboard.topten[leaderboard.topten.length - 1].score) {
       if (scoring) { 
         nickname = null;
         nickname = prompt("You're one of the best. You've earned a place in the Hell of Flame <3 \nMax length: 10 ", "What's your nickname, sir?");
         if (nickname != null) 
-        leaderboard.update(nickname.substring(0, 10), coin.coinCount);
+          leaderboard.update(nickname.substring(0, 10), coin.coinCount);
         scoring = false;
       }
     }

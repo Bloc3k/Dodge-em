@@ -42,51 +42,53 @@ class Leaderboard {
      * Public method to add new record to leaderboard.
      */
     update(name, score) {
-        const leaderboard = this.topten;
-        
-        /*find where to put new record, put it there and shift rest*/
-        let i = 0, shift = false, previousRow;
-        for (; i < this.topten.length + 1; i++) {
-            if (i == this.topten.length) {
-                if (previousRow == null)    /*add record at the end*/
+        this.fetch().then(()=> {
+            const leaderboard = this.topten;
+            
+            /*find where to put new record, put it there and shift rest*/
+            let i = 0, shift = false, previousRow;
+            for (; i < this.topten.length + 1; i++) {
+                if (i == this.topten.length) {
+                    if (previousRow == null)    /*add record at the end*/
                     this.topten.push([name, score]);
-                else                        /*shifting extends list*/
+                    else                        /*shifting extends list*/
                     this.topten.push(previousRow);
-                break;
-            } else {
-                if (shift == true) {                
-                    const temp = leaderboard[i];
-                    leaderboard[i] = previousRow;
-                    previousRow = temp;
-                }
-                if (score > leaderboard[i].score && shift == false) {    
-                    previousRow = leaderboard[i]; 
-                    leaderboard[i] = {"name":name, "score":score};
-                    shift = true;   /*shift all upcoming rows*/
+                    break;
+                } else {
+                    if (shift == true) {                
+                        const temp = leaderboard[i];
+                        leaderboard[i] = previousRow;
+                        previousRow = temp;
+                    }
+                    if (score > leaderboard[i].score && shift == false) {    
+                        previousRow = leaderboard[i]; 
+                        leaderboard[i] = {"name":name, "score":score};
+                        shift = true;   /*shift all upcoming rows*/
+                    }
                 }
             }
-        }
-
-        /*cromp back to 10 records*/
-        while (leaderboard.length > 10) {
-            leaderboard.pop();
-        }
-
-        /*update local leaderboard*/
-        this.topten = leaderboard;
-        
-        /*update remote leaderboard*/
-        this.save(leaderboard);
+            
+            /*cromp back to 10 records*/
+            while (leaderboard.length > 10) {
+                leaderboard.pop();
+            }
+            
+            /*update local leaderboard*/
+            this.topten = leaderboard;
+            
+            /*update remote leaderboard*/
+            this.save();
+        });
     }
 
     async fetch() {
         const response = await fetch(API_URL_GET);
-        const data = await response.json().then(loading = false).then(data=>{
+        const data = await response.json().then(data=>{
             this.topten = data.leaderboard;
         });
     }
 
-    save(leaderboard) {
+    save() {
         /*Encapsolate to original format*/
         const data = {leaderboard:this.topten};
 

@@ -13,10 +13,13 @@ class Skills {
         this.cooldown_to_place = 0;
         this.portalPlaced = false;
         this.portalPos = createVector(0, 0);
+        this.duration_Tel = 0.6; //duration of inv after teleport
+        this.effect_d = false;
+        this.effectTime_d = 0;
     }
 
     update(_use, _ready, player, _placed, _port) {
-        if (this.ready == false) {
+        if (this.ready == false) {              /*cooldown F*/
             this.cooldown += deltaTime/500;
             if (this.cooldown >= 13) {
                 this.ready = true;
@@ -25,24 +28,19 @@ class Skills {
             }
         }
         /*update D*/
-        if (this.ready_d == false) {
+        if (this.ready_d == false) {            /*after teleport placed*/
             this.cooldown_d += deltaTime/500;
             if (this.cooldown_d >= 2) {
                 this.ready_d = true;
             }
         }
-        if (this.ready_to_place == false) {
+        if (this.ready_to_place == false) {     /*after teleporting*/
             this.cooldown_to_place += deltaTime/500;
             if (this.cooldown_to_place >= 1) {
                 this.ready_to_place = true;
-                //----------- End of invincibility after teleporting ----------------
-                this.effect = false;
-                this.effectTime = 0;
-                this.duration = 3;         //Set this.duration back to original value
-                //-------------------------------------------------------------------
             }
         }
-        if (keyIsPressed) {
+        if (keyIsPressed) {         /*activation F*/
             if (key == 'f' && this.ready == true) {
                 _use.play();
                 this.effect = true;
@@ -50,15 +48,14 @@ class Skills {
                 this.cooldown = 0;
             }
         }
-        if (keyIsPressed) {
+        if (keyIsPressed) {         /*teleport*/
             if (this.portalPlaced == true && this.ready_d == true && key == 'd') {
                 _port.play();
                 _port.setVolume(0.1);
                 player.x = this.portalPos.x;
                 player.y = this.portalPos.y;
                 //--------- Invincibility after teleporting ------------
-                this.effect = true;
-                this.duration = 1;              // Changes this.duration
+                this.effect_d = true;
                 //------------------------------------------------------
                 this.portalPlaced = false;
                 this.ready_to_place = false;
@@ -71,6 +68,13 @@ class Skills {
                 this.cooldown_d = 0;
                 this.ready_d = false;
             } 
+        }
+        if (this.effect_d == true) {            // cooldown effect D
+            this.effectTime_d += deltaTime/500;
+            if (this.effectTime_d >= this.duration_Tel) {
+                this.effect_d = false;
+                this.effectTime_d = 0;
+            }
         }
         if (this.effect == true) {
             this.effectTime += deltaTime/500;

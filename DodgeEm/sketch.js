@@ -51,7 +51,7 @@ function draw() {
     for (let bullet of bullets) {
       bullet.draw();
       bullet.update();
-      if (skill_f.effect == false) { /*Not detecting if skill is on*/
+      if (skill_f.effect == false && skill_f.effect_d == false) { /*Not detecting if skill is on*/
         if (bullet.colision(player)){
           running = false;
           gameover_s.play();
@@ -68,6 +68,8 @@ function draw() {
     coin.draw();
     if (skill_f.effect == true)
       player.drawEffect(skill_f.duration, skill_f.effectTime);
+    else if (skill_f.effect_d)
+      player.drawEffect(skill_f.duration_Tel, skill_f.effectTime_d)
     else
       player.draw();
     player.update();

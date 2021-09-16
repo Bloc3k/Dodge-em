@@ -131,7 +131,3 @@ function draw() {
   coin.drawScore();
   skill_f.draw();
 }
-
-function newRecord() {
-  console.log(this.value);
-}

@@ -1,4 +1,4 @@
-let menu = {procedure:"followPath", debug: true};//Opetions: 'seek','arrive','followPath','wander'
+let menu = {procedure:"seek", debug: false};//Opetions: 'seek','arrive','followPath','wander'
 let agentsHandler;
 let target;
 let path;
@@ -36,7 +36,7 @@ function setup() {
 function draw() {
     background(33);
     
-    path.draw();
+    //path.draw();
     //path.setA(target.getPosition());
 
     //--- What procedure does Agant follow ---

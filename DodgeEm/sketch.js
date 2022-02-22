@@ -116,20 +116,26 @@ function draw() {
       }
     }
     
-    /*Restart game*/
-    if (mouseIsPressed) {
-      running = true;
-      coin.coinCount = 0;
-      player.reset();
-      bullets.forEach(function(entry) {
-        entry.reset();
-      });
-      skill_f.reset();
-    }
+    /*Game is restarted in mousePressed() function 
+      at the end of this file*/
+    
   }
   if (keyCode == 27)
     window.history.back();
 
   coin.drawScore();
   skill_f.draw();
+}
+
+/*Restart game*/
+function mousePressed() {
+  if (!running) {
+    running = true;
+    coin.coinCount = 0;
+    player.reset();
+    bullets.forEach(function(entry) {
+      entry.reset();
+    });
+    skill_f.reset();
+  }
 }

@@ -1,6 +1,6 @@
 # Yakubco Games
 
-This is a repository of a one man trying to learn something and entertain him and hopefully other people as well. The web environment was chosen for ease of distribution so people can see it. Real world application is running [games.nohavovi.cz](https://games.nohavovi.cz/).
+This is a repository of a one man trying to learn something and entertain himselve and hopefully other people as well. The web environment was chosen for ease of distribution so people can see it. Real world application is running on [games.nohavovi.cz](https://games.nohavovi.cz/).
 
 
 ## Content
@@ -8,7 +8,7 @@ This is a repository of a one man trying to learn something and entertain him an
 **1. Dodge 'em**
 
 - Truly skill-based game.
-- Goal is to collect as many as possible coins while avoiding moving projectiles.
+- Collect as many as possible coins while avoiding moving projectiles.
 - You have _"teleport"_ and short _"protection by higher forces"_ to your advantage but you will die anyway. 
 
 **2. Easy Little Puzzle**

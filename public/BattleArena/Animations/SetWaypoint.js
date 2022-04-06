@@ -4,7 +4,7 @@
  class SetWaypoint extends Animation {
     constructor() {  
         super(8);
-        this.size = 40;
+        this.size = 20;
     }
 
     draw() {
@@ -12,7 +12,7 @@
             push();
             noFill();
             stroke(50, 200, 50, 100);
-            strokeWeight(4);
+            strokeWeight(2);
             circle(this.pos.x, this.pos.y, this.size - this.counter*3);
             pop();
         }

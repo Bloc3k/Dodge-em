@@ -33,8 +33,10 @@ function setup() {
 function draw() {
     background(33);
 
-    summoner.draw();
+    animator.animate();
+    
     summoner.update();
+    summoner.draw();
     for (const enemy in enemies) {
         enemies[enemy].draw()
         enemies[enemy].update()
@@ -43,9 +45,8 @@ function draw() {
         allies[ally].draw()
         allies[ally].update()
     } 
+    
 
-    animator.animate();
-  
     if (keyCode == 27)
         window.history.back();
 }

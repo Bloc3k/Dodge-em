@@ -3,7 +3,7 @@
  */
 class ConnectionLost extends Animation {
     constructor() {  
-        super(500);
+        super(25000);
     }
 
     draw() {
@@ -19,7 +19,4 @@ class ConnectionLost extends Animation {
         }
     }
 
-    stop() {
-        this.reset();
-    }
 }

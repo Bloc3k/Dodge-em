@@ -8,6 +8,11 @@ const enemies = {};
 
 let animator;
 
+function preload() {
+    glove_blue = loadImage('/BattleArena/Assets/glove_blue.png');
+    glove_red = loadImage('/BattleArena/Assets/glove_red.png');
+}
+
 function setup() {
     createCanvas(innerWidth, innerHeight);
 
@@ -38,12 +43,12 @@ function draw() {
     summoner.update();
     summoner.draw();
     for (const enemy in enemies) {
-        enemies[enemy].draw()
         enemies[enemy].update()
+        enemies[enemy].draw()
     }
     for (const ally in allies) {
-        allies[ally].draw()
         allies[ally].update()
+        allies[ally].draw()
     } 
     
 
@@ -55,5 +60,9 @@ function mousePressed() {
     if(mouseButton === RIGHT) {
         summoner.setWaypoint(mouseX, mouseY);
     }
+}
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
 }
 

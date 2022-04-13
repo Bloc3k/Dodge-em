@@ -10,8 +10,10 @@ class Player {
     }
 
     update() {
-        if (keyIsPressed && keyCode == 83)      // 's' has keyCode of 83
+        if (keyIsPressed && keyCode == 83) {      // 's' has keyCode of 83
             this.waypoint.set(this.pos.x, this.pos.y);
+            animator.SetWaypoint.stop();
+        }
         const direction = p5.Vector.sub(this.waypoint, this.pos);
         this.heading = createVector(mouseX - this.pos.x, mouseY - this.pos.y).heading() + PI/2;
         this.pos.add(direction.limit(this.speed * deltaTime));
@@ -31,7 +33,7 @@ class Player {
      */
     setWaypoint(x, y) {
         this.waypoint.set(x, y);
-        send_waypoint_update();
+        send_update();
         animator.SetWaypoint.start(x, y)
     }
 
@@ -52,10 +54,17 @@ class Summoner extends Player {
             image(glove_blue, 0 , -45);
         pop();
     }
-
 }
 
 class Enemy extends Player {
+    /**
+     * Constructor of Enemy object.
+     * @param {float} x 
+     * @param {float} y 
+     * @param {Socket.id} id 
+     * @param {float} speed 
+     * @param {String} color 
+     */
     constructor(x, y, id, speed = 0.3, color = '#f33') {
         super(x, y, id, speed, color);
     }

@@ -1,11 +1,13 @@
 const PORT = 60606;
 const IP = "127.0.0.1";
+const FRAME_RATE = 60;
 let socket;
 
 let summoner;
 const allies = {};
 const enemies = {};
 
+let gameState;
 let animator;
 
 function preload() {
@@ -15,6 +17,7 @@ function preload() {
 
 function setup() {
     createCanvas(innerWidth, innerHeight);
+    frameRate(FRAME_RATE);
 
     socket = io('localhost:60606', {
         transports: ['websocket'],
@@ -23,11 +26,11 @@ function setup() {
 
     summoner = new Summoner(innerWidth/2, innerHeight/2, socket.id);
     animator = new Animator();
+    gameState = new GameState();
 
-    socket.on('player login', player_login);
-    socket.on('new player', add_new_player);
-    socket.on('player logoff', player_logoff);
-    socket.on('waypoint update', waypoint_update);
+    // ---------- Receving API -----------
+    socket.on('UPDATE', update);
+    // -----------------------------------
     
     send_login();
 

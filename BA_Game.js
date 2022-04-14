@@ -99,8 +99,8 @@ class Player {
 		this.id = socket.id;
     this.waypoint_x = waypoint_x;
     this.waypoint_y = waypoint_y;
-    this.heading = NaN  // TODO: Work in headigs
-    this.hp = 100;    // TODO: Working with HP
+    this.heading = NaN;   // Initialized be client
+    this.hp = 100;
     this.socket = socket;
 	}
 

@@ -1,15 +1,12 @@
 const PORT = 60606;
 const IP = "127.0.0.1";
 const FRAME_RATE = 60;
+
 let socket;
-
-let summoner;
-const allies = {};
-const enemies = {};
-
 let gameState;
 let animator;
 
+let player;
 let playing = false;
 
 function preload() {
@@ -26,9 +23,9 @@ function setup() {
         forceNode: true,
     });
 
-    summoner = new Summoner(innerWidth/2, innerHeight/2, socket.id);
     animator = new Animator();
     gameState = new GameState();
+    player = new Player();
 
     // ---------- Receving API -----------
     socket.on('UPDATE', update);
@@ -42,33 +39,32 @@ function setup() {
 function draw() {
     background(33);
 
-    animator.animate();
-    
+    // If playing Render current game state and send UPDATE to server
     if (playing) {
-        summoner.update();
-        summoner.draw();
+        render();
+        player.heading = createVector(gameState.getCurrentState().me.pos.x - mouseX, gameState.getCurrentState().me.pos.y - mouseY).heading() - PI/2;
         send_update();
     }
-    for (const enemy in enemies) {
-        enemies[enemy].update()
-        enemies[enemy].draw()
-    }
-    for (const ally in allies) {
-        allies[ally].update()
-        allies[ally].draw()
-    } 
 
+    // Hitting 'Esc' will take browser back in history
     if (keyCode == 27)
         window.history.back();
 }
 
 function mousePressed() {
     if(mouseButton === RIGHT) {
-        summoner.setWaypoint(mouseX, mouseY);
+        player.waypoint.set(mouseX, mouseY);
     }
 }
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
+}
+
+class Player {
+    constructor() {
+        this.waypoint = createVector(0,0);
+        this.heading = 0;
+    }
 }
 

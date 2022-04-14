@@ -18,8 +18,8 @@ function update(newState) {
  */
 function send_update() {
     const payload = {
-        "waypoint": {"x": summoner.waypoint.x, "y": summoner.waypoint.y},
-        "heading": summoner.heading
+        "waypoint": {"x": player.waypoint.x, "y": player.waypoint.y},
+        "heading": player.heading
     }
     socket.emit('UPDATE', payload);
 }

@@ -4,17 +4,6 @@ function render() {
     // Animate effects
     animator.animate();
 
-    // Render me
-    push();
-        translate(me.pos.x, me.pos.y);
-        rotate(me.heading);
-        fill('#33f');
-        circle(0, 0, 40);  // Body
-        image(glove_blue, 0, -45);  // Right glove
-        scale(-1, 1);
-        image(glove_blue, 0, -45);  // Left glove
-    pop();
-
     // Render enemies
     for (const enemy of enemies) {
         push();
@@ -22,9 +11,9 @@ function render() {
             rotate(enemy.heading);
             fill('#f33');
             circle(0, 0, 40);  // Body
-            image(glove_blue, 0, -45);  // Right glove
+            image(glove_red, 0, -45);  // Right glove
             scale(-1, 1);
-            image(glove_blue, 0, -45);  // Left glove
+            image(glove_red, 0, -45);  // Left glove
         pop();
     }
 
@@ -40,5 +29,16 @@ function render() {
             image(glove_blue, 0, -45);  // Left glove
         pop();
     }
+
+    // Render me
+    push();
+        translate(me.pos.x, me.pos.y);
+        rotate(me.heading);
+        fill('#33f');
+        circle(0, 0, 40);  // Body
+        image(glove_blue, 0, -45);  // Right glove
+        scale(-1, 1);
+        image(glove_blue, 0, -45);  // Left glove
+    pop();
 
 }

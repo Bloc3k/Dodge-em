@@ -13,9 +13,9 @@ var soc = socket(server);
 
 
 soc.on('connection', socket => {
+	console.log('New connection: ' + socket.id);
 	// ---------------------- API ------------------------
 	socket.on('UPDATE', player_update);
-	socket.on('LOGIN', player_login);
 	socket.on('disconnect', onDisconnect);
 	// ---------------------------------------------------
 });
@@ -32,13 +32,6 @@ const game = new Game();
  */
 function player_update(newPlayerState) {
 	game.player_update(this, newPlayerState);
-}
-
-/**
- * Called when some player wants to join the game. New Tab opened.
- */
-function player_login() {
-	game.player_login(this);
 }
 
 /**

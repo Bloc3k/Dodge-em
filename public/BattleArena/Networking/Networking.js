@@ -13,23 +13,13 @@ function update(newState) {
 // over the client code. And has to be handled in server API section.
 
 /**
- * Send server login request.
- */
- function send_login() {
-    const payload = {
-        x: summoner.pos.x,
-        y: summoner.pos.y
-    }
-    socket.emit('LOGIN', {payload});
-}
-/**
  * Send updated players waypoint to server.
  * Is called from setWaypoint() in Player class.
  */
 function send_update() {
     const payload = {
-        x: summoner.waypoint.x,
-        y: summoner.waypoint.y
+        "waypoint": {"x": summoner.waypoint.x, "y": summoner.waypoint.y},
+        "heading": summoner.heading
     }
     socket.emit('UPDATE', payload);
 }

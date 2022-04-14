@@ -30,11 +30,9 @@ function setup() {
 
     // ---------- Receving API -----------
     socket.on('UPDATE', update);
-    // -----------------------------------
-    
-    send_login();
+    // -----------------------------------  
 
-    //Disables right click's default context menu
+    // Disables right click's default context menu
     document.addEventListener('contextmenu', event => event.preventDefault()); 
 }
 
@@ -45,6 +43,7 @@ function draw() {
     
     summoner.update();
     summoner.draw();
+    send_update();
     for (const enemy in enemies) {
         enemies[enemy].update()
         enemies[enemy].draw()
@@ -53,7 +52,6 @@ function draw() {
         allies[ally].update()
         allies[ally].draw()
     } 
-    
 
     if (keyCode == 27)
         window.history.back();

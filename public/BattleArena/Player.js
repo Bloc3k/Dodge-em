@@ -15,7 +15,6 @@ class Player {
             animator.SetWaypoint.stop();
         }
         const direction = p5.Vector.sub(this.waypoint, this.pos);
-        this.heading = createVector(mouseX - this.pos.x, mouseY - this.pos.y).heading() + PI/2;
         this.pos.add(direction.limit(this.speed * deltaTime));
     }
 
@@ -33,15 +32,20 @@ class Player {
      */
     setWaypoint(x, y) {
         this.waypoint.set(x, y);
-        send_update();
         animator.SetWaypoint.start(x, y)
     }
 
 }
 
 class Summoner extends Player {
+    // Max speed is also set in Game object in BA_Game.js
     constructor(x, y, id, speed = 0.3, color = '#33f') {
         super(x, y, id, speed, color);
+    }
+
+    update() {
+        super.update();
+        this.heading = createVector(mouseX - this.pos.x, mouseY - this.pos.y).heading() + PI/2;
     }
 
     draw() {
@@ -66,6 +70,7 @@ class Enemy extends Player {
      * @param {String} color 
      */
     constructor(x, y, id, speed = 0.3, color = '#f33') {
+        // Max speed is also set in Game object in BA_Game.js
         super(x, y, id, speed, color);
     }
 
@@ -82,6 +87,7 @@ class Enemy extends Player {
 }
 
 class Ally extends Player {
+    // Max speed is also set in Game object in BA_Game.js
     constructor(x, y, id, speed = 0.3, color = '#3f3') {
         super(x, y, id, speed, color);
     }

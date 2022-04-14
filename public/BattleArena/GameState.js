@@ -16,6 +16,7 @@ class GameState {
         for (const enemy of newState.enemies) {
             enemies[enemy.id] = new Enemy(enemy.pos.x, enemy.pos.y, enemy.id);
             enemies[enemy.id].waypoint.set(enemy.waypoint.x, enemy.waypoint.y);
+            enemies[enemy.id].heading = enemy.heading;
         }
 
         // Update allies
@@ -29,6 +30,7 @@ class GameState {
         // Update player
         summoner.pos.set(newState.me.pos.x, newState.me.pos.y);
         summoner.waypoint.set(newState.me.waypoint.x, newState.me.waypoint.y);
+        summoner.heading = newState.me.heading;
 
     }
 

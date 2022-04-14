@@ -30,6 +30,7 @@ function setup() {
     // ---------- Receving API -----------
     socket.on('UPDATE', update);
     // -----------------------------------  
+
     send_update();
 
     // Disables right click's default context menu
@@ -54,6 +55,7 @@ function draw() {
 function mousePressed() {
     if(mouseButton === RIGHT) {
         player.waypoint.set(mouseX, mouseY);
+        animator.SetWaypoint.start(mouseX, mouseY);
     }
 }
 
@@ -63,8 +65,9 @@ function windowResized() {
 
 class Player {
     constructor() {
-        this.waypoint = createVector(0,0);
-        this.heading = 0;
+        this.pos = createVector(Math.random()*500 + 100, Math.random()*300 + 100);
+        this.waypoint = createVector(this.pos.x, this.pos.y);
+        this.heading = createVector(this.pos.x - mouseX, this.pos.y - mouseY).heading() - PI/2;
     }
 }
 

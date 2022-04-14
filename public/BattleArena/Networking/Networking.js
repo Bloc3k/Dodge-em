@@ -18,6 +18,7 @@ function update(newState) {
  */
 function send_update() {
     const payload = {
+        "pos": {"x": player.pos.x, "y": player.pos.y},
         "waypoint": {"x": player.waypoint.x, "y": player.waypoint.y},
         "heading": player.heading
     }

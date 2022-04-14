@@ -10,6 +10,12 @@ class GameState {
     gameUpdate(newState) {
         this.lastGameState = newState;
 
+        if (newState.me.hp > 0) {
+            playing = true;
+        } else {
+            playing = false;
+        }
+
         // Update enemies
         for (const id in enemies)   
             delete enemies[id];

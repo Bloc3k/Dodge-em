@@ -35,12 +35,11 @@ class Game {
   
       // Server-side calculation
       for (const id in this.players) {
-        
-        //let player = this.players[id];
-        // const direction = new Vec2(player.waypoint_x - player.x, player.waypoint_y - player.y);
-        // direction.constrain(this.MAX_SPEED);
-        // player.x += direction.x;
-        // player.y += direction.y;
+        let player = this.players[id];
+        const direction = new Vec2(player.waypoint_x - player.x, player.waypoint_y - player.y);
+        //direction.constrain(this.MAX_SPEED);
+        player.x += direction.x;
+        player.y += direction.y;
       }
 
       // Send new state to players
@@ -101,7 +100,7 @@ class Player {
     this.waypoint_x = waypoint_x;
     this.waypoint_y = waypoint_y;
     this.heading = NaN  // TODO: Work in headigs
-    this.hp = NaN;    // TODO: Working with HP
+    this.hp = 100;    // TODO: Working with HP
     this.socket = socket;
 	}
 

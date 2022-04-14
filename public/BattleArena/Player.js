@@ -14,14 +14,15 @@ class Player {
             this.waypoint.set(this.pos.x, this.pos.y);
             animator.SetWaypoint.stop();
         }
-        const direction = p5.Vector.sub(this.waypoint, this.pos);
-        this.pos.add(direction.limit(this.speed * deltaTime));
+        //const direction = p5.Vector.sub(this.waypoint, this.pos);
+        //this.pos.add(direction.limit(this.speed * deltaTime));
     }
 
     draw() {
         push();
             translate(this.pos.x, this.pos.y);
-            rotate(this.heading);
+            print(gameState)
+            rotate(gameState.getCurrentState().me.heading);
             fill(this.color);
             circle(0, 0, this.weight);
         pop();

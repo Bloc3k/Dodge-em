@@ -10,6 +10,8 @@ const enemies = {};
 let gameState;
 let animator;
 
+let playing = false;
+
 function preload() {
     glove_blue = loadImage('/BattleArena/Assets/glove_blue.png');
     glove_red = loadImage('/BattleArena/Assets/glove_red.png');
@@ -31,6 +33,7 @@ function setup() {
     // ---------- Receving API -----------
     socket.on('UPDATE', update);
     // -----------------------------------  
+    send_update();
 
     // Disables right click's default context menu
     document.addEventListener('contextmenu', event => event.preventDefault()); 
@@ -41,9 +44,11 @@ function draw() {
 
     animator.animate();
     
-    summoner.update();
-    summoner.draw();
-    send_update();
+    if (playing) {
+        summoner.update();
+        summoner.draw();
+        send_update();
+    }
     for (const enemy in enemies) {
         enemies[enemy].update()
         enemies[enemy].draw()

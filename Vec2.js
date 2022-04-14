@@ -50,8 +50,12 @@ class Vec2 {
       } else {
         return vec1;
       }
-  }
-  
+    }
+
+    static distance(vec1, vec2) {
+        return new Vec2(vec1.x - vec2.x, vec1.y - vec2.y).len();
+    }
+
   }
 
   module.exports = Vec2;

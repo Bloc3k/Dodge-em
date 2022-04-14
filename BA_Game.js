@@ -39,9 +39,11 @@ class Game {
       // Calculate new player positions
       for (const id in this.players) {
         let player = this.players[id];
-        const direction = Vec2.subtract(player.waypoint, player.pos);
-        const movement = Vec2.constrain(direction, this.MAX_SPEED);
-        player.pos = Vec2.add(player.pos, movement);
+        if (Vec2.distance(player.pos, player.waypoint) > 2) {
+          const direction = Vec2.subtract(player.waypoint, player.pos);
+          const movement = Vec2.constrain(direction, this.MAX_SPEED);
+          player.pos = Vec2.add(player.pos, movement);
+        }
       }
 
       // Send new state to players

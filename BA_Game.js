@@ -8,14 +8,43 @@ class Game {
       this.shouldSendUpdate = false;
       setInterval(this.update.bind(this), 1000 / 60);
     }
-
-    check_player_exist(socket) {
+    
+    update() {
       
-    }
+      // Calculate time elapsed
+      const now = Date.now();
+      const dt = (now - this.lastUpdateTime) / 1000;
+      this.lastUpdateTime = now;
+      
+      // ----------------- Server-side calculation --------------------
 
+      // Calculate new player positions
+      for (const id in this.players) {
+        let player = this.players[id];
+        if (Vec2.distance(player.pos, player.waypoint) > 2) {
+          const direction = Vec2.subtract(player.waypoint, player.pos);
+          const movement = Vec2.constrain(direction, this.MAX_SPEED);
+
+          // Move player
+          player.pos = Vec2.add(player.pos, movement);
+        }
+
+      }
+      // --------------------------------------------------------------
+      
+      // Send new state to players
+      for (const id in this.players) {
+        this.players[id].socket.emit('UPDATE', this.getCurrentState(this.players[id]));
+      }
+    }
+    
+    /**
+     * Called when some player sends new State.
+     * @param {io.socket} socket 
+     * @param {State} newState 
+     */
     player_update(socket, newState) {
       // Check if player exist and create one if not
-
       if (socket.id in this.players) {
         // Update player properties
         let player = this.players[socket.id];
@@ -27,29 +56,6 @@ class Game {
         this.players[socket.id] = new Player(newState.pos.x, newState.pos.y, newState.pos.x, newState.pos.y, socket);
         this.players[socket.id].heading = newState.heading;
       }    
-    }
-
-    update() {
-      // Calculate time elapsed
-      const now = Date.now();
-      const dt = (now - this.lastUpdateTime) / 1000;
-      this.lastUpdateTime = now;
-  
-      // Server-side calculation
-      // Calculate new player positions
-      for (const id in this.players) {
-        let player = this.players[id];
-        if (Vec2.distance(player.pos, player.waypoint) > 2) {
-          const direction = Vec2.subtract(player.waypoint, player.pos);
-          const movement = Vec2.constrain(direction, this.MAX_SPEED);
-          player.pos = Vec2.add(player.pos, movement);
-        }
-      }
-
-      // Send new state to players
-      for (const id in this.players) {
-        this.players[id].socket.emit('UPDATE', this.getCurrentState(this.players[id]));
-      }
     }
 
     /**
@@ -103,6 +109,7 @@ class Player {
     this.waypoint = new Vec2(waypoint_x, waypoint_y);
     this.heading = NaN;   // Initialized be client
     this.hp = 100;
+    this.size = 40;
     this.socket = socket;
 	}
 
@@ -116,7 +123,8 @@ class Player {
       "pos": {"x": this.pos.x, "y": this.pos.y},
       "waypoint": {"x": this.waypoint.x, "y": this.waypoint.y},
       "heading": this.heading,
-      "hp": this.hp
+      "hp": this.hp,
+      "size": this.size
     }
   }
 }

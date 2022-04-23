@@ -28,11 +28,12 @@ class Game {
       // Calculate new player positions
       for (const id in this.players) {
         let me = this.players[id];
-        if (Vec2.distance(me.pos, me.waypoint) > 3) {
+        if (Vec2.distance(me.pos, me.waypoint) > 2) {
           // Movement
           let direction = Vec2.subtract(me.waypoint, me.pos);
           let movement = Vec2.constrain(direction, this.MAX_SPEED);
           me.pos = Vec2.add(me.pos, movement);
+          me.heading = me.pos.subtract(me.waypoint).heading() - Math.PI/2;
           
           // Handle collision with other players
           for (const id in this.players) {
@@ -47,6 +48,7 @@ class Game {
                 // Move other player and me by half of penetration depth
                 other_player.pos = other_player.pos.add(movement);
                 me.pos = me.pos.add(movement.multiply(-1));
+                
               }
             }
           }
@@ -103,13 +105,11 @@ class Game {
         let player = this.players[socket.id];
         player.waypoint.x = newState.waypoint.x;
         player.waypoint.y = newState.waypoint.y;
-        player.heading = newState.heading;
         player.punchLeft = newState.punchLeft;
         player.punchRight = newState.punchRight;
       } else {
         // Add new player to Database
         this.players[socket.id] = new Player(newState.pos.x, newState.pos.y, newState.pos.x, newState.pos.y, socket);
-        this.players[socket.id].heading = newState.heading;
       }    
     }
 

@@ -6,11 +6,11 @@ const Vec2 = require('./Vec2');
  class Player {
 	constructor(x, y, waypoint_x, waypoint_y, socket) {
 		this.pos = new Vec2(x, y);
-		this.id = socket.id;
     this.waypoint = new Vec2(waypoint_x, waypoint_y);
-    this.heading = NaN;   // Initialized be client
+    this.heading = this.pos.subtract(this.waypoint).heading() - Math.PI/2;  
     this.hp = 100;
     this.size = 40;
+		this.id = socket.id;
     this.socket = socket;
     this.punchLeft = false;
     this.punchRight = false;

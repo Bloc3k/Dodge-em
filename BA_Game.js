@@ -20,15 +20,30 @@ class Game {
 
       // Calculate new player positions
       for (const id in this.players) {
-        let player = this.players[id];
-        if (Vec2.distance(player.pos, player.waypoint) > 2) {
-          const direction = Vec2.subtract(player.waypoint, player.pos);
-          const movement = Vec2.constrain(direction, this.MAX_SPEED);
-
-          // Move player
-          player.pos = Vec2.add(player.pos, movement);
+        let me = this.players[id];
+        if (Vec2.distance(me.pos, me.waypoint) > 3) {
+          let direction = Vec2.subtract(me.waypoint, me.pos);
+          let movement = Vec2.constrain(direction, this.MAX_SPEED);
+          // Move me
+          me.pos = Vec2.add(me.pos, movement);
+          
+          // Handle collision with other players
+          for (const id in this.players) {
+            let other_player = this.players[id];
+            if (other_player != me) {
+              // Check if me would coline with other player
+              if (me.collide(other_player)) {
+                // Move both away from each other
+                const vec_between_players = Vec2.subtract(other_player.pos, me.pos);
+                const penetration_depth = me.size/2 + other_player.size/2 - vec_between_players.len();
+                movement = vec_between_players.setLength(penetration_depth/2);
+                // Move other player and me by half of penetration depth
+                other_player.pos = other_player.pos.add(movement);
+                me.pos = me.pos.add(movement.multiply(-1));
+              }
+            }
+          }
         }
-
       }
       // --------------------------------------------------------------
       
@@ -112,6 +127,14 @@ class Player {
     this.size = 40;
     this.socket = socket;
 	}
+
+  /**
+   * Check for colision with other player.
+   * @param {Player} other_player 
+   */
+  collide(other_player) {
+    return Vec2.distance(this.pos, other_player.pos) <= (other_player.size/2 + this.size/2);
+  }
 
   /**
    * Serialize player to JSON format.

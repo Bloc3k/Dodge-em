@@ -18,7 +18,7 @@ function setup() {
     createCanvas(innerWidth, innerHeight);
     frameRate(FRAME_RATE);
 
-    socket = io('localhost:60606', {
+    socket = io(`${IP}:${PORT}`, {
         transports: ['websocket'],
         forceNode: true,
     });
@@ -56,6 +56,13 @@ function mousePressed() {
     if(mouseButton === RIGHT) {
         player.waypoint.set(mouseX, mouseY);
         animator.SetWaypoint.start(mouseX, mouseY);
+    }
+}
+
+function keyPressed() {
+    if(keyCode == 83) { // 's' = 83
+        player.waypoint.set(gameState.getCurrentState().me.pos);
+        animator.SetWaypoint.stop();
     }
 }
 

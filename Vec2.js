@@ -148,6 +148,15 @@ class Vec2 {
       return me_norm.multiply(length);
     }
 
+    set(x, y) {
+      this.x = x;
+      this.y = y;
+    }
+
+    heading() {
+      return Math.atan2(this.y, this.x);
+    }
+
   }
 
   module.exports = Vec2;

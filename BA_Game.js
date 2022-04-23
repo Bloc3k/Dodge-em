@@ -1,4 +1,5 @@
 const Vec2 = require('./Vec2');
+const Player = require('./Player');
 
 class Game {
     constructor() {
@@ -6,6 +7,12 @@ class Game {
       this.players = {};
       this.lastUpdateTime = Date.now();
       this.shouldSendUpdate = false;
+      //--------------------------- Dummy ------------------------
+      this.players['dummy_stay'] = new Player(800, 100, 800, 100, NaN);
+      this.players['dummy_stay_moveble'] = new Player(200, 100, 800, 100, NaN);
+      this.players['dummy_horizont'] = new Player(100, 150, 1200, 150, NaN);
+      this.players['dummy_vertical'] = new Player(150, 250, 150, 800, NaN);
+      //-----------------------------------------------------------
       setInterval(this.update.bind(this), 1000 / 60);
     }
     
@@ -45,11 +52,35 @@ class Game {
           }
         }
       }
+      // --------- Dummies ----------
+      let dummy_h = this.players['dummy_horizont'];
+      
+      if (dummy_h.pos.x < 150) {
+        dummy_h.waypoint.set(1200, 150);
+        dummy_h.heading = dummy_h.pos.subtract(dummy_h.waypoint).heading() - Math.PI/2;
+      } else if (dummy_h.pos.x > 1150) {
+        dummy_h.waypoint.set(100, 150);
+        dummy_h.heading = dummy_h.pos.subtract(dummy_h.waypoint).heading() - Math.PI/2;
+      }
+      
+      let dummy_v = this.players['dummy_vertical'];
+      if (dummy_v.pos.y < 270) {
+        dummy_v.waypoint.set(150, 800);
+        dummy_v.heading = dummy_v.pos.subtract(dummy_v.waypoint).heading() - Math.PI/2;
+      } else if (dummy_v.pos.y > 770) {
+        dummy_v.waypoint.set(150, 250);
+        dummy_v.heading = dummy_v.pos.subtract(dummy_v.waypoint).heading() - Math.PI/2;
+      }
+
+      let dummy_s = this.players['dummy_stay_moveble'];
+      dummy_s.waypoint.set(dummy_s.pos.x,dummy_s.pos.y);
+
       // --------------------------------------------------------------
       
       // Send new state to players
       for (const id in this.players) {
-        this.players[id].socket.emit('UPDATE', this.getCurrentState(this.players[id]));
+        if (!id.includes('dummy'))
+          this.players[id].socket.emit('UPDATE', this.getCurrentState(this.players[id]));
       }
     }
     
@@ -114,42 +145,6 @@ class Game {
     }
 }  
 
-/**
- * Class for holding server information about each player.
- */
-class Player {
-	constructor(x, y, waypoint_x, waypoint_y, socket) {
-		this.pos = new Vec2(x, y);
-		this.id = socket.id;
-    this.waypoint = new Vec2(waypoint_x, waypoint_y);
-    this.heading = NaN;   // Initialized be client
-    this.hp = 100;
-    this.size = 40;
-    this.socket = socket;
-	}
 
-  /**
-   * Check for colision with other player.
-   * @param {Player} other_player 
-   */
-  collide(other_player) {
-    return Vec2.distance(this.pos, other_player.pos) <= (other_player.size/2 + this.size/2);
-  }
-
-  /**
-   * Serialize player to JSON format.
-   * @returns Serialized player
-   */
-  serialize() {
-    return {
-      "id": this.id,
-      "pos": {"x": this.pos.x, "y": this.pos.y},
-      "waypoint": {"x": this.waypoint.x, "y": this.waypoint.y},
-      "heading": this.heading,
-      "hp": this.hp,
-      "size": this.size
-    }
-  }
-}
 
 module.exports = Game;

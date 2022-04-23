@@ -61,8 +61,11 @@ function mousePressed() {
 
 function keyPressed() {
     if(keyCode == 83) { // 's' = 83
-        player.waypoint.set(gameState.getCurrentState().me.pos);
+        // Important to set waypoint this way. Other wise it uses reference and updates in future as well.
+        const pos = gameState.getCurrentState().me.pos;
+        player.waypoint.set(pos.x, pos.y);
         animator.SetWaypoint.stop();
+        keyCode = 0;
     }
 }
 

@@ -12,6 +12,8 @@ const Vec2 = require('./Vec2');
     this.hp = 100;
     this.size = 40;
     this.socket = socket;
+    this.punchLeft = false;
+    this.punchRight = false;
 	}
 
   /**
@@ -33,7 +35,9 @@ const Vec2 = require('./Vec2');
       "waypoint": {"x": this.waypoint.x, "y": this.waypoint.y},
       "heading": this.heading,
       "hp": this.hp,
-      "size": this.size
+      "size": this.size,
+      "punchLeft": this.punchLeft,
+      "punchRight": this.punchRight
     }
   }
 }

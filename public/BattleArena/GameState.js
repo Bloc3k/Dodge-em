@@ -35,7 +35,10 @@ class GameState {
  *          "id": <id>
  *          "pos": {"x": <pos.x>, "y": <pos.y>},
  *          "heading": <rad>,
- *          "hp": <hp>
+ *          "hp": <hp>,
+ *          "size": this.size,
+ *          "punchLeft": this.punchLeft,
+ *          "punchRight": this.punchRight
  *      },
  *      "enemies": [
  *          {
@@ -43,7 +46,10 @@ class GameState {
  *              "pos": {"x": <pos.x>, "y": <pos.y>},
  *              "waypoint": {"x": <pos.x>, "y": <pos.y>},
  *              "heading": this.heading,
- *              "hp": <hp>
+ *              "hp": <hp>,
+ *              "size": this.size,
+ *              "punchLeft": this.punchLeft,
+ *              "punchRight": this.punchRight
  *          }    
  *      ],
  *      "allies": []

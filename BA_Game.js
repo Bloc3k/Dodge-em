@@ -29,9 +29,9 @@ class Game {
       for (const id in this.players) {
         let me = this.players[id];
         if (Vec2.distance(me.pos, me.waypoint) > 3) {
+          // Movement
           let direction = Vec2.subtract(me.waypoint, me.pos);
           let movement = Vec2.constrain(direction, this.MAX_SPEED);
-          // Move me
           me.pos = Vec2.add(me.pos, movement);
           
           // Handle collision with other players
@@ -50,6 +50,13 @@ class Game {
               }
             }
           }
+
+          // Melee attack
+          if (me.punchLeft) {
+            //check hitbox
+          } 
+
+        
         }
       }
       // --------- Dummies ----------
@@ -97,6 +104,8 @@ class Game {
         player.waypoint.x = newState.waypoint.x;
         player.waypoint.y = newState.waypoint.y;
         player.heading = newState.heading;
+        player.punchLeft = newState.punchLeft;
+        player.punchRight = newState.punchRight;
       } else {
         // Add new player to Database
         this.players[socket.id] = new Player(newState.pos.x, newState.pos.y, newState.pos.x, newState.pos.y, socket);

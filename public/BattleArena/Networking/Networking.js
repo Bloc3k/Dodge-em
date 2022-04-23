@@ -20,7 +20,13 @@ function send_update() {
     const payload = {
         "pos": {"x": player.pos.x, "y": player.pos.y},
         "waypoint": {"x": player.waypoint.x, "y": player.waypoint.y},
-        "heading": player.heading
+        "heading": player.heading,
+        "punchLeft": player.punchLeft,
+        "punchRight": player.punchRight
     }
     socket.emit('UPDATE', payload);
+
+    // Punch only on one key press
+    player.punchLeft = false;
+    player.punchRight = false;
 }

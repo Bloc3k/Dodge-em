@@ -60,13 +60,23 @@ function mousePressed() {
 }
 
 function keyPressed() {
-    if(keyCode == 83) { // 's' = 83
+    const me = gameState.getCurrentState().me;
+
+    if (keyCode == 83) {        // 's' = 83
         // Important to set waypoint this way. Other wise it uses reference and updates in future as well.
-        const pos = gameState.getCurrentState().me.pos;
-        player.waypoint.set(pos.x, pos.y);
+        player.waypoint.set(me.pos.x, me.pos.y);
         animator.SetWaypoint.stop();
         keyCode = 0;
+    } else if (keyCode == 68) {     // 'd' = 68
+        // Right hand punch
+        player.punchRight = true;   // Reset to false after sending update state to server, Networking.send_update()
+        animator.Punch.start(false, true);
+    } else if (keyCode == 70) {
+        // Left hand punch
+        player.punchLeft = true;    // Reset to false after sending update state to server, Networking.send_update()
+        animator.Punch.start(true, false);
     }
+        
 }
 
 function windowResized() {
@@ -78,6 +88,8 @@ class Player {
         this.pos = createVector(Math.random()*500 + 100, Math.random()*300 + 100);
         this.waypoint = createVector(this.pos.x, this.pos.y);
         this.heading = createVector(this.pos.x - mouseX, this.pos.y - mouseY).heading() - PI/2;
+        this.punchLeft = false;
+        this.punchRight = false;
     }
 }
 

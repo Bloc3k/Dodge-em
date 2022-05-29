@@ -14,6 +14,11 @@ const Vec2 = require('./Vec2');
     this.socket = socket;
     this.punchLeft = false;
     this.punchRight = false;
+    // Spell Cooldowns
+    this.COOLDOWN = 3;
+    this.isSpellUp = false;
+    this.cast = false;   // True when wants to cast
+    this.cast_direction = null;   // Set in player_update, from player updateded state
 	}
 
   /**

@@ -1,5 +1,5 @@
 function render() {
-    const {me, enemies, allies} = gameState.getCurrentState();
+    const {me, enemies, allies, projectiles} = gameState.getCurrentState();
 
     // Animate effects
     animator.animate();
@@ -40,5 +40,14 @@ function render() {
         scale(-1, 1);
         image(glove_blue, 0, -45);  // Left glove
     pop();
+
+    // Render projectiles
+    for (const projectile of projectiles) {
+        push();
+            translate(projectile.pos.x, projectile.pos.y);
+            fill('#a66');
+            circle(0, 0, 15);
+        pop();   
+    }
 
 }

@@ -48,6 +48,7 @@ function draw() {
         if (dist(me.pos.x, me.pos.y, me.waypoint.x, me.waypoint.y) < 2) {
             player.waypoint.set(me.pos);
         }
+
     }
 
     // Hitting 'Esc' will take browser back in history
@@ -77,6 +78,8 @@ function keyPressed() {
         // Left hand punch
         player.punchLeft = true;    // Reset to false after sending update state to server, Networking.send_update()
         animator.Punch.start(true, false);
+    } else if (keyCode == 69) {     // 'e' = 69
+        player.cast = true;         // Reset to false after sending update state to server, Networking.send_update()
     }
         
 }

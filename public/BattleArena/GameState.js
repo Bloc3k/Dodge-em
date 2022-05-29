@@ -22,7 +22,8 @@ class GameState {
         const me = this.lastGameState.me;
         const enemies = this.lastGameState.enemies;
         const allies = this.lastGameState.allies;
-        return {me, enemies, allies};
+        const projectiles = this.lastGameState.projectiles;
+        return {me, enemies, allies, projectiles};
     }
 }
 
@@ -52,7 +53,10 @@ class GameState {
  *              "punchRight": this.punchRight
  *          }    
  *      ],
- *      "allies": []
+ *      "allies": [],
+ *      "projectiles": {
+ *              "pos": {"x": <pos.x>, "y": <pos.y>}
+ *      }
  * } 
  * 
  */

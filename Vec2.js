@@ -157,6 +157,12 @@ class Vec2 {
       return Math.atan2(this.y, this.x);
     }
 
+    setHeading(heading) {
+      let m = this.mag();
+      this.x = m * Math.cos(heading);
+      this.y = m * Math.sin(heading);
+    }
+
   }
 
   module.exports = Vec2;

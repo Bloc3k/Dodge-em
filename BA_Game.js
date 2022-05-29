@@ -1,10 +1,12 @@
 const Vec2 = require('./Vec2');
 const Player = require('./Player');
+const Projectile = require('./Projectile');
 
 class Game {
     constructor() {
       this.MAX_SPEED = 3;
       this.players = {};
+      this.projectiles = [];
       this.lastUpdateTime = Date.now();
       this.shouldSendUpdate = false;
       //--------------------------- Dummy ------------------------
@@ -48,17 +50,9 @@ class Game {
                 // Move other player and me by half of penetration depth
                 other_player.pos = other_player.pos.add(movement);
                 me.pos = me.pos.add(movement.multiply(-1));
-                
               }
             }
-          }
-
-          // Melee attack
-          if (me.punchLeft) {
-            //check hitbox
-          } 
-
-        
+          }        
         }
       }
       // --------- Dummies ----------
@@ -84,6 +78,20 @@ class Game {
       let dummy_s = this.players['dummy_stay_moveble'];
       dummy_s.waypoint.set(dummy_s.pos.x,dummy_s.pos.y);
 
+      // ----------- Projectiles ----------
+      for (let i = 0; i < this.projectiles.length; i++) {
+        // Move 
+        this.projectiles[i].update();
+        
+        // Check for out of bounds & delete
+        if (this.projectiles[i].pos.x < -200 ||
+            this.projectiles[i].pos.x > 2000 ||
+            this.projectiles[i].pos.y < -200 ||
+            this.projectiles[i].pos.y > 1500) 
+          {
+            this.projectiles.splice(i, 1);
+          }
+      }
       // --------------------------------------------------------------
       
       // Send new state to players
@@ -107,6 +115,11 @@ class Game {
         player.waypoint.y = newState.waypoint.y;
         player.punchLeft = newState.punchLeft;
         player.punchRight = newState.punchRight;
+        player.cast = newState.cast;
+        player.cast_direction = newState.cast_direction;
+        if (player.cast == true) {     // cast the spell
+          this.projectiles.push(new Projectile(player.pos.x, player.pos.y, player.cast_direction.x, player.cast_direction.y));
+        }
       } else {
         // Add new player to Database
         this.players[socket.id] = new Player(newState.pos.x, newState.pos.y, newState.pos.x, newState.pos.y, socket);
@@ -132,7 +145,8 @@ class Game {
         "time": Date.now(),
         "me": player.serialize(),
         "enemies": this.serializePlayersExcept(player),
-        "allies": []
+        "allies": [],
+        "projectiles": this.serializeProjectiles()
       }
     }
 
@@ -152,8 +166,19 @@ class Game {
 
       return serialized_JSON;
     }
-}  
 
+    /**
+     * Serialize all projectiles to be send to players in new game state, Format: JSON
+     */
+    serializeProjectiles() {
+      const serialized_JSON = [];
+      for (const projectile of this.projectiles) {
+        serialized_JSON.push(projectile.serialize());
+      }
+
+      return serialized_JSON;
+    }
+}  
 
 
 module.exports = Game;

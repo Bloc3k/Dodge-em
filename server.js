@@ -28,7 +28,7 @@ const game = new Game();
 
 /**
  * Called when some player sends his update state.
- * @param {PlayerState} newPlayerState  New player states
+ * @param {PlayerState} newPlayerState  New player state
  */
 function player_update(newPlayerState) {
 	game.player_update(this, newPlayerState);

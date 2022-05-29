@@ -21,11 +21,14 @@ function send_update() {
         "pos": {"x": player.pos.x, "y": player.pos.y},
         "waypoint": {"x": player.waypoint.x, "y": player.waypoint.y},
         "punchLeft": player.punchLeft,
-        "punchRight": player.punchRight
+        "punchRight": player.punchRight,
+        "cast": player.cast,
+        "cast_direction": {"x": mouseX, "y": mouseY}
     }
     socket.emit('UPDATE', payload);
 
     // Punch only on one key press
     player.punchLeft = false;
     player.punchRight = false;
+    player.cast = false;
 }

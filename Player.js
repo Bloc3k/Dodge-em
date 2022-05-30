@@ -19,7 +19,6 @@ const Vec2 = require('./Vec2');
     this.isSpellUp = false;
     this.cast = false;   // True when wants to cast
     this.cast_direction = null;   // Set in player_update, from player updateded state
-    this.damageTaken = 0;
 	}
 
   /**
@@ -61,7 +60,6 @@ const Vec2 = require('./Vec2');
       "size": this.size,
       "punchLeft": this.punchLeft,
       "punchRight": this.punchRight,
-      "damageTaken": this.damageTaken
     }
   }
 }

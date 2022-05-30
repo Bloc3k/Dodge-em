@@ -80,6 +80,7 @@ function keyPressed() {
         animator.Punch.start(true, false);
     } else if (keyCode == 69) {     // 'e' = 69
         player.cast = true;         // Reset to false after sending update state to server, Networking.send_update()
+        player.waypoint.set(me.pos);
     }
         
 }

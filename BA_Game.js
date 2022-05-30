@@ -119,6 +119,7 @@ class Game {
         player.cast_direction = newState.cast_direction;
         if (player.cast == true) {     // cast the spell
           this.projectiles.push(new Projectile(player.pos.x, player.pos.y, player.cast_direction.x, player.cast_direction.y));
+          player.heading = Vec2.subtract(player.pos, player.cast_direction).heading() - Math.PI/2;
         }
       } else {
         // Add new player to Database

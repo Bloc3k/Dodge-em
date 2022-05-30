@@ -13,8 +13,14 @@ class GameState {
         // Is player dead???
         if (newState.me.hp > 0) {
             playing = true;
+            if (player.dead) 
+                player.dead = false;
         } else {
             playing = false;
+            if (!player.dead) {
+                dead_timestamp = Date.now();
+                player.dead = true;
+            }
         }
     }
 

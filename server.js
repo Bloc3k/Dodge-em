@@ -2,8 +2,8 @@ const Game = require('./BA_Game.js');
 
 const express = require('express')
 const app = express();
-const server = app.listen(60606, () => {
-	console.log('listening on 127.0.0.1:60606');
+const server = app.listen(80, () => {
+	console.log('listening on 147.229.217.105:80');
   });
 
 app.use(express.static('public'));

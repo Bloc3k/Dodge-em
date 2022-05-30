@@ -19,6 +19,7 @@ const Vec2 = require('./Vec2');
     this.isSpellUp = false;
     this.cast = false;   // True when wants to cast
     this.cast_direction = null;   // Set in player_update, from player updateded state
+    this.damageTaken = 0;
 	}
 
   /**
@@ -27,6 +28,15 @@ const Vec2 = require('./Vec2');
    */
   takeDamage(damage) {
     this.hp -= damage;
+    if (this.hp <= 0) {
+      setTimeout( () => {this.revive()}, 4000);
+      this.pos = new Vec2(Math.random()*1500 + 100, Math.random()*800 + 100);
+      this.waypoint = new Vec2(this.pos.x, this.pos.y);
+    }
+  }
+
+  revive() {
+    this.hp = 100;
   }
 
   /**
@@ -50,7 +60,8 @@ const Vec2 = require('./Vec2');
       "hp": this.hp,
       "size": this.size,
       "punchLeft": this.punchLeft,
-      "punchRight": this.punchRight
+      "punchRight": this.punchRight,
+      "damageTaken": this.damageTaken
     }
   }
 }

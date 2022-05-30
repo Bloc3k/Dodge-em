@@ -30,29 +30,31 @@ class Game {
       // Calculate new player positions
       for (const id in this.players) {
         let me = this.players[id];
-        if (Vec2.distance(me.pos, me.waypoint) > 2) {
-          // Movement
-          let direction = Vec2.subtract(me.waypoint, me.pos);
-          let movement = Vec2.constrain(direction, this.MAX_SPEED);
-          me.pos = Vec2.add(me.pos, movement);
-          me.heading = me.pos.subtract(me.waypoint).heading() - Math.PI/2;
-          
-          // Handle collision with other players
-          for (const id in this.players) {
-            let other_player = this.players[id];
-            if (other_player != me) {
-              // Check if me would coline with other player
-              if (me.collide(other_player)) {
-                // Move both away from each other
-                const vec_between_players = Vec2.subtract(other_player.pos, me.pos);
-                const penetration_depth = me.size/2 + other_player.size/2 - vec_between_players.len();
-                movement = vec_between_players.setLength(penetration_depth/2);
-                // Move other player and me by half of penetration depth
-                other_player.pos = other_player.pos.add(movement);
-                me.pos = me.pos.add(movement.multiply(-1));
+        if (me.hp > 0) {
+          if (Vec2.distance(me.pos, me.waypoint) > 2) {
+            // Movement
+            let direction = Vec2.subtract(me.waypoint, me.pos);
+            let movement = Vec2.constrain(direction, this.MAX_SPEED);
+            me.pos = Vec2.add(me.pos, movement);
+            me.heading = me.pos.subtract(me.waypoint).heading() - Math.PI/2;
+            
+            // Handle collision with other players
+            for (const id in this.players) {
+              let other_player = this.players[id];
+              if (other_player != me && other_player.hp > 0) {
+                // Check if me would coline with other player
+                if (me.collide(other_player)) {
+                  // Move both away from each other
+                  const vec_between_players = Vec2.subtract(other_player.pos, me.pos);
+                  const penetration_depth = me.size/2 + other_player.size/2 - vec_between_players.len();
+                  movement = vec_between_players.setLength(penetration_depth/2);
+                  // Move other player and me by half of penetration depth
+                  other_player.pos = other_player.pos.add(movement);
+                  me.pos = me.pos.add(movement.multiply(-1));
+                }
               }
-            }
-          }        
+            }        
+          }
         }
       }
       // --------- Dummies ----------
@@ -87,9 +89,11 @@ class Game {
         for (const id in this.players) {
           let player = this.players[id];
 
-          if (Vec2.distance(player.pos, this.projectiles[i].pos) < player.size/2 + this.projectiles[i].SIZE/2) {
-            player.takeDamage(this.projectiles[i].DAMAGE);
-            this.projectiles[i].toBeDeleted = true;
+          if (player.hp > 0) {
+            if (Vec2.distance(player.pos, this.projectiles[i].pos) < player.size/2 + this.projectiles[i].SIZE/2) {
+              player.takeDamage(this.projectiles[i].DAMAGE);
+              this.projectiles[i].toBeDeleted = true;
+            }
           }
         }
                 
@@ -176,7 +180,9 @@ class Game {
 
       for (const id in this.players) {
         if (this.players[id] != player_excluded) {
-          serialized_JSON.push(this.players[id].serialize());
+          if (this.players[id].hp > 0) {
+            serialized_JSON.push(this.players[id].serialize());
+          }
         }
       }
 

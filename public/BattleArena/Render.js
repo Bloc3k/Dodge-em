@@ -34,11 +34,16 @@ function render() {
     push();
         translate(me.pos.x, me.pos.y);
         rotate(me.heading);
-        fill('#33f');
-        circle(0, 0, me.size);  // Body
-        image(glove_blue, 0, -45);  // Right glove
-        scale(-1, 1);
-        image(glove_blue, 0, -45);  // Left glove
+        if (me.hp > 0)
+            fill(40, 40, 255);
+        else
+            fill(40, 40, 255, 200);
+        circle(0, 0, me.size, 50);  // Body
+        if (me.hp > 0) {
+            image(glove_blue, 0, -45);  // Right glove
+            scale(-1, 1);
+            image(glove_blue, 0, -45);  // Left glove
+        }
     pop();
 
     // Render projectiles

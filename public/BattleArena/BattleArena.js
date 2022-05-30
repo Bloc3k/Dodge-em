@@ -1,5 +1,5 @@
-const PORT = 60606;
-const IP = "127.0.0.1";
+const PORT = 80;
+const IP = "147.229.217.105";
 const FRAME_RATE = 60;
 
 let socket;
@@ -8,10 +8,14 @@ let animator;
 
 let player;
 let playing = false;
+let dead_timestamp;
+
+let FredokaOne_font;
 
 function preload() {
     glove_blue = loadImage('/BattleArena/Assets/glove_blue.png');
     glove_red = loadImage('/BattleArena/Assets/glove_red.png');
+    FredokaOne_font = loadFont('/BattleArena/Assets/FredokaOne-Regular.ttf');
 }
 
 function setup() {
@@ -49,8 +53,21 @@ function draw() {
             player.waypoint.set(me.pos);
         }
     } else {
-        if (gameState.lastGameState)
+        // DEAD
+        if (gameState.lastGameState) {
             render();
+            send_update();
+            const me = gameState.getCurrentState().me;
+            if (dist(me.pos.x, me.pos.y, me.waypoint.x, me.waypoint.y) < 2) {
+                player.waypoint.set(me.pos);
+            }
+
+            textFont(FredokaOne_font);
+            textSize(34);
+            textAlign(CENTER, CENTER)
+            fill(200,200,0,200);
+            text(Math.floor(((dead_timestamp - Date.now())/1000)) + 5, me.pos.x, me.pos.y - 4);
+        }
     }
 
     // Hitting 'Esc' will take browser back in history
@@ -81,8 +98,10 @@ function keyPressed() {
         player.punchLeft = true;    // Reset to false after sending update state to server, Networking.send_update()
         animator.Punch.start(true, false);
     } else if (keyCode == 69) {     // 'e' = 69
-        player.cast = true;         // Reset to false after sending update state to server, Networking.send_update()
-        player.waypoint.set(me.pos);
+        if (me.hp > 0) {
+            player.cast = true;         // Reset to false after sending update state to server, Networking.send_update()
+            player.waypoint.set(me.pos);
+        }
     }
         
 }
@@ -97,6 +116,7 @@ class Player {
         this.waypoint = createVector(this.pos.x + 1, this.pos.y);
         this.punchLeft = false;
         this.punchRight = false;
+        this.dead = false;
     }
 }
 

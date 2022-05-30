@@ -22,6 +22,14 @@ const Vec2 = require('./Vec2');
 	}
 
   /**
+   * Called when player take damage.
+   * @param {int} damage 
+   */
+  takeDamage(damage) {
+    this.hp -= damage;
+  }
+
+  /**
    * Check for colision with other player.
    * @param {Player} other_player 
    */

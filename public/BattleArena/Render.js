@@ -46,7 +46,7 @@ function render() {
         push();
             translate(projectile.pos.x, projectile.pos.y);
             fill('#a66');
-            circle(0, 0, 15);
+            circle(0, 0, 15);   // Projectile size = 15
         pop();   
     }
 

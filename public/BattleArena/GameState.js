@@ -1,6 +1,6 @@
 class GameState {
     constructor() {
-        this.lastGameState = NaN;
+        this.lastGameState = null;
     }
 
     /**

@@ -48,7 +48,9 @@ function draw() {
         if (dist(me.pos.x, me.pos.y, me.waypoint.x, me.waypoint.y) < 2) {
             player.waypoint.set(me.pos);
         }
-
+    } else {
+        if (gameState.lastGameState)
+            render();
     }
 
     // Hitting 'Esc' will take browser back in history

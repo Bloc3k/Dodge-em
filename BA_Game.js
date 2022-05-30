@@ -82,15 +82,28 @@ class Game {
       for (let i = 0; i < this.projectiles.length; i++) {
         // Move 
         this.projectiles[i].update();
-        
+
+        // Check player hit
+        for (const id in this.players) {
+          let player = this.players[id];
+
+          if (Vec2.distance(player.pos, this.projectiles[i].pos) < player.size/2 + this.projectiles[i].SIZE/2) {
+            player.takeDamage(this.projectiles[i].DAMAGE);
+            this.projectiles[i].toBeDeleted = true;
+          }
+        }
+                
         // Check for out of bounds & delete
         if (this.projectiles[i].pos.x < -200 ||
             this.projectiles[i].pos.x > 2000 ||
             this.projectiles[i].pos.y < -200 ||
             this.projectiles[i].pos.y > 1500) 
           {
-            this.projectiles.splice(i, 1);
+            this.projectiles[i].toBeDeleted = true;
           }
+        
+        if (this.projectiles[i].toBeDeleted) 
+          this.projectiles.splice(i, 1);
       }
       // --------------------------------------------------------------
       
@@ -117,8 +130,10 @@ class Game {
         player.punchRight = newState.punchRight;
         player.cast = newState.cast;
         player.cast_direction = newState.cast_direction;
+
         if (player.cast == true) {     // cast the spell
-          this.projectiles.push(new Projectile(player.pos.x, player.pos.y, player.cast_direction.x, player.cast_direction.y));
+          const cast_pos = Vec2.add(player.pos, Vec2.subtract(player.cast_direction, player.pos).setLength(player.size));
+          this.projectiles.push(new Projectile(cast_pos.x, cast_pos.y, player.cast_direction.x, player.cast_direction.y));
           player.heading = Vec2.subtract(player.pos, player.cast_direction).heading() - Math.PI/2;
         }
       } else {

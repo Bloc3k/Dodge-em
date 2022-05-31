@@ -65,7 +65,7 @@ function draw() {
             textFont(FredokaOne_font);
             textSize(34);
             textAlign(CENTER, CENTER)
-            fill(200,200,0,200);
+            fill(230,230,0,200);
             text(Math.floor(((dead_timestamp - Date.now())/1000)) + 5, me.pos.x, me.pos.y - 4);
         }
     }

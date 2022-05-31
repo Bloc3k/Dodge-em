@@ -11,6 +11,7 @@ class ConnectionLost extends Animation {
             push();
             fill(20, 20, 20, 200);
             noStroke();
+            rectMode(CORNER)
             rect(innerWidth/2-100, 13, 200, 40, 5);
             fill('#ccc');
             textSize(26);

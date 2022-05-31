@@ -5,7 +5,7 @@ class Projectile {
         this.pos = new Vec2(x, y);
         this.direction = new Vec2(direction_x - x, direction_y - y);
         this.SPEED = 10;
-        this.DAMAGE = 20;
+        this.DAMAGE = 15;
         this.SIZE = 15;     // Size of has to match in Render.js on clietn-side (line: 49)
         this.toBeDeleted = false;
     }

@@ -61,12 +61,6 @@ function draw() {
             if (dist(me.pos.x, me.pos.y, me.waypoint.x, me.waypoint.y) < 2) {
                 player.waypoint.set(me.pos);
             }
-
-            textFont(FredokaOne_font);
-            textSize(34);
-            textAlign(CENTER, CENTER)
-            fill(230,230,0,200);
-            text(Math.floor(((dead_timestamp - Date.now())/1000)) + 5, me.pos.x, me.pos.y - 4);
         }
     }
 

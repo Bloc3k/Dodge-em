@@ -4,7 +4,6 @@ const Projectile = require('./Projectile');
 
 class Game {
     constructor() {
-      this.MAX_SPEED = 3;
       this.players = {};
       this.projectiles = [];
       this.lastUpdateTime = Date.now();
@@ -34,7 +33,7 @@ class Game {
           if (Vec2.distance(me.pos, me.waypoint) > 2) {
             // Movement
             let direction = Vec2.subtract(me.waypoint, me.pos);
-            let movement = Vec2.constrain(direction, this.MAX_SPEED);
+            let movement = Vec2.constrain(direction, me.MAX_SPEED);
             me.pos = Vec2.add(me.pos, movement);
             me.heading = me.pos.subtract(me.waypoint).heading() - Math.PI/2;
             
@@ -136,8 +135,12 @@ class Game {
         player.cast_direction = newState.cast_direction;
 
         if (player.cast == true) {     // cast the spell
-          const cast_pos = Vec2.add(player.pos, Vec2.subtract(player.cast_direction, player.pos).setLength(player.size));
-          this.projectiles.push(new Projectile(cast_pos.x, cast_pos.y, player.cast_direction.x, player.cast_direction.y));
+          const cast_pos = Vec2.add(player.pos, Vec2.subtract(player.cast_direction, player.pos).setLength(player.size - player.size*0.2));
+          this.projectiles.push(new Projectile(
+                    cast_pos.x, cast_pos.y, 
+                    player.cast_direction.x, player.cast_direction.y, 
+                    player.SPELL_DAMAGE, player.SPELL_SPEED
+          ));
           player.heading = Vec2.subtract(player.pos, player.cast_direction).heading() - Math.PI/2;
         }
       } else {

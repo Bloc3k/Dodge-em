@@ -8,17 +8,19 @@ const Vec2 = require('./Vec2');
 		this.pos = new Vec2(x, y);
     this.waypoint = new Vec2(waypoint_x, waypoint_y);
     this.heading = this.pos.subtract(this.waypoint).heading() - Math.PI/2;  
-    this.hp = 100;
+    this.MAX_HP = 100;    // Max. HP
+    this.MAX_SPEED = 3;   // Max. Speed
+    this.hp = this.MAX_HP;
     this.size = 40;
 		this.id = socket.id;
     this.socket = socket;
     this.punchLeft = false;
     this.punchRight = false;
-    // Spell Cooldowns
-    this.COOLDOWN = 3;
-    this.isSpellUp = false;
+    // ------ Spell -------
     this.cast = false;   // True when wants to cast
     this.cast_direction = null;   // Set in player_update, from player updateded state
+    this.SPELL_DAMAGE = 15;
+    this.SPELL_SPEED = 10;
 	}
 
   /**
@@ -29,13 +31,13 @@ const Vec2 = require('./Vec2');
     this.hp -= damage;
     if (this.hp <= 0) {
       setTimeout( () => {this.revive()}, 4000);
-      this.pos = new Vec2(Math.random()*1500 + 100, Math.random()*800 + 100);
+      this.pos = new Vec2(Math.random()*(1880) + 55, Math.random()*(880) + 55);
       this.waypoint = new Vec2(this.pos.x, this.pos.y);
     }
   }
 
   revive() {
-    this.hp = 100;
+    this.hp = this.MAX_HP;
   }
 
   /**
@@ -60,6 +62,10 @@ const Vec2 = require('./Vec2');
       "size": this.size,
       "punchLeft": this.punchLeft,
       "punchRight": this.punchRight,
+      "spell_damage": this.SPELL_DAMAGE,
+      "max_hp": this.MAX_HP,
+      "max_speed": this.MAX_SPEED,
+      "spell_speed": this.SPELL_SPEED
     }
   }
 }

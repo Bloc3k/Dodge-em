@@ -4,6 +4,8 @@ function render() {
     // Animate effects
     animator.animate();
 
+    render_stats(me);
+
     // Render enemies
     for (const enemy of enemies) {
         render_heath_bar(enemy);    // Health-bar
@@ -33,8 +35,9 @@ function render() {
     }
 
     // Render me
-    if (me.hp > 0)
-        render_heath_bar(me);               // Health-bar
+    if (me.hp > 0) 
+        render_heath_bar(me);           // Health-bar
+
     push();
         translate(me.pos.x, me.pos.y);
         rotate(me.heading);
@@ -49,6 +52,11 @@ function render() {
             image(glove_blue, 0, -45);  // Left glove
         }
     pop();
+
+    if (me.hp <= 0) {
+        render_death_counter(me);       // Countdown when player dead
+    }
+
 
     // Render projectiles
     for (const projectile of projectiles) {
@@ -65,26 +73,59 @@ function render_heath_bar(player) {
     noStroke();
     rectMode(CENTER);
     fill(16, 16, 16, 230);
-    rect(player.pos.x, player.pos.y - 55, 87, 17, 6);
-    if (player.hp > 60)
+    // Backgroud rect
+    rect(player.pos.x, player.pos.y - 55, player.max_hp*0.87, 17, player.max_hp * 0.06);
+    if (player.hp > player.max_hp * 0.6)
         fill(20, 255, 10, 220);
-    else if (player.hp > 50)
+    else if (player.hp > player.max_hp * 0.5)
         fill(50, 255, 10, 220);
-    else if (player.hp > 40)
-        fill(80, 255, 10, 220);
-    else if (player.hp > 30)
-        fill(111, 255, 10, 220);
-    else if (player.hp > 25)
+    else if (player.hp > player.max_hp * 0.4)
+        fill(90, 255, 10, 220);
+    else if (player.hp > player.max_hp * 0.3)
+        fill(122, 255, 10, 220);
+    else if (player.hp > player.max_hp * 0.25)
         fill(188, 255, 10, 220);
-    else if (player.hp > 20)
+    else if (player.hp > player.max_hp * 0.2)
         fill(255, 255, 10, 220);
-    else if (player.hp > 15)
+    else if (player.hp > player.max_hp * 0.15)
         fill(255, 192, 10, 220);
-    else if (player.hp > 10)
+    else if (player.hp > player.max_hp * 0.1)
         fill(255, 100, 10, 220);
     else
         fill(255, 20, 10, 220);
     rectMode(CORNER);
-    rect(player.pos.x - 40, player.pos.y - 60, player.hp * 0.8, 10, 4);
+    //Health foregroud rect
+    rect(player.pos.x - player.max_hp*0.4, player.pos.y - 60, player.hp * 0.8, 10, player.max_hp * 0.04);
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    if (player.hp > 0.74 * player.max_hp) {
+        fill(0,0,0,220);
+        textSize(13);
+        text(Math.ceil(player.hp), player.pos.x, player.pos.y - 57);
+    } else if (player.hp > 0.4 * player.max_hp) {
+        textAlign(LEFT, CENTER);
+        text(Math.ceil(player.hp), player.pos.x + player.hp * 0.8 - player.max_hp * 0.36, player.pos.y - 57);
+    } else {
+        text(Math.ceil(player.hp), player.pos.x, player.pos.y - 57);
+    }
     stroke(4);
+}
+
+function render_stats(player) {
+    textFont(FredokaOne_font);
+    textSize(20);
+    textAlign(LEFT, CENTER)
+    fill(230,230,0,200);
+    text("Damage: " + player.spell_damage, 10, innerHeight - 95);
+    text("Max. HP: " + player.max_hp, 10, innerHeight - 70);
+    text("Max. Speed: " + player.max_speed, 10, innerHeight - 45);
+    text("Bullet Speed: " + player.spell_speed, 10, innerHeight - 20);
+}
+
+function render_death_counter(player) {
+    textFont(FredokaOne_font);
+    textSize(34);
+    textAlign(CENTER, CENTER)
+    fill(230,230,0,200);
+    text(Math.floor(((dead_timestamp - Date.now())/1000)) + 5, player.pos.x, player.pos.y - 4);
 }

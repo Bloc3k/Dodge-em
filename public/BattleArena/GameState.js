@@ -45,7 +45,11 @@ class GameState {
  *          "hp": <hp>,
  *          "size": this.size,
  *          "punchLeft": this.punchLeft,
- *          "punchRight": this.punchRight
+ *          "punchRight": this.punchRight,
+ *          "spell_damage": this.SPELL_DAMAGE,
+ *          "max_hp": this.MAX_HP,
+ *          "max_speed": this.MAX_SPEED,
+ *          "spell_speed": this.SPELL_SPEED
  *      },
  *      "enemies": [
  *          {
@@ -56,7 +60,11 @@ class GameState {
  *              "hp": <hp>,
  *              "size": this.size,
  *              "punchLeft": this.punchLeft,
- *              "punchRight": this.punchRight
+ *              "punchRight": this.punchRight,
+ *              "spell_damage": this.SPELL_DAMAGE,
+ *              "max_hp": this.MAX_HP,
+ *              "max_speed": this.MAX_SPEED,
+ *              "spell_speed": this.SPELL_SPEED
  *          }    
  *      ],
  *      "allies": [],

@@ -15,6 +15,8 @@ function update(newState) {
 /**
  * Send updated players waypoint to server.
  * Is called from setWaypoint() in Player class.
+ * Player is created in BattleArena.js just for strage
+ * of information to be send to server.
  */
 function send_update() {
     const payload = {
@@ -23,7 +25,8 @@ function send_update() {
         "punchLeft": player.punchLeft,
         "punchRight": player.punchRight,
         "cast": player.cast,
-        "cast_direction": {"x": mouseX, "y": mouseY}
+        "cast_direction": {"x": mouseX, "y": mouseY},
+        "level_up": player.level_up
     }
     socket.emit('UPDATE', payload);
 
@@ -31,4 +34,5 @@ function send_update() {
     player.punchLeft = false;
     player.punchRight = false;
     player.cast = false;
+    player.level_up = null;
 }

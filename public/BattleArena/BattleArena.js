@@ -11,6 +11,7 @@ let playing = false;
 let dead_timestamp;
 
 let FredokaOne_font;
+let level_up_menu = true;
 
 function preload() {
     glove_blue = loadImage('/BattleArena/Assets/glove_blue.png');
@@ -70,9 +71,12 @@ function draw() {
 }
 
 function mousePressed() {
-    if(mouseButton === RIGHT) {
+    if (mouseButton === RIGHT) {
         player.waypoint.set(mouseX, mouseY);
         animator.SetWaypoint.start(mouseX, mouseY);
+    }
+    if (mouseButton === LEFT) {
+        level_up_menu_handler();
     }
 }
 
@@ -111,6 +115,47 @@ class Player {
         this.punchLeft = false;
         this.punchRight = false;
         this.dead = false;
+        this.level_up = null;  // Damage=1, Crit=2, HP=3, Speed=4, bullet_speed=5
     }
+}
+
+function level_up_menu_handler() {
+    if (mouseX > 190 &&
+        mouseX < 210 &&
+        mouseY < innerHeight - 115 &&
+        mouseY > innerHeight - 140 ) {
+            player.level_up = 1;            
+            console.log(player.level_up)
+    }
+    if (mouseX > 190 &&
+        mouseX < 210 &&
+        mouseY < innerHeight - 95 &&
+        mouseY > innerHeight - 115 ) {
+            player.level_up = 2;            
+            console.log(player.level_up)
+    }
+    if (mouseX > 190 &&
+        mouseX < 210 &&
+        mouseY < innerHeight - 70 &&
+        mouseY > innerHeight - 90 ) {
+            player.level_up = 3;            
+            console.log(player.level_up)
+    }
+    if (mouseX > 190 &&
+        mouseX < 210 &&
+        mouseY < innerHeight - 45 &&
+        mouseY > innerHeight - 65 ) {
+            player.level_up = 4;            
+            console.log(player.level_up)
+    }
+    if (mouseX > 190 &&
+        mouseX < 210 &&
+        mouseY < innerHeight - 20 &&
+        mouseY > innerHeight - 40 ) {
+            player.level_up = 5;            
+            console.log(player.level_up)
+    }
+
+        
 }
 

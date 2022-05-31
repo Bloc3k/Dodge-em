@@ -4,7 +4,11 @@ function render() {
     // Animate effects
     animator.animate();
 
+    // Player stats in left bottom corner
     render_stats(me);
+
+    // Level-up menu
+    if (level_up_menu)      render_level_up();
 
     // Render enemies
     for (const enemy of enemies) {
@@ -116,10 +120,11 @@ function render_stats(player) {
     textSize(20);
     textAlign(LEFT, CENTER)
     fill(230,230,0,200);
-    text("Damage: " + player.spell_damage, 10, innerHeight - 95);
-    text("Max. HP: " + player.max_hp, 10, innerHeight - 70);
-    text("Max. Speed: " + player.max_speed, 10, innerHeight - 45);
-    text("Bullet Speed: " + player.spell_speed, 10, innerHeight - 20);
+    text("Damage: " + player.spell_damage, 10, innerHeight - 130);
+    text("Crit Chance: " + Math.round(player.crit_chance * 100) + "%", 10, innerHeight - 105);
+    text("Max. HP: " + player.max_hp, 10, innerHeight - 80);
+    text("Max. Speed: " + player.max_speed, 10, innerHeight - 55);
+    text("Bullet Speed: " + player.spell_speed, 10, innerHeight - 30);
 }
 
 function render_death_counter(player) {
@@ -128,4 +133,26 @@ function render_death_counter(player) {
     textAlign(CENTER, CENTER)
     fill(230,230,0,200);
     text(Math.floor(((dead_timestamp - Date.now())/1000)) + 5, player.pos.x, player.pos.y - 4);
+}
+
+function render_level_up() {
+    render_button(200, innerHeight - 130);
+    render_button(200, innerHeight - 105);
+    render_button(200, innerHeight - 80);
+    render_button(200, innerHeight - 55);
+    render_button(200, innerHeight - 30);
+}
+
+function render_button(x, y) {
+    rectMode(CENTER);
+    fill(100, 100, 80, 220);
+    noStroke();
+    rect(x, y, 20, 20, 4);
+    fill(55, 55, 55, 220);
+    stroke(35);
+    strokeWeight(4);
+    line(x, y + 7, x, y - 7);     // Vertical
+    line(x + 7, y, x - 7, y);     // Horizontal
+    strokeWeight(2);
+    
 }

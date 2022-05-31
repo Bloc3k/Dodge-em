@@ -16,11 +16,13 @@ const Vec2 = require('./Vec2');
     this.socket = socket;
     this.punchLeft = false;
     this.punchRight = false;
+    this.level_up = true;
     // ------ Spell -------
     this.cast = false;   // True when wants to cast
     this.cast_direction = null;   // Set in player_update, from player updateded state
     this.SPELL_DAMAGE = 15;
     this.SPELL_SPEED = 10;
+    this.CRIT_CHANCE = 0.1;
 	}
 
   /**
@@ -65,7 +67,8 @@ const Vec2 = require('./Vec2');
       "spell_damage": this.SPELL_DAMAGE,
       "max_hp": this.MAX_HP,
       "max_speed": this.MAX_SPEED,
-      "spell_speed": this.SPELL_SPEED
+      "spell_speed": this.SPELL_SPEED,
+      "crit_chance": this.CRIT_CHANCE
     }
   }
 }

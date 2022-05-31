@@ -139,9 +139,19 @@ class Game {
           this.projectiles.push(new Projectile(
                     cast_pos.x, cast_pos.y, 
                     player.cast_direction.x, player.cast_direction.y, 
-                    player.SPELL_DAMAGE, player.SPELL_SPEED
+                    player.SPELL_DAMAGE, player.SPELL_SPEED, player.CRIT_CHANCE
           ));
           player.heading = Vec2.subtract(player.pos, player.cast_direction).heading() - Math.PI/2;
+        }
+
+        if (player.level_up) {
+          // Damage=1, Crit=2, HP=3, Speed=4, bullet_speed=5
+          if (newState.level_up == 1)          player.SPELL_DAMAGE++;
+          else if (newState.level_up == 2)     player.CRIT_CHANCE += 0.1;
+          else if (newState.level_up == 3)     player.MAX_HP += 10;
+          else if (newState.level_up == 4)     player.MAX_SPEED += 0.5;
+          else if (newState.level_up == 5)     player.SPELL_SPEED += 0.5;
+          player.level_up = true;
         }
       } else {
         // Add new player to Database

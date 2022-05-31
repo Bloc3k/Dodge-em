@@ -64,7 +64,8 @@ class GameState {
  *              "spell_damage": this.SPELL_DAMAGE,
  *              "max_hp": this.MAX_HP,
  *              "max_speed": this.MAX_SPEED,
- *              "spell_speed": this.SPELL_SPEED
+ *              "spell_speed": this.SPELL_SPEED,
+ *              "crit_chance": this.CRIT_CHANCE
  *          }    
  *      ],
  *      "allies": [],

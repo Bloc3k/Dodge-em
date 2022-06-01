@@ -11,7 +11,8 @@ let playing = false;
 let dead_timestamp;
 
 let FredokaOne_font;
-let level_up_menu = true;
+let level_up_menu = false;
+let short_level_up = true;
 
 function preload() {
     glove_blue = loadImage('/BattleArena/Assets/glove_blue.png');
@@ -65,6 +66,25 @@ function draw() {
         }
     }
 
+    if (short_level_up) {
+        if (keyIsDown(18) && keyIsDown(49)) {
+            player.level_up = 1;
+            short_level_up = false;
+        } else if (keyIsDown(18) && keyIsDown(50)) {
+            player.level_up = 2;
+            short_level_up = false;
+        } else if (keyIsDown(18) && keyIsDown(51)) {
+            player.level_up = 3;
+            short_level_up = false;
+        } else if (keyIsDown(18) && keyIsDown(52)) {
+            player.level_up = 4;
+            short_level_up = false;
+        } else if (keyIsDown(18) && keyIsDown(53)) {
+            player.level_up = 5;
+            short_level_up = false;
+        } 
+    }
+
     // Hitting 'Esc' will take browser back in history
     if (keyCode == 27)
         window.history.back();
@@ -106,6 +126,10 @@ function keyPressed() {
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
+} 
+
+function keyReleased() {
+    short_level_up = true;
 }
 
 class Player {
@@ -120,42 +144,31 @@ class Player {
 }
 
 function level_up_menu_handler() {
-    if (mouseX > 190 &&
-        mouseX < 210 &&
+    if (mouseX > 205 &&
+        mouseX < 225 &&
         mouseY < innerHeight - 115 &&
         mouseY > innerHeight - 140 ) {
-            player.level_up = 1;            
-            console.log(player.level_up)
-    }
-    if (mouseX > 190 &&
-        mouseX < 210 &&
+            player.level_up = 1;
+    } else if (mouseX > 205 &&
+        mouseX < 225 &&
         mouseY < innerHeight - 95 &&
         mouseY > innerHeight - 115 ) {
-            player.level_up = 2;            
-            console.log(player.level_up)
-    }
-    if (mouseX > 190 &&
-        mouseX < 210 &&
+            player.level_up = 2;
+    } else if (mouseX > 205 &&
+        mouseX < 225 &&
         mouseY < innerHeight - 70 &&
         mouseY > innerHeight - 90 ) {
-            player.level_up = 3;            
-            console.log(player.level_up)
-    }
-    if (mouseX > 190 &&
-        mouseX < 210 &&
+            player.level_up = 3;
+    } else if (mouseX > 205 &&
+        mouseX < 225 &&
         mouseY < innerHeight - 45 &&
         mouseY > innerHeight - 65 ) {
-            player.level_up = 4;            
-            console.log(player.level_up)
-    }
-    if (mouseX > 190 &&
-        mouseX < 210 &&
+            player.level_up = 4;
+    } else if (mouseX > 205 &&
+        mouseX < 225 &&
         mouseY < innerHeight - 20 &&
         mouseY > innerHeight - 40 ) {
-            player.level_up = 5;            
-            console.log(player.level_up)
-    }
-
+            player.level_up = 5;
+    } 
         
 }
-

@@ -16,7 +16,7 @@ const Vec2 = require('./Vec2');
     this.socket = socket;
     this.punchLeft = false;
     this.punchRight = false;
-    this.level_up = true;
+    this.level_up = 0;
     // ------ Spell -------
     this.cast = false;   // True when wants to cast
     this.cast_direction = null;   // Set in player_update, from player updateded state
@@ -33,13 +33,25 @@ const Vec2 = require('./Vec2');
     this.hp -= damage;
     if (this.hp <= 0) {
       setTimeout( () => {this.revive()}, 4000);
-      this.pos = new Vec2(Math.random()*(1880) + 55, Math.random()*(880) + 55);
+      this.pos = new Vec2(Math.random()*(1600) + 55, Math.random()*(870) + 55);
       this.waypoint = new Vec2(this.pos.x, this.pos.y);
+      return true;
     }
+    return false;
   }
 
+  /**
+   * Revive player.
+   */
   revive() {
     this.hp = this.MAX_HP;
+  }
+
+  /**
+   * Called when player kills someone.
+   */
+  kill() {
+    this.level_up++;
   }
 
   /**
@@ -68,7 +80,8 @@ const Vec2 = require('./Vec2');
       "max_hp": this.MAX_HP,
       "max_speed": this.MAX_SPEED,
       "spell_speed": this.SPELL_SPEED,
-      "crit_chance": this.CRIT_CHANCE
+      "crit_chance": this.CRIT_CHANCE,
+      "level_up": this.level_up
     }
   }
 }

@@ -90,7 +90,8 @@ class Game {
 
           if (player.hp > 0) {
             if (Vec2.distance(player.pos, this.projectiles[i].pos) < player.size/2 + this.projectiles[i].SIZE/2) {
-              player.takeDamage(this.projectiles[i].DAMAGE);
+              const isItkill = player.takeDamage(this.projectiles[i].DAMAGE);
+              if (isItkill)   this.players[this.projectiles[i].owner].kill();
               this.projectiles[i].toBeDeleted = true;
             }
           }
@@ -135,23 +136,24 @@ class Game {
         player.cast_direction = newState.cast_direction;
 
         if (player.cast == true) {     // cast the spell
-          const cast_pos = Vec2.add(player.pos, Vec2.subtract(player.cast_direction, player.pos).setLength(player.size - player.size*0.2));
+          const cast_pos = Vec2.add(player.pos, Vec2.subtract(player.cast_direction, player.pos).setLength(player.size - player.size*0.4));
           this.projectiles.push(new Projectile(
                     cast_pos.x, cast_pos.y, 
                     player.cast_direction.x, player.cast_direction.y, 
-                    player.SPELL_DAMAGE, player.SPELL_SPEED, player.CRIT_CHANCE
+                    player.SPELL_DAMAGE, player.SPELL_SPEED, player.CRIT_CHANCE,
+                    player.id
           ));
           player.heading = Vec2.subtract(player.pos, player.cast_direction).heading() - Math.PI/2;
         }
 
-        if (player.level_up) {
+        if (player.level_up > 0 && newState.level_up) {
           // Damage=1, Crit=2, HP=3, Speed=4, bullet_speed=5
-          if (newState.level_up == 1)          player.SPELL_DAMAGE++;
-          else if (newState.level_up == 2)     player.CRIT_CHANCE += 0.1;
-          else if (newState.level_up == 3)     player.MAX_HP += 10;
-          else if (newState.level_up == 4)     player.MAX_SPEED += 0.5;
-          else if (newState.level_up == 5)     player.SPELL_SPEED += 0.5;
-          player.level_up = true;
+          if (newState.level_up == 1 && player.SPELL_DAMAGE < 300)      player.SPELL_DAMAGE += 2;     // The cap value should corespond with value in render_level_up in Render.js on client-side
+          else if (newState.level_up == 2 && player.CRIT_CHANCE < 1)    player.CRIT_CHANCE += 0.05;
+          else if (newState.level_up == 3 && player.MAX_HP < 200)       player.MAX_HP += 10;
+          else if (newState.level_up == 4 && player.MAX_SPEED < 30)     player.MAX_SPEED += 0.5;
+          else if (newState.level_up == 5 && player.SPELL_SPEED < 40)   player.SPELL_SPEED += 2;
+          player.level_up--;
         }
       } else {
         // Add new player to Database

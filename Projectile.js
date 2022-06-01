@@ -1,7 +1,7 @@
 const Vec2 = require('./Vec2');
 
 class Projectile {
-    constructor(x, y, direction_x, direction_y, spell_damage, spell_speed, crit_chance) {
+    constructor(x, y, direction_x, direction_y, spell_damage, spell_speed, crit_chance, owner) {
         this.pos = new Vec2(x, y);
         this.direction = new Vec2(direction_x - x, direction_y - y);
         this.CRIT_CHANCE = crit_chance;
@@ -13,6 +13,7 @@ class Projectile {
         this.SPEED = spell_speed;
         this.SIZE = 15;   // Size of has to match in Render.js on clietn-side (line: 49)
         this.toBeDeleted = false;
+        this.owner = owner;
     }
 
     update() {

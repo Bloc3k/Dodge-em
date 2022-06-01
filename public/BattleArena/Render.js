@@ -8,7 +8,7 @@ function render() {
     render_stats(me);
 
     // Level-up menu
-    if (level_up_menu)      render_level_up();
+    if (me.level_up > 0)      render_level_up(me);
 
     // Render enemies
     for (const enemy of enemies) {
@@ -135,12 +135,24 @@ function render_death_counter(player) {
     text(Math.floor(((dead_timestamp - Date.now())/1000)) + 5, player.pos.x, player.pos.y - 4);
 }
 
-function render_level_up() {
-    render_button(200, innerHeight - 130);
-    render_button(200, innerHeight - 105);
-    render_button(200, innerHeight - 80);
-    render_button(200, innerHeight - 55);
-    render_button(200, innerHeight - 30);
+function render_level_up(player) {
+    // Buttons
+    if (player.spell_damage < 300)  render_button(215, innerHeight - 130);
+    if (player.crit_chance < 1)     render_button(215, innerHeight - 105);
+    if (player.max_hp < 200)        render_button(215, innerHeight - 80);
+    if (player.max_speed < 30)      render_button(215, innerHeight - 55);
+    if (player.spell_speed < 40)    render_button(215, innerHeight - 30);
+
+    // Text
+    textFont(FredokaOne_font);
+    textSize(20);
+    textAlign(LEFT, CENTER)
+    fill(230,230,0,200);
+    text("+2", 230, innerHeight - 135);
+    text("+5%", 230, innerHeight - 110);
+    text("+10", 230, innerHeight - 85);
+    text("+0.5", 230, innerHeight - 60);
+    text("+2", 230, innerHeight - 35);
 }
 
 function render_button(x, y) {

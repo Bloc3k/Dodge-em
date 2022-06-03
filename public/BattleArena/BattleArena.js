@@ -46,17 +46,17 @@ function setup() {
 function draw() {
     background(33);
 
-    // If playing Render current game state and send UPDATE to server
-    if (playing) {
-        render();
-        send_update();
-        const me = gameState.getCurrentState().me;
-        if (dist(me.pos.x, me.pos.y, me.waypoint.x, me.waypoint.y) < 2) {
-            player.waypoint.set(me.pos);
-        }
-    } else {
-        // DEAD
-        if (gameState.lastGameState) {
+    if (gameState.lastGameState) {
+        // If playing Render current game state and send UPDATE to server
+        if (playing) {
+            render();
+            send_update();
+            const me = gameState.getCurrentState().me;
+            if (dist(me.pos.x, me.pos.y, me.waypoint.x, me.waypoint.y) < 2) {
+                player.waypoint.set(me.pos);
+            }
+        } else {
+            // DEAD
             render();
             send_update();
             const me = gameState.getCurrentState().me;
@@ -64,25 +64,41 @@ function draw() {
                 player.waypoint.set(me.pos);
             }
         }
-    }
 
-    if (short_level_up) {
-        if (keyIsDown(18) && keyIsDown(49)) {
-            player.level_up = 1;
-            short_level_up = false;
-        } else if (keyIsDown(18) && keyIsDown(50)) {
-            player.level_up = 2;
-            short_level_up = false;
-        } else if (keyIsDown(18) && keyIsDown(51)) {
-            player.level_up = 3;
-            short_level_up = false;
-        } else if (keyIsDown(18) && keyIsDown(52)) {
-            player.level_up = 4;
-            short_level_up = false;
-        } else if (keyIsDown(18) && keyIsDown(53)) {
-            player.level_up = 5;
-            short_level_up = false;
-        } 
+        if (short_level_up) {
+            const me = gameState.getCurrentState().me;
+            if (keyIsDown(18) && keyIsDown(49)) {   // 18 = Alt, 49 = 1
+                // Damage
+                if (me.spell_damage < 300) { // Cap on 300 has to be set on server (BA_Game.player_update()), on clinet in Render.js render_level_up() and in BattleArena.js level_up_menu_handler()
+                    player.level_up = 1;
+                }
+                short_level_up = false;
+            } else if (keyIsDown(18) && keyIsDown(50)) {    // 50 = 2
+                // Crit Chance 
+                if (me.crit_chance < 1) {
+                    player.level_up = 2;
+                }
+                short_level_up = false;
+            } else if (keyIsDown(18) && keyIsDown(51)) {    // 51 = 3
+                // Max. HP
+                if (me.max_hp < 200) {
+                    player.level_up = 3;
+                }
+                short_level_up = false;
+            } else if (keyIsDown(18) && keyIsDown(52)) {    // 52 = 4
+                // Max. Speed
+                if (me.max_speed < 30) {
+                    player.level_up = 4;
+                }
+                short_level_up = false;
+            } else if (keyIsDown(18) && keyIsDown(53)) {    // 53 = 5
+                // Max. Bullet Speed
+                if (me.spell_speed < 40) {
+                    player.level_up = 5;
+                }
+                short_level_up = false;
+            } 
+        }
     }
 
     // Hitting 'Esc' will take browser back in history
@@ -144,31 +160,48 @@ class Player {
 }
 
 function level_up_menu_handler() {
+    const me = gameState.getCurrentState().me;
+    
     if (mouseX > 205 &&
         mouseX < 225 &&
         mouseY < innerHeight - 115 &&
         mouseY > innerHeight - 140 ) {
-            player.level_up = 1;
+            // Damage
+            if (me.spell_damage < 300) { // Cap on 300 has to be set on server (BA_Game.player_update()), on clinet in Render.js render_level_up() and in BattleArena.js level_up_menu_handler()
+                player.level_up = 1;
+            }
     } else if (mouseX > 205 &&
         mouseX < 225 &&
         mouseY < innerHeight - 95 &&
         mouseY > innerHeight - 115 ) {
-            player.level_up = 2;
+            // Crit Chance 
+            if (me.crit_chance < 1) {
+                player.level_up = 2;
+            }
     } else if (mouseX > 205 &&
         mouseX < 225 &&
         mouseY < innerHeight - 70 &&
         mouseY > innerHeight - 90 ) {
-            player.level_up = 3;
+            // Max. HP
+            if (me.max_hp < 200) {
+                player.level_up = 3;
+            }
     } else if (mouseX > 205 &&
         mouseX < 225 &&
         mouseY < innerHeight - 45 &&
         mouseY > innerHeight - 65 ) {
-            player.level_up = 4;
+            // Max. Speed
+            if (me.max_speed < 30) {
+                player.level_up = 4;
+            }
     } else if (mouseX > 205 &&
         mouseX < 225 &&
         mouseY < innerHeight - 20 &&
         mouseY > innerHeight - 40 ) {
-            player.level_up = 5;
+            // Max. Bullet Speed
+            if (me.spell_speed < 40) {
+                player.level_up = 5;
+            }
     } 
         
 }

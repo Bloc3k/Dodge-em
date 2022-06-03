@@ -78,7 +78,7 @@ function render_heath_bar(player) {
     rectMode(CENTER);
     fill(16, 16, 16, 230);
     // Backgroud rect
-    rect(player.pos.x, player.pos.y - 55, player.max_hp*0.87, 17, player.max_hp * 0.06);
+    rect(player.pos.x, player.pos.y - 55, player.max_hp*0.87, 17, player.max_hp * 0.07);
     if (player.hp > player.max_hp * 0.6)
         fill(20, 255, 10, 220);
     else if (player.hp > player.max_hp * 0.5)
@@ -112,6 +112,11 @@ function render_heath_bar(player) {
     } else {
         text(Math.ceil(player.hp), player.pos.x, player.pos.y - 57);
     }
+    fill(200, 200, 200, 220);
+    textAlign(CENTER, CENTER);
+    textSize(12);
+    if (player.level < 10)   text(player.level, player.pos.x - player.max_hp*0.5, player.pos.y - 56);
+    if (player.level >= 10)   text(player.level, player.pos.x - player.max_hp*0.5-3, player.pos.y - 56);
     stroke(4);
 }
 
@@ -119,7 +124,7 @@ function render_stats(player) {
     textFont(FredokaOne_font);
     textSize(20);
     textAlign(LEFT, CENTER)
-    fill(230,230,0,200);
+    fill(200,200,0,200);
     text("Damage: " + player.spell_damage, 10, innerHeight - 130);
     text("Crit Chance: " + Math.round(player.crit_chance * 100) + "%", 10, innerHeight - 105);
     text("Max. HP: " + player.max_hp, 10, innerHeight - 80);
@@ -136,28 +141,38 @@ function render_death_counter(player) {
 }
 
 function render_level_up(player) {
-    // Buttons
-    if (player.spell_damage < 300)  render_button(215, innerHeight - 130);
-    if (player.crit_chance < 1)     render_button(215, innerHeight - 105);
-    if (player.max_hp < 200)        render_button(215, innerHeight - 80);
-    if (player.max_speed < 30)      render_button(215, innerHeight - 55);
-    if (player.spell_speed < 40)    render_button(215, innerHeight - 30);
-
-    // Text
     textFont(FredokaOne_font);
     textSize(20);
     textAlign(LEFT, CENTER)
-    fill(230,230,0,200);
-    text("+2", 230, innerHeight - 135);
-    text("+5%", 230, innerHeight - 110);
-    text("+10", 230, innerHeight - 85);
-    text("+0.5", 230, innerHeight - 60);
-    text("+2", 230, innerHeight - 35);
+    fill(180,180,0,200);
+    
+    if (player.spell_damage < 300) {    // Cap on 300 has to be set on server (BA_Game.player_update()), on clinet in Render.js render_level_up() and in BattleArena.js level_up_menu_handler()
+        render_button(215, innerHeight - 130); 
+        text("+2", 230, innerHeight - 135);
+    }  
+    if (player.crit_chance < 1) {
+        render_button(215, innerHeight - 105);
+        text("+3%", 230, innerHeight - 110);
+    }
+    if (player.max_hp < 200) {
+        render_button(215, innerHeight - 80);
+        text("+10", 230, innerHeight - 85);
+    }
+    if (player.max_speed < 30) {
+        render_button(215, innerHeight - 55);
+        text("+0.5", 230, innerHeight - 60);
+    }
+    if (player.spell_speed < 40) {
+        render_button(215, innerHeight - 30);
+        text("+2", 230, innerHeight - 35);
+    }
+    
 }
 
 function render_button(x, y) {
+    push();
     rectMode(CENTER);
-    fill(100, 100, 80, 220);
+    fill(180, 180, 0, 200);
     noStroke();
     rect(x, y, 20, 20, 4);
     fill(55, 55, 55, 220);
@@ -166,5 +181,5 @@ function render_button(x, y) {
     line(x, y + 7, x, y - 7);     // Vertical
     line(x + 7, y, x - 7, y);     // Horizontal
     strokeWeight(2);
-    
+    pop()
 }

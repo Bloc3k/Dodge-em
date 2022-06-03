@@ -16,7 +16,9 @@ const Vec2 = require('./Vec2');
     this.socket = socket;
     this.punchLeft = false;
     this.punchRight = false;
-    this.level_up = 0;
+    this.level_up = 0;  // Enables player to level up N times
+    this.level = 1;     // Tracks how many level ups was done
+    this.kills = 0;     // Tracks how many kills was made
     // ------ Spell -------
     this.cast = false;   // True when wants to cast
     this.cast_direction = null;   // Set in player_update, from player updateded state
@@ -51,7 +53,11 @@ const Vec2 = require('./Vec2');
    * Called when player kills someone.
    */
   kill() {
-    this.level_up++;
+    this.kills++;
+    if (this.kills == 0.5 * this.level * this.level + 0.5 * this.level ) {
+      this.level_up++;
+      this.level++;
+    }
   }
 
   /**
@@ -81,7 +87,8 @@ const Vec2 = require('./Vec2');
       "max_speed": this.MAX_SPEED,
       "spell_speed": this.SPELL_SPEED,
       "crit_chance": this.CRIT_CHANCE,
-      "level_up": this.level_up
+      "level_up": this.level_up,
+      "level": this.level
     }
   }
 }

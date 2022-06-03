@@ -30,7 +30,7 @@ class Game {
       for (const id in this.players) {
         let me = this.players[id];
         if (me.hp > 0) {
-          if (Vec2.distance(me.pos, me.waypoint) > 2) {
+          if (Vec2.distance(me.pos, me.waypoint) > me.MAX_SPEED) {
             // Movement
             let direction = Vec2.subtract(me.waypoint, me.pos);
             let movement = Vec2.constrain(direction, me.MAX_SPEED);
@@ -148,8 +148,9 @@ class Game {
 
         if (player.level_up > 0 && newState.level_up) {
           // Damage=1, Crit=2, HP=3, Speed=4, bullet_speed=5
-          if (newState.level_up == 1 && player.SPELL_DAMAGE < 300)      player.SPELL_DAMAGE += 2;     // The cap value should corespond with value in render_level_up in Render.js on client-side
-          else if (newState.level_up == 2 && player.CRIT_CHANCE < 1)    player.CRIT_CHANCE += 0.05;
+          // Cap on 300 has to be set on server (BA_Game.player_update()), on clinet in Render.js render_level_up() and in BattleArena.js level_up_menu_handler()
+          if (newState.level_up == 1 && player.SPELL_DAMAGE < 300)      player.SPELL_DAMAGE += 2;     // The cap value should corespond with value in render_level_up in Render.js on client-side and in BattleArena in level_up_menu_handler()
+          else if (newState.level_up == 2 && player.CRIT_CHANCE < 1)    player.CRIT_CHANCE += 0.03;  
           else if (newState.level_up == 3 && player.MAX_HP < 200)       player.MAX_HP += 10;
           else if (newState.level_up == 4 && player.MAX_SPEED < 30)     player.MAX_SPEED += 0.5;
           else if (newState.level_up == 5 && player.SPELL_SPEED < 40)   player.SPELL_SPEED += 2;

@@ -1,5 +1,5 @@
 function render() {
-    const {me, enemies, allies, projectiles} = gameState.getCurrentState();
+    const {me, enemies, allies, projectiles, gadgets} = gameState.getCurrentState();
 
     // Animate effects
     animator.animate();
@@ -10,6 +10,9 @@ function render() {
     // Level-up menu
     if (me.level_up > 0)      render_level_up(me);
 
+    render_heal_pad(960, 77, gadgets[0].charged);
+    render_heal_pad(960, 888, gadgets[1].charged);
+
     // Render enemies
     for (const enemy of enemies) {
         render_heath_bar(enemy);    // Health-bar
@@ -17,10 +20,10 @@ function render() {
             translate(enemy.pos.x, enemy.pos.y);
             rotate(enemy.heading);
             fill('#f33');
-            circle(0, 0, enemy.size);  // Body
-            image(glove_red, 0, -45);  // Right glove
+            circle(0, 0, enemy.size + Math.sin(frameCount*0.05)*0.035*deltaTime);  // Body
+            image(glove_red, Math.sin(frameCount*0.05)*0.025*deltaTime, -45);  // Right glove
             scale(-1, 1);
-            image(glove_red, 0, -45);  // Left glove
+            image(glove_red, Math.sin(frameCount*0.05)*0.025*deltaTime, -45);  // Left glove
         pop();
     }
 
@@ -31,10 +34,10 @@ function render() {
             translate(ally.pos.x, ally.pos.y);
             rotate(ally.heading);
             fill('#3f3');
-            circle(0, 0, ally.size);  // Body
-            image(glove_blue, 0, -45);  // Right glove
+            circle(0, 0, ally.size + Math.sin(frameCount*0.05)*0.035*deltaTime);  // Body
+            image(glove_blue, Math.sin(frameCount*0.05)*0.025*deltaTime, -45);  // Right glove
             scale(-1, 1);
-            image(glove_blue, 0, -45);  // Left glove
+            image(glove_blue, Math.sin(frameCount*0.05)*0.025*deltaTime, -45);  // Left glove
         pop();
     }
 
@@ -49,11 +52,11 @@ function render() {
             fill(40, 40, 255);  // Alive
         else
             fill(40, 40, 255, 240);
-        circle(0, 0, me.size, 50);  // Body
+        circle(0, 0, me.size + Math.sin(frameCount*0.05)*0.035*deltaTime, 50);  // Body
         if (me.hp > 0) {
-            image(glove_blue, 0, -45);  // Right glove
+            image(glove_blue, Math.sin(frameCount*0.05)*0.025*deltaTime, -45);  // Right glove
             scale(-1, 1);
-            image(glove_blue, 0, -45);  // Left glove
+            image(glove_blue, Math.sin(frameCount*0.05)*0.0225*deltaTime, -45);  // Left glove
         }
     pop();
 
@@ -182,4 +185,32 @@ function render_button(x, y) {
     line(x + 7, y, x - 7, y);     // Horizontal
     strokeWeight(2);
     pop()
+}
+
+function render_heal_pad(x, y, charged) {
+    push();
+    rectMode(CENTER);
+    noStroke();
+    fill(44, 44, 44);
+    //ellipse(x, y, 50, 46);
+    rect(x, y, 50, 50, 21)
+    fill(28, 28, 28, 230);
+    rect(x, y, 36, 30, 12);
+
+    if (charged) {
+        // ability
+        const x_in = x;
+        const y_in = y - Math.cos(frameCount*0.07)*1.6 - 3;
+        fill(10,250,10, 80);
+        rect(x_in, y_in, 30, 26, 4.5);
+        stroke(222,15,15, 200);
+        strokeWeight(5);
+        const cross_size = 7;
+        line(x_in, y_in + cross_size , x_in, y_in - cross_size);     // Vertical
+        line(x_in, y_in + cross_size , x_in, y_in - cross_size);     // Vertical
+        line(x_in + cross_size, y_in, x_in + 4, y_in);     // Horizontal
+        line(x_in - 4, y_in, x_in - cross_size, y_in);     // Horizontal
+    }
+
+    pop();
 }

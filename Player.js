@@ -30,6 +30,7 @@ const Vec2 = require('./Vec2');
   /**
    * Called when player take damage.
    * @param {int} damage 
+   * @returns True if player is killed, else false
    */
   takeDamage(damage) {
     this.hp -= damage;

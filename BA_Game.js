@@ -1,11 +1,13 @@
 const Vec2 = require('./Vec2');
 const Player = require('./Player');
 const Projectile = require('./Projectile');
+const Gadget = require('./Gadget');
 
 class Game {
     constructor() {
       this.players = {};
       this.projectiles = [];
+      this.gadgets = [];
       this.lastUpdateTime = Date.now();
       this.shouldSendUpdate = false;
       //--------------------------- Dummy ------------------------
@@ -13,7 +15,10 @@ class Game {
       this.players['dummy_stay_moveble'] = new Player(200, 100, 800, 100, NaN);
       this.players['dummy_horizont'] = new Player(100, 150, 1200, 150, NaN);
       this.players['dummy_vertical'] = new Player(150, 250, 150, 800, NaN);
-      //-----------------------------------------------------------
+      //-------------------------- Gadgets -----------------------
+      this.gadgets.push(new Gadget(960, 77));
+      this.gadgets.push(new Gadget(960, 888));
+      //----------------------------------------------------------
       setInterval(this.update.bind(this), 1000 / 60);
     }
     
@@ -109,6 +114,23 @@ class Game {
         if (this.projectiles[i].toBeDeleted) 
           this.projectiles.splice(i, 1);
       }
+
+      // ------------- Gadgets -------------
+      for (let gadget of this.gadgets) {
+        if (gadget.charged) {
+          // Check for player interaction
+          for (const id in this.players) {
+            let player = this.players[id];
+            if (Vec2.distance(player.pos, gadget.pos) < gadget.SIZE) {
+              if (player.hp + 50 <= player.MAX_HP)    player.hp += gadget.HEAL_VALUE;
+              else  player.hp = player.MAX_HP;
+              gadget.charged = false;
+              setTimeout(() => {gadget.charged = true}, gadget.COOLDOWN*1000);
+            }
+          }
+        }
+      }
+
       // --------------------------------------------------------------
       
       // Send new state to players
@@ -182,7 +204,8 @@ class Game {
         "me": player.serialize(),
         "enemies": this.serializePlayersExcept(player),
         "allies": [],
-        "projectiles": this.serializeProjectiles()
+        "projectiles": this.serializeProjectiles(),
+        "gadgets": this.serializaGadgets()
       }
     }
 
@@ -212,6 +235,18 @@ class Game {
       const serialized_JSON = [];
       for (const projectile of this.projectiles) {
         serialized_JSON.push(projectile.serialize());
+      }
+
+      return serialized_JSON;
+    }
+
+    /**
+     * Serialize all gadgets, Format: JSON
+     */
+    serializaGadgets() {
+      const serialized_JSON = [];
+      for (const gadget of this.gadgets) {
+        serialized_JSON.push(gadget.serialize());
       }
 
       return serialized_JSON;

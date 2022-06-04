@@ -40,7 +40,17 @@ function setup() {
     send_update();
 
     // Disables right click's default context menu
-    document.addEventListener('contextmenu', event => event.preventDefault()); 
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    
+    // Disable ctrl & alt default shortcuts
+    document.body.addEventListener('keydown', event => {
+        if (event.ctrlKey && 'cvxspwuaz12345'.indexOf(event.key) !== -1) {
+          event.preventDefault()
+        }
+        if (event.altKey !== -1) {
+            event.preventDefault()
+          }
+      }) 
 }
 
 function draw() {

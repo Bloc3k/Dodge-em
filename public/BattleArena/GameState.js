@@ -29,7 +29,8 @@ class GameState {
         const enemies = this.lastGameState.enemies;
         const allies = this.lastGameState.allies;
         const projectiles = this.lastGameState.projectiles;
-        return {me, enemies, allies, projectiles};
+        const gadgets = this.lastGameState.gadgets;
+        return {me, enemies, allies, projectiles, gadgets};
     }
 }
 

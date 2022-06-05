@@ -16,8 +16,12 @@ class Game {
       this.players['dummy_horizont'] = new Player(100, 150, 1200, 150, NaN);
       this.players['dummy_vertical'] = new Player(150, 250, 150, 800, NaN);
       //-------------------------- Gadgets -----------------------
-      this.gadgets.push(new Gadget(960, 77));
-      this.gadgets.push(new Gadget(960, 888));
+      this.gadgets.push(new Gadget(960, 70));         // Middle Top
+      this.gadgets.push(new Gadget(960, 900));        // Middle Bottom
+      this.gadgets.push(new Gadget(120, 120, 25));    // Left Top
+      this.gadgets.push(new Gadget(120, 860, 25));    // Left Bottom
+      this.gadgets.push(new Gadget(1800, 120, 25));   // Right Top
+      this.gadgets.push(new Gadget(1800, 860, 25));   // Right Bottom
       //----------------------------------------------------------
       setInterval(this.update.bind(this), 1000 / 60);
     }

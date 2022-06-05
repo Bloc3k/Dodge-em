@@ -4,14 +4,17 @@ function render() {
     // Animate effects
     animator.animate();
 
-    // Player stats in left bottom corner
-    render_stats(me);
-
+    
     // Level-up menu
     if (me.level_up > 0)      render_level_up(me);
+    
+    // Gadgets
+    for (const gadget of gadgets) {
+        render_heal_pad(gadget.pos.x, gadget.pos.y, gadget.charged, gadget.heal);
+    }
 
-    render_heal_pad(960, 77, gadgets[0].charged);
-    render_heal_pad(960, 888, gadgets[1].charged);
+    // Player stats in left bottom corner
+    render_stats(me);
 
     // Render enemies
     for (const enemy of enemies) {
@@ -187,25 +190,32 @@ function render_button(x, y) {
     pop()
 }
 
-function render_heal_pad(x, y, charged) {
+function render_heal_pad(x, y, charged, heal_value) {
     push();
     rectMode(CENTER);
     noStroke();
     fill(44, 44, 44);
     //ellipse(x, y, 50, 46);
-    rect(x, y, 50, 50, 21)
+    if (heal_value > 25 )   rect(x, y, 70, 66, 30);
+    else                    rect(x, y, 50, 48, 21);
     fill(28, 28, 28, 230);
-    rect(x, y, 36, 30, 12);
+    if (heal_value > 25 )   rect(x, y, 46, 43, 18);
+    else                    rect(x, y, 36, 34, 14);
 
     if (charged) {
         // ability
         const x_in = x;
         const y_in = y - Math.cos(frameCount*0.07)*1.6 - 3;
         fill(10,250,10, 80);
-        rect(x_in, y_in, 30, 26, 4.5);
+        if (heal_value > 25 )   rect(x_in, y_in, 41, 37, 5.5);
+        else                    rect(x_in, y_in, 30, 26, 4.5);
         stroke(222,15,15, 200);
         strokeWeight(5);
-        const cross_size = 7;
+        let cross_size = 7;
+        if (heal_value > 25 ) {
+            cross_size = 12;
+            strokeWeight(7)
+        }  
         line(x_in, y_in + cross_size , x_in, y_in - cross_size);     // Vertical
         line(x_in, y_in + cross_size , x_in, y_in - cross_size);     // Vertical
         line(x_in + cross_size, y_in, x_in + 4, y_in);     // Horizontal

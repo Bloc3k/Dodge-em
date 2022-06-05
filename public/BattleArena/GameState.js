@@ -1,6 +1,7 @@
 class GameState {
     constructor() {
         this.lastGameState = null;
+        this.previousGameState = null;
     }
 
     /**
@@ -8,6 +9,7 @@ class GameState {
      * @param {GameState} newState 
      */
     gameUpdate(newState) {
+        this.previousGameState = this.lastGameState;
         this.lastGameState = newState;
 
         // Is player dead???

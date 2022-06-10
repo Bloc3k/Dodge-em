@@ -8,7 +8,7 @@ class Chat {
         this.TEXT_SIZE = 16;
         this.LEFT_PADDING = 7;
         this.show = false;
-        this.hide_timer = 3.5;  // seconds
+        this.hide_timer = 3;  // seconds
         this.hide_timer_reset;
         this.pos = createVector(25, innerHeight - this.HEIGHT - 270);
         this.text_box_height = this.calculate_text_box_size();
@@ -18,7 +18,7 @@ class Chat {
         push();
         if (this.show) {
             // Chat text-box
-            fill(20,20,20, 75);
+            fill(20,20,20, 120);
             noStroke();
             rectMode(CORNER);
             rect(this.pos.x, this.pos.y, this.WIDHT, this.HEIGHT, 10);

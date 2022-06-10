@@ -17,6 +17,15 @@ let short_level_up = true;
 let chat_del_hold = 0;
 let short_delete = true;
 
+let options = {
+    "pos": {"x": innerWidth - 25, "y": 25},
+    "opened": false,
+    "nickname_change": false,
+    "nickname_holder": "",
+    "WIDTH": 300,
+    "HEIGHT": 400,
+}
+
 function preload() {
     glove_blue = loadImage('/BattleArena/Assets/glove_blue.png');
     glove_red = loadImage('/BattleArena/Assets/glove_red.png');
@@ -115,8 +124,21 @@ function draw() {
             } 
         }
     }
-
-    if (chat.writing) {
+    if (options.nickname_change) {
+        if (keyIsDown(8) && keyIsDown(17)) {     // 'Ctrl' = 17
+            if (short_delete) {
+                // Remove last word
+                re = /[^|\s]\w*$/;
+                index = options.nickname_holder.search(re);
+                options.nickname_holder = options.nickname_holder.slice(0, index);
+                short_delete = false;   
+            }
+        } else if (keyIsDown(8)) {     // 'Backspace' = 8
+            if (chat_del_hold > 1.4 * deltaTime)
+                options.nickname_holder = options.nickname_holder.slice(0, -1);
+            chat_del_hold++;
+        }
+    } else if (chat.writing) {
         if (keyIsDown(8) && keyIsDown(17)) {     // 'Ctrl' = 17
             if (short_delete) {
                 // Remove last word
@@ -144,6 +166,7 @@ function mousePressed() {
     }
     if (mouseButton === LEFT) {
         level_up_menu_handler();
+        options_handler(options.pos.x, options.pos.y);
     }
 }
 
@@ -151,9 +174,26 @@ function keyPressed() {
     const me = gameState.getCurrentState().me;
 
     if (keyCode == 13) {        // 'Enter' = 13
-        chat.enter_handler();
+        if (options.nickname_change) {
+            options.nickname_change = false;
+            player.nickname = options.nickname_holder;
+        } else {
+            chat.enter_handler();
+        }
     } else {
-        if (chat.writing) {
+        if (options.nickname_change) {
+            // Changing nickname
+            textSize(16);
+            if (key == 'Backspace') {
+                options.nickname_holder = options.nickname_holder.slice(0, -1); 
+            } else if (key == '?' || key == '+') {
+                if (options.nickname_holder.length < 20) 
+                    options.nickname_holder += key;
+            } else if ('abcdefghijklmnopqrstuvwxyz1234567890,.#%^&*()@~`<>!:?|-_+="\';'.search(key.toLowerCase()) !== -1) {
+                if (options.nickname_holder.length < 20)
+                    options.nickname_holder += key;
+            } 
+        } else if (chat.writing) {
             // Typing in chat
             textSize(chat.TEXT_SIZE);
             if (key == 'Backspace') {
@@ -206,6 +246,7 @@ class Player {
         this.punchRight = false;
         this.dead = false;
         this.level_up = null;  // Damage=1, Crit=2, HP=3, Speed=4, bullet_speed=5
+        this.nickname = null;
     }
 }
 
@@ -254,4 +295,47 @@ function level_up_menu_handler() {
             }
     } 
         
+}
+
+function options_handler(x, y) {
+    if (click_in(x, y, 29, 27)) {
+        // Open Main Menu
+        options.opened = true;
+    } else if (options.opened) {
+        // --------- Main Menu -
+        if (click_in(
+            options.pos.x - options.WIDTH/2, 
+            options.pos.y + options.HEIGHT/7, 
+            options.WIDTH - options.WIDTH/4, 
+            30
+        )) {
+            // Change Nickname
+            options.nickname_change = true;
+            options.nickname_holder = '';
+        } else if (click_in(
+            options.pos.x - options.WIDTH/6, 
+            options.pos.y + options.HEIGHT/1.1, 
+            options.WIDTH/5, 
+            30
+        )) {
+            // Apply button
+            options.opened = false;
+            player.nickname = options.nickname_holder;
+            options.nickname_holder = '';
+            options.nickname_change = false;
+        } else {
+            options.opened = false;
+        }
+    }
+}
+
+function click_in(x, y, width, height) {
+    if (mouseX > x - width/2  &&
+        mouseX < x + width/2  &&
+        mouseY < y + height/2 &&
+        mouseY > y - height/2 ) {
+            return true;
+    } else {
+        return false;
+    }
 }

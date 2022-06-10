@@ -37,7 +37,8 @@ function send_update() {
         "punchRight": player.punchRight,
         "cast": player.cast,
         "cast_direction": {"x": mouseX, "y": mouseY},
-        "level_up": player.level_up
+        "level_up": player.level_up,
+        "nickname": player.nickname
     }
     socket.emit('UPDATE', payload);
 

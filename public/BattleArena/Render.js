@@ -79,6 +79,9 @@ function render() {
     // Render Chat
     chat.render();
 
+    // Render Options
+    render_options();
+
 }
 
 function render_heath_bar(player) {
@@ -227,5 +230,74 @@ function render_heal_pad(x, y, charged, heal_value) {
         line(x_in - 4, y_in, x_in - cross_size, y_in);     // Horizontal
     }
 
+    pop();
+}
+
+function render_options() {
+    push();
+    fill(20,20,20, 240);
+    rectMode(CENTER);
+    noStroke();
+    if (options.opened) {
+        // ----------- Menu opened -----------
+        rect(options.pos.x - options.WIDTH/2, options.pos.y + options.HEIGHT/2, options.WIDTH, options.HEIGHT, 10)
+        // Nickname
+        fill(40, 40, 40, 240);
+        rect(options.pos.x - options.WIDTH/2, 
+            options.pos.y + options.HEIGHT/7, 
+            options.WIDTH - options.WIDTH/4, 
+            30, 4);
+        fill(200, 200, 200, 240);
+        textSize(24);
+        textAlign(CENTER, CENTER);
+        text("Nickname",
+            options.pos.x - options.WIDTH/2,
+            options.pos.y + options.HEIGHT/19);
+        if (options.nickname_change) {
+            // ------- Changing nickname -------
+            textSize(16);
+            text(
+                options.nickname_holder,
+                options.pos.x - options.WIDTH/2,
+                options.pos.y + options.HEIGHT/7.4
+                );
+            stroke(200 * Math.round(frameCount*0.02 % 1));
+            strokeWeight(2);
+            line(options.pos.x - options.WIDTH/2 + textWidth(options.nickname_holder)/2 + 2,
+                options.pos.y + options.HEIGHT/8.3,
+                options.pos.x - options.WIDTH/2 + textWidth(options.nickname_holder)/2 + 2,
+                options.pos.y + options.HEIGHT/6.3);
+            noStroke();
+        } else {
+            fill(120,120,120, 240);
+            textSize(16);
+            text(gameState.getCurrentState().me.nickname,
+                options.pos.x - options.WIDTH/2,
+                options.pos.y + options.HEIGHT/7.5);
+        }
+        // Apply Button
+        fill(40,40,40,240);
+        rect(
+            options.pos.x - options.WIDTH/6, 
+            options.pos.y + options.HEIGHT/1.1, 
+            options.WIDTH/5, 
+            30, 4
+        )
+        fill(200,200,200,240);
+        text(
+            'Apply',
+            options.pos.x - options.WIDTH/6, 
+            options.pos.y + options.HEIGHT/1.11,
+        );
+        // -----------------------------------
+    } else {
+        // ----------- Menu closed -----------
+        rect(options.pos.x, options.pos.y, 29, 27, 5);
+        fill(150, 150, 150, 220);
+        rect(options.pos.x, options.pos.y - 6, 19, 3, 5);
+        rect(options.pos.x, options.pos.y, 19, 3, 5);
+        rect(options.pos.x, options.pos.y + 6, 19, 3, 5);
+        // -----------------------------------
+    }
     pop();
 }

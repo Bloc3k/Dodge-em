@@ -161,6 +161,9 @@ class Game {
         player.punchRight = newState.punchRight;
         player.cast = newState.cast;
         player.cast_direction = newState.cast_direction;
+        if (newState.nickname) {
+          player.nickname = newState.nickname;
+        }
 
         if (player.cast == true) {     // cast the spell
           const cast_pos = Vec2.add(player.pos, Vec2.subtract(player.cast_direction, player.pos).setLength(player.size - player.size*0.4));

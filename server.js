@@ -16,6 +16,7 @@ soc.on('connection', socket => {
 	console.log('New connection: ' + socket.id);
 	// ---------------------- API ------------------------
 	socket.on('UPDATE', player_update);
+	socket.on('CHAT', chat_in)
 	socket.on('disconnect', onDisconnect);
 	// ---------------------------------------------------
 });
@@ -32,6 +33,14 @@ const game = new Game();
  */
 function player_update(newPlayerState) {
 	game.player_update(this, newPlayerState);
+}
+
+/**
+ * Called when some player sends new message to chat.
+ * @param {String} message 
+ */
+function chat_in(message) {
+	game.chat_in(this, message);
 }
 
 /**

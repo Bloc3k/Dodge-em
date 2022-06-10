@@ -1,10 +1,6 @@
 function render() {
     const {me, enemies, allies, projectiles, gadgets} = gameState.getCurrentState();
 
-    // Animate effects
-    animator.animate();
-
-    
     // Level-up menu
     if (me.level_up > 0)      render_level_up(me);
     
@@ -12,9 +8,12 @@ function render() {
     for (const gadget of gadgets) {
         render_heal_pad(gadget.pos.x, gadget.pos.y, gadget.charged, gadget.heal);
     }
-
+    
     // Player stats in left bottom corner
     render_stats(me);
+
+    // Animate effects
+    animator.animate();
 
     // Render enemies
     for (const enemy of enemies) {
@@ -76,6 +75,9 @@ function render() {
             circle(0, 0, 15);   // Projectile size = 15
         pop();   
     }
+    
+    // Render Chat
+    chat.render();
 
 }
 
@@ -196,10 +198,10 @@ function render_heal_pad(x, y, charged, heal_value) {
     noStroke();
     fill(44, 44, 44);
     //ellipse(x, y, 50, 46);
-    if (heal_value > 25 )   rect(x, y, 70, 66, 30);
+    if (heal_value > 25 )   rect(x, y, 65, 62, 27);
     else                    rect(x, y, 50, 48, 21);
     fill(28, 28, 28, 230);
-    if (heal_value > 25 )   rect(x, y, 46, 43, 18);
+    if (heal_value > 25 )   rect(x, y, 44, 40, 16);
     else                    rect(x, y, 36, 34, 14);
 
     if (charged) {
@@ -207,14 +209,14 @@ function render_heal_pad(x, y, charged, heal_value) {
         const x_in = x;
         const y_in = y - Math.cos(frameCount*0.07)*1.6 - 3;
         fill(10,250,10, 80);
-        if (heal_value > 25 )   rect(x_in, y_in, 41, 37, 5.5);
+        if (heal_value > 25 )   rect(x_in, y_in, 38, 33, 5.2);
         else                    rect(x_in, y_in, 30, 26, 4.5);
         stroke(222,15,15, 200);
         strokeWeight(5);
         let cross_size = 7;
         if (heal_value > 25 ) {
-            cross_size = 12;
-            strokeWeight(7)
+            cross_size = 10;
+            strokeWeight(6)
         }  
         line(x_in, y_in + cross_size , x_in, y_in - cross_size);     // Vertical
         line(x_in, y_in + cross_size , x_in, y_in - cross_size);     // Vertical

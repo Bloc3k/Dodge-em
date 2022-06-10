@@ -7,6 +7,19 @@ function update(newState) {
     gameState.gameUpdate(newState);
 }
 
+/**
+ * Incoming message from server.
+ * @param {String} new_message 
+ */
+function chat_in(new_message) {
+    if (chat.messages.length > 11) {
+        chat.messages.shift();
+        chat.messages.push('(' + new_message.level + '. lvl): ' + new_message.message);
+    } else {
+        chat.messages.push('(' + new_message.level + '. lvl): ' + new_message.message);
+    }
+    chat.show_chat();
+}
 
 //---------------------- SEND ----------------------
 // Functions for sending informations to server are used all
@@ -35,4 +48,16 @@ function send_update() {
     player.punchRight = false;
     player.cast = false;
     player.level_up = null;
+}
+
+/**
+ * Send new message to chat.
+ * @param {String} message 
+ */
+function chat_out(message) {
+    const payload = {
+        "level": gameState.getCurrentState().me.level,
+        "message": message
+    }
+    socket.emit('CHAT', payload);
 }

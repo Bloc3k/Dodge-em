@@ -125,7 +125,7 @@ class Game {
           // Check for player interaction
           for (const id in this.players) {
             let player = this.players[id];
-            if (Vec2.distance(player.pos, gadget.pos) < gadget.SIZE) {
+            if (Vec2.distance(player.pos, gadget.pos) < gadget.SIZE + player.size) {
               if (player.hp + 50 <= player.MAX_HP)    player.hp += gadget.HEAL_VALUE;
               else  player.hp = player.MAX_HP;
               gadget.charged = false;
@@ -195,6 +195,16 @@ class Game {
     deletePlayer(socket) {
       console.log('Player disconnected: ' + socket.id);
       delete this.players[socket.id];
+    }
+
+    /**
+     * Update chat with new message. Inform other players.
+     * @param {io.socket} socket 
+     * @param {String} new_message 
+     */
+    chat_in(socket, new_message) {
+      // Send updated chat to players
+      socket.broadcast.emit('CHAT', new_message);
     }
 
     /**

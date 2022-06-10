@@ -1,10 +1,11 @@
 const PORT = 80;
-const IP = "147.229.217.105";
+const IP = "192.168.0.101";
 const FRAME_RATE = 60;
 
 let socket;
 let gameState;
 let animator;
+let chat;
 
 let player;
 let playing = false;
@@ -13,6 +14,8 @@ let dead_timestamp;
 let FredokaOne_font;
 let level_up_menu = false;
 let short_level_up = true;
+let chat_del_hold = 0;
+let short_delete = true;
 
 function preload() {
     glove_blue = loadImage('/BattleArena/Assets/glove_blue.png');
@@ -29,12 +32,14 @@ function setup() {
         forceNode: true,
     });
 
+    chat = new Chat();
     animator = new Animator();
     gameState = new GameState();
     player = new Player();
 
     // ---------- Receving API -----------
     socket.on('UPDATE', update);
+    socket.on('CHAT', chat_in);
     // -----------------------------------  
 
     send_update();
@@ -111,6 +116,22 @@ function draw() {
         }
     }
 
+    if (chat.writing) {
+        if (keyIsDown(8) && keyIsDown(17)) {     // 'Ctrl' = 17
+            if (short_delete) {
+                // Remove last word
+                re = /[^|\s]\w*$/;
+                index = chat.holder.search(re);
+                chat.holder = chat.holder.slice(0, index);
+                short_delete = false;   
+            }
+        } else if (keyIsDown(8)) {     // 'Backspace' = 8
+            if (chat_del_hold > 1.4 * deltaTime)
+                chat.holder = chat.holder.slice(0, -1);
+            chat_del_hold++;
+        }
+    }
+
     // Hitting 'Esc' will take browser back in history
     if (keyCode == 27)
         window.history.back();
@@ -129,25 +150,41 @@ function mousePressed() {
 function keyPressed() {
     const me = gameState.getCurrentState().me;
 
-    if (keyCode == 83) {        // 's' = 83
-        player.waypoint.set(me.pos);
-        animator.SetWaypoint.stop();
-        keyCode = 0;
-    } else if (keyCode == 68) {     // 'd' = 68
-        // Right hand punch
-        player.punchRight = true;   // Reset to false after sending update state to server, Networking.send_update()
-        animator.Punch.start(false, true);
-    } else if (keyCode == 70) {     // 'f' = 70
+    if (keyCode == 13) {        // 'Enter' = 13
+        chat.enter_handler();
+    } else {
+        if (chat.writing) {
+            // Typing in chat
+            if (key == 'Backspace') {
+                chat.holder = chat.holder.slice(0, -1); 
+            } else if (key == '?' || key == '+') {
+                if (chat.holder.length < 54)      chat.holder += key;
+            } else if ('abcdefghijklmnopqrstuvwxyz1234567890,.#%^&*()@~`<> !:?/\\|-_+="\';'.search(key.toLowerCase()) !== -1) {
+                if (chat.holder.length < 54)      chat.holder += key;
+            } 
+        } else {
+            // Handle input
+            if (keyCode == 83) {        // 's' = 83
+                player.waypoint.set(me.pos);
+                animator.SetWaypoint.stop();
+                keyCode = 0;
+            } else if (keyCode == 68) {     // 'd' = 68
+                // Right hand punch
+                player.punchRight = true;   // Reset to false after sending update state to server, Networking.send_update()
+                animator.Punch.start(false, true);
+            } else if (keyCode == 70) {     // 'f' = 70
         // Left hand punch
         player.punchLeft = true;    // Reset to false after sending update state to server, Networking.send_update()
         animator.Punch.start(true, false);
-    } else if (keyCode == 69) {     // 'e' = 69
-        if (me.hp > 0) {
-            player.cast = true;         // Reset to false after sending update state to server, Networking.send_update()
-            player.waypoint.set(me.pos);
+        } else if (keyCode == 69) {     // 'e' = 69
+                if (me.hp > 0) {
+                    player.cast = true;         // Reset to false after sending update state to server, Networking.send_update()
+                    player.waypoint.set(me.pos);
+                }
+            }
         }
     }
-        
+    
 }
 
 function windowResized() {
@@ -156,6 +193,8 @@ function windowResized() {
 
 function keyReleased() {
     short_level_up = true;
+    short_delete = true;
+    chat_del_hold = 0;
 }
 
 class Player {

@@ -9,7 +9,7 @@ const Vec2 = require('./Vec2');
         this.charged = charged;
         this.COOLDOWN = 11;
         this.HEAL_VALUE = heal_value;
-        this.SIZE = 30;
+        this.SIZE = heal_value*0.02;
     }
 
     /**

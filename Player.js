@@ -4,7 +4,7 @@ const Vec2 = require('./Vec2');
  * Class for holding server information about each player.
  */
  class Player {
-	constructor(x, y, waypoint_x, waypoint_y, socket) {
+	constructor(x, y, waypoint_x, waypoint_y, socket, nickname) {
 		this.pos = new Vec2(x, y);
     this.waypoint = new Vec2(waypoint_x, waypoint_y);
     this.heading = this.pos.subtract(this.waypoint).heading() - Math.PI/2;  
@@ -14,6 +14,7 @@ const Vec2 = require('./Vec2');
     this.size = 40;
 		this.id = socket.id;
     this.socket = socket;
+    this.nickname = nickname;
     this.punchLeft = false;
     this.punchRight = false;
     this.level_up = 0;  // Enables player to level up N times
@@ -89,7 +90,8 @@ const Vec2 = require('./Vec2');
       "spell_speed": this.SPELL_SPEED,
       "crit_chance": this.CRIT_CHANCE,
       "level_up": this.level_up,
-      "level": this.level
+      "level": this.level,
+      "nickname": this.nickname
     }
   }
 }

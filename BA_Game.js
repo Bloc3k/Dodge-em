@@ -6,6 +6,7 @@ const Gadget = require('./Gadget');
 class Game {
     constructor() {
       this.players = {};
+      this.players_n = 0;
       this.projectiles = [];
       this.gadgets = [];
       this.lastUpdateTime = Date.now();
@@ -184,7 +185,15 @@ class Game {
         }
       } else {
         // Add new player to Database
-        this.players[socket.id] = new Player(newState.pos.x, newState.pos.y, newState.pos.x, newState.pos.y, socket);
+        this.players[socket.id] = new Player(
+              newState.pos.x,   // Pos
+              newState.pos.y, 
+              newState.pos.x,   // Waypoint
+              newState.pos.y, 
+              socket,
+              'Player ' + (this.players_n + 1)    // Nickname
+            );
+        this.players_n++;
       }    
     }
 

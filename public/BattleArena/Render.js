@@ -120,12 +120,15 @@ function render_heath_bar(player) {
     } else {
         text(Math.ceil(player.hp), player.pos.x, player.pos.y - 57);
     }
+    // Level number
     fill(200, 200, 200, 220);
     textAlign(CENTER, CENTER);
     textSize(12);
     if (player.level < 10)   text(player.level, player.pos.x - player.max_hp*0.5, player.pos.y - 56);
     if (player.level >= 10)   text(player.level, player.pos.x - player.max_hp*0.5-3, player.pos.y - 56);
     stroke(4);
+    // Nickname
+    text(player.nickname, player.pos.x, player.pos.y - 73)
 }
 
 function render_stats(player) {

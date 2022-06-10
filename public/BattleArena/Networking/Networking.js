@@ -14,9 +14,9 @@ function update(newState) {
 function chat_in(new_message) {
     if (chat.messages.length > 11) {
         chat.messages.shift();
-        chat.messages.push('(' + new_message.level + '. lvl): ' + new_message.message);
+        chat.messages.push(new_message.author + ' (' + new_message.level + '. lvl): ' + new_message.message);
     } else {
-        chat.messages.push('(' + new_message.level + '. lvl): ' + new_message.message);
+        chat.messages.push(new_message.author + ' (' + new_message.level + '. lvl): ' + new_message.message);
     }
     chat.show_chat();
 }
@@ -57,6 +57,7 @@ function send_update() {
 function chat_out(message) {
     const payload = {
         "level": gameState.getCurrentState().me.level,
+        "author": gameState.getCurrentState().me.nickname,
         "message": message
     }
     socket.emit('CHAT', payload);

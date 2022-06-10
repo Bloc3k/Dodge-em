@@ -12,10 +12,10 @@ class Game {
       this.lastUpdateTime = Date.now();
       this.shouldSendUpdate = false;
       //--------------------------- Dummy ------------------------
-      this.players['dummy_stay'] = new Player(800, 100, 800, 100, NaN);
-      this.players['dummy_stay_moveble'] = new Player(200, 100, 800, 100, NaN);
-      this.players['dummy_horizont'] = new Player(100, 150, 1200, 150, NaN);
-      this.players['dummy_vertical'] = new Player(150, 250, 150, 800, NaN);
+      this.players['dummy_stay'] = new Player(800, 100, 800, 100, NaN, 'Dummy');
+      this.players['dummy_stay_moveble'] = new Player(200, 100, 800, 100, NaN, 'Dummy');
+      this.players['dummy_horizont'] = new Player(100, 150, 1200, 150, NaN, 'Dummy');
+      this.players['dummy_vertical'] = new Player(150, 250, 150, 800, NaN, 'Dummy');
       //-------------------------- Gadgets -----------------------
       this.gadgets.push(new Gadget(960, 70));         // Middle Top
       this.gadgets.push(new Gadget(960, 900));        // Middle Bottom

@@ -12,11 +12,9 @@ function update(newState) {
  * @param {String} new_message 
  */
 function chat_in(new_message) {
-    if (chat.messages.length > 11) {
+    chat.messages.push(new_message.author + ' (' + new_message.level + '. lvl): ' + new_message.message);
+    while (chat.calculate_text_box_size() >= chat.HEIGHT) {
         chat.messages.shift();
-        chat.messages.push(new_message.author + ' (' + new_message.level + '. lvl): ' + new_message.message);
-    } else {
-        chat.messages.push(new_message.author + ' (' + new_message.level + '. lvl): ' + new_message.message);
     }
     chat.show_chat();
 }

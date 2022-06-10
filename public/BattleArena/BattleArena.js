@@ -155,12 +155,13 @@ function keyPressed() {
     } else {
         if (chat.writing) {
             // Typing in chat
+            textSize(chat.TEXT_SIZE);
             if (key == 'Backspace') {
                 chat.holder = chat.holder.slice(0, -1); 
             } else if (key == '?' || key == '+') {
-                if (chat.holder.length < 54)      chat.holder += key;
+                if (textWidth(chat.holder) < chat.WIDHT - 30)      chat.holder += key;
             } else if ('abcdefghijklmnopqrstuvwxyz1234567890,.#%^&*()@~`<> !:?/\\|-_+="\';'.search(key.toLowerCase()) !== -1) {
-                if (chat.holder.length < 54)      chat.holder += key;
+                if (textWidth(chat.holder) < chat.WIDHT - 30)      chat.holder += key;
             } 
         } else {
             // Handle input

@@ -1,5 +1,5 @@
 const PORT = 80;
-const IP = "192.168.0.101";
+const IP = "147.229.217.105";
 const FRAME_RATE = 60;
 
 let socket;
@@ -119,6 +119,12 @@ function draw() {
                 // Max. Bullet Speed
                 if (me.spell_speed < 40) {
                     player.level_up = 5;
+                }
+                short_level_up = false;
+            } else if (keyIsDown(18) && keyIsDown(54)) {    // 54 = 6
+                // Life steal
+                if (me.lifesteal < 1) {
+                    player.level_up = 6;
                 }
                 short_level_up = false;
             } 
@@ -255,35 +261,43 @@ function level_up_menu_handler() {
     
     if (mouseX > 205 &&
         mouseX < 225 &&
-        mouseY < innerHeight - 115 &&
-        mouseY > innerHeight - 140 ) {
+        mouseY < innerHeight - 140 &&
+        mouseY > innerHeight - 165 ) {
             // Damage
             if (me.spell_damage < 300) { // Cap on 300 has to be set on server (BA_Game.player_update()), on clinet in Render.js render_level_up() and in BattleArena.js level_up_menu_handler()
                 player.level_up = 1;
             }
     } else if (mouseX > 205 &&
         mouseX < 225 &&
-        mouseY < innerHeight - 95 &&
-        mouseY > innerHeight - 115 ) {
+        mouseY < innerHeight - 115 &&
+        mouseY > innerHeight - 140 ) {
             // Crit Chance 
             if (me.crit_chance < 1) {
                 player.level_up = 2;
             }
     } else if (mouseX > 205 &&
         mouseX < 225 &&
-        mouseY < innerHeight - 70 &&
-        mouseY > innerHeight - 90 ) {
+        mouseY < innerHeight - 95 &&
+        mouseY > innerHeight - 115 ) {
             // Max. HP
             if (me.max_hp < 200) {
                 player.level_up = 3;
             }
     } else if (mouseX > 205 &&
         mouseX < 225 &&
-        mouseY < innerHeight - 45 &&
-        mouseY > innerHeight - 65 ) {
+        mouseY < innerHeight - 70 &&
+        mouseY > innerHeight - 90 ) {
             // Max. Speed
             if (me.max_speed < 30) {
                 player.level_up = 4;
+            }
+    } else if (mouseX > 205 &&
+        mouseX < 225 &&
+        mouseY < innerHeight - 45 &&
+        mouseY > innerHeight - 65 ) {
+            // Max. Bullet Speed
+            if (me.spell_speed < 40) {
+                player.level_up = 5;
             }
     } else if (mouseX > 205 &&
         mouseX < 225 &&
@@ -291,9 +305,9 @@ function level_up_menu_handler() {
         mouseY > innerHeight - 40 ) {
             // Max. Bullet Speed
             if (me.spell_speed < 40) {
-                player.level_up = 5;
+                player.level_up = 6;
             }
-    } 
+    }
         
 }
 

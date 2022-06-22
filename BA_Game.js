@@ -100,8 +100,15 @@ class Game {
 
           if (player.hp > 0) {
             if (Vec2.distance(player.pos, this.projectiles[i].pos) < player.size/2 + this.projectiles[i].SIZE/2) {
+              let shoter = this.players[this.projectiles[i].owner]
               const isItkill = player.takeDamage(this.projectiles[i].DAMAGE);
-              if (isItkill)   this.players[this.projectiles[i].owner].kill();
+              if (isItkill)   shoter.kill();
+              // Life-steal
+              const heal = this.projectiles[i].DAMAGE * shoter.LIFESTEAL;
+              if (shoter.hp + heal < shoter.MAX_HP)
+                shoter.hp += heal;
+              else 
+                shoter.hp = shoter.MAX_HP;
               this.projectiles[i].toBeDeleted = true;
             }
           }
@@ -177,13 +184,14 @@ class Game {
         }
 
         if (player.level_up > 0 && newState.level_up) {
-          // Damage=1, Crit=2, HP=3, Speed=4, bullet_speed=5
+          // Damage=1, Crit=2, HP=3, Speed=4, bullet_speed=5, lifesteal=6
           // Cap on 300 has to be set on server (BA_Game.player_update()), on clinet in Render.js render_level_up() and in BattleArena.js level_up_menu_handler()
           if (newState.level_up == 1 && player.SPELL_DAMAGE < 300)      player.SPELL_DAMAGE += 2;     // The cap value should corespond with value in render_level_up in Render.js on client-side and in BattleArena in level_up_menu_handler()
-          else if (newState.level_up == 2 && player.CRIT_CHANCE < 1)    player.CRIT_CHANCE += 0.03;  
+          else if (newState.level_up == 2 && player.CRIT_CHANCE < 1)    player.CRIT_CHANCE += 0.05;  
           else if (newState.level_up == 3 && player.MAX_HP < 200)       player.MAX_HP += 10;
           else if (newState.level_up == 4 && player.MAX_SPEED < 30)     player.MAX_SPEED += 0.5;
           else if (newState.level_up == 5 && player.SPELL_SPEED < 40)   player.SPELL_SPEED += 2;
+          else if (newState.level_up == 6 && player.LIFESTEAL < 1)      player.LIFESTEAL += 0.03;
           player.level_up--;
         }
       } else {

@@ -26,6 +26,7 @@ const Vec2 = require('./Vec2');
     this.SPELL_DAMAGE = 15;
     this.SPELL_SPEED = 10;
     this.CRIT_CHANCE = 0.1;
+    this.LIFESTEAL = 0.0;
 	}
 
   /**
@@ -89,6 +90,7 @@ const Vec2 = require('./Vec2');
       "max_speed": this.MAX_SPEED,
       "spell_speed": this.SPELL_SPEED,
       "crit_chance": this.CRIT_CHANCE,
+      "lifesteal": this.LIFESTEAL,
       "level_up": this.level_up,
       "level": this.level,
       "nickname": this.nickname

@@ -139,11 +139,12 @@ function render_stats(player) {
     textSize(20);
     textAlign(LEFT, CENTER)
     fill(200,200,0,200);
-    text("Damage: " + player.spell_damage, 10, innerHeight - 130);
-    text("Crit Chance: " + Math.round(player.crit_chance * 100) + "%", 10, innerHeight - 105);
-    text("Max. HP: " + player.max_hp, 10, innerHeight - 80);
-    text("Max. Speed: " + player.max_speed, 10, innerHeight - 55);
-    text("Bullet Speed: " + player.spell_speed, 10, innerHeight - 30);
+    text("Damage: " + player.spell_damage,      10, innerHeight - 155);
+    text("Crit Chance: " + Math.round(player.crit_chance * 100) + "%", 10, innerHeight - 130);
+    text("Max. HP: " + player.max_hp,           10, innerHeight - 105);
+    text("Max. Speed: " + player.max_speed,     10, innerHeight - 80);
+    text("Bullet Speed: " + player.spell_speed, 10, innerHeight - 55);
+    text("Life steal: " + Math.round(player.lifesteal * 100) + "%", 10, innerHeight - 30);
 }
 
 function render_death_counter(player) {
@@ -161,24 +162,27 @@ function render_level_up(player) {
     fill(180,180,0,200);
     
     if (player.spell_damage < 300) {    // Cap on 300 has to be set on server (BA_Game.player_update()), on clinet in Render.js render_level_up() and in BattleArena.js level_up_menu_handler()
-        render_button(215, innerHeight - 130); 
-        text("+2", 230, innerHeight - 135);
+        render_button(215, innerHeight - 155); 
+        text("+2", 230, innerHeight - 160);
     }  
     if (player.crit_chance < 1) {
-        render_button(215, innerHeight - 105);
-        text("+3%", 230, innerHeight - 110);
+        render_button(215, innerHeight - 130);
+        text("+5%", 230, innerHeight - 135);
     }
     if (player.max_hp < 200) {
-        render_button(215, innerHeight - 80);
-        text("+10", 230, innerHeight - 85);
+        render_button(215, innerHeight - 105);
+        text("+10", 230, innerHeight - 110);
     }
     if (player.max_speed < 30) {
-        render_button(215, innerHeight - 55);
-        text("+0.5", 230, innerHeight - 60);
+        render_button(215, innerHeight - 80);
+        text("+0.5", 230, innerHeight - 85);
     }
     if (player.spell_speed < 40) {
+        render_button(215, innerHeight - 55);
+        text("+2", 230, innerHeight - 60);
+    }  if (player.lifesteal < 1) {
         render_button(215, innerHeight - 30);
-        text("+2", 230, innerHeight - 35);
+        text("+3%", 230, innerHeight - 35);
     }
     
 }

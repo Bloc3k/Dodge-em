@@ -140,7 +140,7 @@ function render_stats(player) {
     textAlign(LEFT, CENTER)
     fill(200,200,0,200);
     text("Damage: " + player.spell_damage,      10, innerHeight - 155);
-    text("Crit Chance: " + Math.round(player.crit_chance * 100) + "%", 10, innerHeight - 130);
+    text("Crit. Chance: " + Math.round(player.crit_chance * 100) + "%", 10, innerHeight - 130);
     text("Max. HP: " + player.max_hp,           10, innerHeight - 105);
     text("Max. Speed: " + player.max_speed,     10, innerHeight - 80);
     text("Bullet Speed: " + player.spell_speed, 10, innerHeight - 55);
@@ -279,7 +279,27 @@ function render_options() {
                 options.pos.x - options.WIDTH/2,
                 options.pos.y + options.HEIGHT/7.5);
         }
-        // Apply Button
+        // ------------- Key Bindigns ------------
+        fill(200, 200, 200, 240);
+        textAlign(CENTER, CENTER);
+        textSize(24);
+        text("Key Bindings",
+            options.pos.x - options.WIDTH/2,
+            options.pos.y + options.HEIGHT/4.4);
+        // Shoot
+        menu_key_binding("Shoot", 3.3);
+        fill(200, 200, 200, 240);
+        text("Level up",
+            options.pos.x - options.WIDTH/2,
+            options.pos.y + options.HEIGHT/2.85
+        );
+        menu_key_binding("Damage", 2.45);
+        menu_key_binding("Crit. Chance", 2.16);
+        menu_key_binding("Max. HP", 1.928);
+        menu_key_binding("Max. Speed", 1.745);
+        menu_key_binding("Bullet Speed", 1.59);
+        menu_key_binding("Life Steal", 1.46);
+        // ------------- Apply Button ------------
         fill(40,40,40,240);
         rect(
             options.pos.x - options.WIDTH/6, 
@@ -288,6 +308,7 @@ function render_options() {
             30, 4
         )
         fill(200,200,200,240);
+        textSize(17);
         text(
             'Apply',
             options.pos.x - options.WIDTH/6, 
@@ -304,4 +325,38 @@ function render_options() {
         // -----------------------------------
     }
     pop();
+}
+
+function menu_key_binding(name, height_fraction) {
+    fill(40, 40, 40, 240);
+        rect(options.pos.x - options.WIDTH/3, 
+            options.pos.y + options.HEIGHT/height_fraction, 
+            options.WIDTH - options.WIDTH/1.5, 
+            20, 4);
+        textSize(16);
+        if (options[name.toLowerCase() + "_change"]) {
+            // ------- Changing Binding -------
+            fill(200, 200, 200, 240);
+            text(
+                options[name.toLowerCase() + "_holder"],
+                options.pos.x - options.WIDTH/3,
+                options.pos.y + options.HEIGHT/height_fraction
+                );
+            stroke(200 * Math.round(frameCount*0.02 % 1));
+            strokeWeight(2);
+            line(options.pos.x - options.WIDTH/3 + textWidth(options.shoot_holder)/2 + 4,
+                options.pos.y + options.HEIGHT/height_fraction - 10,
+                options.pos.x - options.WIDTH/3 + textWidth(options.shoot_holder)/2 + 4,
+                options.pos.y + options.HEIGHT/height_fraction + 10);
+            noStroke();
+        } else {
+            fill(120,120,120, 240);
+            text(options[name.toLowerCase() + "_keybind"],
+                options.pos.x - options.WIDTH/3,
+                options.pos.y + options.HEIGHT/height_fraction - 3);
+        }
+        fill(120,120,120, 240);
+        text(name + ": ",
+            options.pos.x - options.WIDTH/1.4,
+            options.pos.y + options.HEIGHT/height_fraction - 2);
 }

@@ -24,6 +24,57 @@ class GameState {
                 player.dead = true;
             }
         }
+
+        // Sounds
+        if (newState.me.healed) {
+            heal_sfx.setVolume(sound_volume);
+            heal_sfx.play();
+        }
+        if (newState.me.damage_taken) {
+            damage_taken_sfx.setVolume(sound_volume*4);
+            damage_taken_sfx.play(); 
+            hit_sfx.setVolume(sound_volume*0.2);
+            hit_sfx.play();
+        }
+        if (newState.me.revive) {
+            revive_sfx.setVolume(sound_volume);
+            revive_sfx.play();
+        }
+
+        for (const ally of newState.allies) {
+            if (ally.healed) {
+                heal_sfx.setVolume(sound_volume);
+                heal_sfx.play();
+            }
+            if (ally.damage_taken) {
+                hit_sfx.setVolume(sound_volume);
+                hit_sfx.play();
+            }
+            if (ally.revive) {
+                revive_sfx.setVolume(sound_volume);
+                revive_sfx.play();
+            }
+        }
+
+        for (const enemy of newState.enemies) {
+            if (enemy.healed) {
+                heal_sfx.setVolume(sound_volume);
+                heal_sfx.play();
+            }
+            if (enemy.damage_taken) {
+                hit_sfx.setVolume(sound_volume);
+                hit_sfx.play();
+            }
+            if (enemy.revive) {
+                revive_sfx.setVolume(sound_volume);
+                revive_sfx.play();
+            }
+        }
+
+        for (const kill of newState.kills) {
+            die_sfx.setVolume(sound_volume);
+            die_sfx.play();
+        }
     }
 
     getCurrentState() {

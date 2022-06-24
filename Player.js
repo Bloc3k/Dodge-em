@@ -30,6 +30,7 @@ const Vec2 = require('./Vec2');
     this.damage_dealt = [];
     this.healed = false;
     this.damage_taken = false;
+    this.revive_now = false;
 	}
 
   /**
@@ -54,6 +55,8 @@ const Vec2 = require('./Vec2');
    */
   revive() {
     this.hp = this.MAX_HP;
+    this.damage_taken = false;
+    this.revive_now = true;
   }
 
   /**
@@ -101,12 +104,15 @@ const Vec2 = require('./Vec2');
       "damage_dealt": this.damage_dealt,
       "damage_taken": this.damage_taken,
       "healed": this.healed,
+      "revive": this.revive_now,
     }
 
     // Reset variables
     this.damage_dealt = [];
     this.healed = false;
     this.damage_taken = false;
+    this.died = false;
+    this.revive_now = false;
 
     return serialized;
   }

@@ -60,6 +60,9 @@ function preload() {
     hit_sfx = loadSound("/BattleArena/Assets/hit.wav");
     heal_sfx = loadSound("/BattleArena/Assets/heal.mp3");
     damage_taken_sfx = loadSound("/BattleArena/Assets/au.mp3");
+    die_sfx = loadSound("/BattleArena/Assets/die.mp3");
+    level_up_selection_sfx = loadSound("/BattleArena/Assets/level_up_select.wav");
+    revive_sfx = loadSound("/BattleArena/Assets/revive.mp3");
 }
 
 function setup() {
@@ -136,15 +139,11 @@ function draw() {
                 short_delete = false;   
             }
         } else if (keyIsDown(8)) {     // 'Backspace' = 8
-            if (chat_del_hold > 1.4 * deltaTime)
+            if (chat_del_hold > 0.9 * deltaTime)
                 chat.holder = chat.holder.slice(0, -1);
             chat_del_hold++;
         }
     }
-
-    // Hitting 'Esc' will take browser back in history
-    if (keyCode == 27)
-        window.history.back();
 }
 
 function mousePressed() {
@@ -239,31 +238,43 @@ function keyPressed() {
                 // Damage
                 if (me.spell_damage < 300) { // Cap on 300 has to be set on server (BA_Game.player_update()), on clinet in Render.js render_level_up() and in BattleArena.js level_up_menu_handler()
                     player.level_up = 1;
+                    level_up_selection_sfx.setVolume(sound_volume);
+                    level_up_selection_sfx.play();
                 }
             } else if (keyIsDown(options["crit. chance_keybind"].toUpperCase().charCodeAt(0))) {    // 50 = 2
                 // Crit Chance 
                 if (me.crit_chance < 1) {
                     player.level_up = 2;
+                    level_up_selection_sfx.setVolume(sound_volume);
+                    level_up_selection_sfx.play();
                 }
             } else if (keyIsDown(options["max. hp_keybind"].toUpperCase().charCodeAt(0))) {    // 51 = 3
                 // Max. HP
                 if (me.max_hp < 200) {
                     player.level_up = 3;
+                    level_up_selection_sfx.setVolume(sound_volume);
+                    level_up_selection_sfx.play();
                 }
             } else if (keyIsDown(options["max. speed_keybind"].toUpperCase().charCodeAt(0))) {    // 52 = 4
                 // Max. Speed
                 if (me.max_speed < 30) {
                     player.level_up = 4;
+                    level_up_selection_sfx.setVolume(sound_volume);
+                    level_up_selection_sfx.play();
                 }
             } else if (keyIsDown(options["bullet speed_keybind"].toUpperCase().charCodeAt(0))) {    // 53 = 5
                 // Max. Bullet Speed
                 if (me.spell_speed < 40) {
                     player.level_up = 5;
+                    level_up_selection_sfx.setVolume(sound_volume);
+                    level_up_selection_sfx.play();
                 }
             } else if (keyCode == options["life steal_keybind"].toUpperCase().charCodeAt(0)) {    // 54 = 6
                 // Life steal
                 if (me.lifesteal < 1) {
                     player.level_up = 6;
+                    level_up_selection_sfx.setVolume(sound_volume);
+                    level_up_selection_sfx.play();
                 }
             } else if (keyCode == 83) {        // 's' = 83
                 player.waypoint.set(me.pos);
@@ -277,7 +288,11 @@ function keyPressed() {
                 // Right hand punch
                 player.punchRight = true;   // Reset to false after sending update state to server, Networking.send_update()
                 animator.Punch.start(false, true);
-            } 
+            } else if (keyCode == 27) {
+                if (options.opened) {
+                    options.opened = false;
+                }
+            }
         }
     }
 }
@@ -333,6 +348,8 @@ function level_up_menu_handler() {
             // Damage
             if (me.spell_damage < 300) { // Cap on 300 has to be set on server (BA_Game.player_update()), on clinet in Render.js render_level_up() and in BattleArena.js level_up_menu_handler()
                 player.level_up = 1;
+                level_up_selection_sfx.setVolume(sound_volume);
+                level_up_selection_sfx.play();
             }
     } else if (mouseX > 205 &&
         mouseX < 225 &&
@@ -341,6 +358,8 @@ function level_up_menu_handler() {
             // Crit Chance 
             if (me.crit_chance < 1) {
                 player.level_up = 2;
+                level_up_selection_sfx.setVolume(sound_volume);
+                level_up_selection_sfx.play();
             }
     } else if (mouseX > 205 &&
         mouseX < 225 &&
@@ -349,6 +368,8 @@ function level_up_menu_handler() {
             // Max. HP
             if (me.max_hp < 200) {
                 player.level_up = 3;
+                level_up_selection_sfx.setVolume(sound_volume);
+                level_up_selection_sfx.play();
             }
     } else if (mouseX > 205 &&
         mouseX < 225 &&
@@ -357,6 +378,8 @@ function level_up_menu_handler() {
             // Max. Speed
             if (me.max_speed < 30) {
                 player.level_up = 4;
+                level_up_selection_sfx.setVolume(sound_volume);
+                level_up_selection_sfx.play();
             }
     } else if (mouseX > 205 &&
         mouseX < 225 &&
@@ -365,6 +388,8 @@ function level_up_menu_handler() {
             // Max. Bullet Speed
             if (me.spell_speed < 40) {
                 player.level_up = 5;
+                level_up_selection_sfx.setVolume(sound_volume);
+                level_up_selection_sfx.play();
             }
     } else if (mouseX > 205 &&
         mouseX < 225 &&
@@ -373,6 +398,8 @@ function level_up_menu_handler() {
             // Max. Bullet Speed
             if (me.spell_speed < 40) {
                 player.level_up = 6;
+                level_up_selection_sfx.setVolume(sound_volume);
+                level_up_selection_sfx.play();
             }
     }
         
@@ -382,6 +409,8 @@ function options_handler(x, y) {
     if (click_in(x, y, 29, 27)) {
         // Open Main Menu
         options.opened = true;
+        keyboard_hit_sfx.setVolume(sound_volume);
+        keyboard_hit_sfx.play();
     } else if (options.opened) {
         // --------- Main Menu ----------
         if (click_in(

@@ -11,6 +11,7 @@ class Game {
       this.gadgets = [];
       this.lastUpdateTime = Date.now();
       this.shouldSendUpdate = false;
+      this.kills_in_frame = [];
       //--------------------------- Dummy ------------------------
       this.players['dummy_stay'] = new Player(800, 100, 800, 100, NaN, 'Dummy');
       this.players['dummy_stay_moveble'] = new Player(200, 100, 800, 100, NaN, 'Dummy');
@@ -104,11 +105,13 @@ class Game {
               let shoter = this.players[this.projectiles[i].owner];
               shoter.damage_dealt.push({
                 "amount": this.projectiles[i].DAMAGE,
+                "dealt_to": player.nickname,
                 "x": player.pos.x,
                 "y": player.pos.y,
               });
               if (isItkill) {
                 shoter.kill();
+                this.kills_in_frame.push('');
               }
               // Life-steal
               const heal = this.projectiles[i].DAMAGE * shoter.LIFESTEAL;
@@ -241,14 +244,17 @@ class Game {
      * @returns Game state for player
      */
     getCurrentState(player) {
-      return {
+      const serialized = {
         "time": Date.now(),
         "me": player.serialize(),
         "enemies": this.serializePlayersExcept(player),
         "allies": [],
         "projectiles": this.serializeProjectiles(),
-        "gadgets": this.serializaGadgets()
+        "gadgets": this.serializaGadgets(),
+        "kills": this.kills_in_frame,
       }
+      this.kills_in_frame = [];
+      return serialized;
     }
 
     /**

@@ -26,10 +26,6 @@ function render() {
             image(glove_red, Math.sin(frameCount*0.05)*0.025*deltaTime, -45);  // Right glove
             scale(-1, 1);
             image(glove_red, Math.sin(frameCount*0.05)*0.025*deltaTime, -45);  // Left glove
-            if (enemy.healed) {
-                heal_sfx.setVolume(sound_volume);
-                heal_sfx.play();
-            }
         pop();
     }
 
@@ -44,10 +40,6 @@ function render() {
             image(glove_blue, Math.sin(frameCount*0.05)*0.025*deltaTime, -45);  // Right glove
             scale(-1, 1);
             image(glove_blue, Math.sin(frameCount*0.05)*0.025*deltaTime, -45);  // Left glove
-            if (ally.healed) {
-                heal_sfx.setVolume(sound_volume);
-                heal_sfx.play();
-            }
         pop();
     }
 
@@ -67,20 +59,6 @@ function render() {
             image(glove_blue, Math.sin(frameCount*0.05)*0.025*deltaTime, -45);  // Right glove
             scale(-1, 1);
             image(glove_blue, Math.sin(frameCount*0.05)*0.0225*deltaTime, -45);  // Left glove
-        }
-        if (me.healed) {
-            heal_sfx.setVolume(sound_volume);
-            heal_sfx.play();
-        }
-        if (me.damage_taken) {
-            damage_taken_sfx.setVolume(sound_volume);
-            hit_sfx.setVolume(sound_volume*0.2);
-            damage_taken_sfx.play(); 
-            hit_sfx.play();
-        }
-        for (const damage of me.damage_dealt) {
-            hit_sfx.setVolume(sound_volume);
-            hit_sfx.play();
         }
     pop();
 

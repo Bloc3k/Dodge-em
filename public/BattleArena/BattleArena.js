@@ -16,6 +16,8 @@ let level_up_menu = false;
 let chat_del_hold = 0;
 let short_delete = true;
 
+let sound_volume = 1;
+
 let options = {
     "pos": {"x": innerWidth - 25, "y": 25},
     "opened": false,
@@ -53,7 +55,11 @@ function preload() {
     // Sounds
     shoot_sfx = loadSound("/BattleArena/Assets/shoot.wav");
     keyboard_hit_sfx = loadSound("/BattleArena/Assets/keyhit.wav");
+    level_up_sfx = loadSound("/BattleArena/Assets/levelup.wav");
+    apply_button_sfx = loadSound("/BattleArena/Assets/apply_button.wav");
     hit_sfx = loadSound("/BattleArena/Assets/hit.wav");
+    heal_sfx = loadSound("/BattleArena/Assets/heal.mp3");
+    damage_taken_sfx = loadSound("/BattleArena/Assets/au.mp3");
 }
 
 function setup() {
@@ -92,6 +98,9 @@ function draw() {
             const me = gameState.getCurrentState().me;
             if (dist(me.pos.x, me.pos.y, me.waypoint.x, me.waypoint.y) < 2) {
                 player.waypoint.set(me.pos);
+            }
+            if (gameState.previousGameState) {
+                level_up_audio_handler();
             }
         } else {
             // DEAD
@@ -156,27 +165,36 @@ function keyPressed() {
         if (options.nickname_change) {
             options.nickname_change = false;
             player.nickname = options.nickname_holder;
+            keyboard_hit_sfx.setVolume(sound_volume);
+            keyboard_hit_sfx.play();
         } else if (options.shoot_change) {
             options.shoot_change = false;
-            options.shoot_keybind = options.shoot_holder;
+            keyboard_hit_sfx.setVolume(sound_volume);
+            keyboard_hit_sfx.play();
         } else if (options.damage_change) {
             options.damage_change = false;
-            options.damage_keybind = options.damage_holder;
+            keyboard_hit_sfx.setVolume(sound_volume);
+            keyboard_hit_sfx.play();
         } else if (options["crit. chance_change"]) {
             options["crit. chance_change"] = false;
-            options["crit. chance_keybind"] = options["crit. chance_holder"];
+            keyboard_hit_sfx.setVolume(sound_volume);
+            keyboard_hit_sfx.play();
         } else if (options["max. hp_change"]) {
             options["max. hp_change"] = false;
-            options["max. hp_keybind"] = options["max. hp_holder"];
+            keyboard_hit_sfx.setVolume(sound_volume);
+            keyboard_hit_sfx.play();
         } else if (options["max. speed_change"]) {
             options["max. speed_change"] = false;
-            options["max. speed_keybind"] = options["max. speed_holder"];
+            keyboard_hit_sfx.setVolume(sound_volume);
+            keyboard_hit_sfx.play();
         } else if (options["bullet speed_change"]) {
             options["bullet speed_change"] = false;
-            options["bullet speed_keybind"] = options["bullet speed_holder"];
+            keyboard_hit_sfx.setVolume(sound_volume);
+            keyboard_hit_sfx.play();
         } else if (options["life steal_change"]) {
             options["life steal_change"] = false;
-            options["life steal_keybind"] = options["life steal_holder"];
+            keyboard_hit_sfx.setVolume(sound_volume);
+            keyboard_hit_sfx.play();
         } else {
             chat.enter_handler();
         }
@@ -213,6 +231,7 @@ function keyPressed() {
             if (keyCode == options.shoot_keybind.toUpperCase().charCodeAt(0)) {     // 'e' = 69
                 if (me.hp > 0) {
                     player.cast = true;         // Reset to false after sending update state to server, Networking.send_update()
+                    shoot_sfx.setVolume(sound_volume*2.5);
                     shoot_sfx.play();                    
                     player.waypoint.set(me.pos);
                 }
@@ -266,15 +285,18 @@ function keyPressed() {
 function keyboard_menu_input(options_obj, buffer_name, buffer_length) {
     if (key == 'Backspace') {
         options_obj[buffer_name] = options_obj[buffer_name].slice(0, -1); 
+        keyboard_hit_sfx.setVolume(sound_volume);
         keyboard_hit_sfx.play();
     } else if (key == '?' || key == '+') {
         if (options_obj[buffer_name].length < buffer_length) {
             options_obj[buffer_name] += key;
+            keyboard_hit_sfx.setVolume(sound_volume);
             keyboard_hit_sfx.play();
         }
     } else if ('abcdefghijklmnopqrstuvwxyz1234567890,.#%^&*()@~`<> !:?/\\|-_+="\';'.search(key.toLowerCase()) !== -1) {
         if (options_obj[buffer_name].length < buffer_length) {
             options_obj[buffer_name] += key;
+            keyboard_hit_sfx.setVolume(sound_volume);
             keyboard_hit_sfx.play();
         }   
     }
@@ -505,6 +527,9 @@ function options_handler(x, y) {
             30
         )) {
             // Apply Button
+            apply_button_sfx.setVolume(sound_volume);
+            apply_button_sfx.play();
+
             options.opened = false;
             player.nickname = options.nickname_holder;
             options.nickname_holder = '';
@@ -559,5 +584,12 @@ function click_in(x, y, width, height) {
             return true;
     } else {
         return false;
+    }
+}
+
+function level_up_audio_handler() {
+    if (gameState.previousGameState.me.level !== gameState.lastGameState.me.level) {
+        level_up_sfx.setVolume(sound_volume);
+        level_up_sfx.play();        
     }
 }

@@ -100,9 +100,16 @@ class Game {
 
           if (player.hp > 0) {
             if (Vec2.distance(player.pos, this.projectiles[i].pos) < player.size/2 + this.projectiles[i].SIZE/2) {
-              let shoter = this.players[this.projectiles[i].owner]
               const isItkill = player.takeDamage(this.projectiles[i].DAMAGE);
-              if (isItkill)   shoter.kill();
+              let shoter = this.players[this.projectiles[i].owner];
+              shoter.damage_dealt.push({
+                "amount": this.projectiles[i].DAMAGE,
+                "x": player.pos.x,
+                "y": player.pos.y,
+              });
+              if (isItkill) {
+                shoter.kill();
+              }
               // Life-steal
               const heal = this.projectiles[i].DAMAGE * shoter.LIFESTEAL;
               if (shoter.hp + heal < shoter.MAX_HP)
@@ -138,6 +145,7 @@ class Game {
               else  player.hp = player.MAX_HP;
               gadget.charged = false;
               setTimeout(() => {gadget.charged = true}, gadget.COOLDOWN*1000);
+              player.healed = true;
             }
           }
         }

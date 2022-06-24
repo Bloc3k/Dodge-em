@@ -27,6 +27,9 @@ const Vec2 = require('./Vec2');
     this.SPELL_SPEED = 10;
     this.CRIT_CHANCE = 0.1;
     this.LIFESTEAL = 0.0;
+    this.damage_dealt = [];
+    this.healed = false;
+    this.damage_taken = false;
 	}
 
   /**
@@ -36,6 +39,7 @@ const Vec2 = require('./Vec2');
    */
   takeDamage(damage) {
     this.hp -= damage;
+    this.damage_taken = true;
     if (this.hp <= 0) {
       setTimeout( () => {this.revive()}, 4000);
       this.pos = new Vec2(Math.random()*(1600) + 55, Math.random()*(870) + 55);
@@ -76,7 +80,7 @@ const Vec2 = require('./Vec2');
    * @returns Serialized player
    */
   serialize() {
-    return {
+    const serialized = {
       "id": this.id,
       "pos": {"x": this.pos.x, "y": this.pos.y},
       "waypoint": {"x": this.waypoint.x, "y": this.waypoint.y},
@@ -93,8 +97,18 @@ const Vec2 = require('./Vec2');
       "lifesteal": this.LIFESTEAL,
       "level_up": this.level_up,
       "level": this.level,
-      "nickname": this.nickname
+      "nickname": this.nickname,
+      "damage_dealt": this.damage_dealt,
+      "damage_taken": this.damage_taken,
+      "healed": this.healed,
     }
+
+    // Reset variables
+    this.damage_dealt = [];
+    this.healed = false;
+    this.damage_taken = false;
+
+    return serialized;
   }
 }
 
